@@ -1,0 +1,353 @@
+@extends('layouts.app') @section('content')
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">{{ trans('app.QuizHeader') }}</div>
+
+                <div class="card-body">
+
+                    @if (session('message'))
+                    <div class="alert alert-success">
+                        {{ session('message') }}
+                    </div>
+                    @endif
+
+
+
+                    <form id="submitQuiz" method="POST" action="{{ route('submitQuiz.store') }}">
+                        @csrf
+                        <div class="row">
+                            <div class="col-md-8" >
+                                <label style="display:none;" id="quizTimer">{{ trans('app.TimeRemainingLabel') }}
+                                    <p id="timer"></p>
+                                </label>
+                            </div>
+                            <div class="col-md-2 offset-md-2">
+                                <label>{{ trans('app.DifficultyLevelLabel') }} {{$question->difficultyLevel}}</label>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="form-group row">
+                                    <div class="col-md-8 offset-md-2">
+                                        {{$question->questionNumber}}. {{$question->question}}
+                                    </div>
+                                </div>
+                                @if ($question->questionType == 'MultipleChoice')
+                                <div class="form-group row">
+                                    <div class="col-md-7 offset-md-2">
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="radio" id="answer" value="{{$question->choice1}}"> {{$question->choice1}}</label>
+                                        </div>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="radio" id="answer" value="{{$question->choice2}}"> {{$question->choice2}}</label>
+                                        </div>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="radio" id="answer" value="{{$question->choice3}}"> {{$question->choice3}}</label>
+                                        </div>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="radio" id="answer" value="{{$question->choice4}}"> {{$question->choice4}}</label>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                @endif @if ($question->questionType == 'MultipleAnswer')
+                                <div class="form-group row">
+                                    <div class="offset-md-2 col-md-12">
+
+                                        <div class="form-group">
+
+                                            <table width="70%">
+                                                <tr>
+                                                    <label>{{ trans('app.MultipleAnswersDesc') }}</label>
+                                                </tr>
+                                                <tr>
+                                                    <td width="15%">
+                                                        <label>{{ trans('app.Choice1Label') }}</label>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control" name="choice[1]" id="choice1"
+                                                            value="{{$question->choice1}}" readonly/>
+                                                    </td>
+                                                    <td align="center">
+                                                        <input class="checkboxField" name="selected_ids[]" type="checkbox" value="1"
+                                                        />
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <label>{{ trans('app.Choice2Label') }}</label>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control" name="choice[2]" id="choice2"
+                                                            value="{{$question->choice2}}" readonly/>
+                                                    </td>
+                                                    <td align="center">
+                                                        <input class="checkboxField" name="selected_ids[]" type="checkbox" value="2"
+                                                        />
+                                                    </td>
+
+                                                </tr>
+
+                                                <tr>
+                                                    <td>
+                                                        <label>{{ trans('app.Choice3Label') }}</label>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control" name="choice[3]" id="choice3"
+                                                            value="{{$question->choice3}}" readonly/>
+                                                    </td>
+                                                    <td align="center">
+                                                        <input class="checkboxField" name="selected_ids[]" type="checkbox" value="3"
+                                                        />
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <label>{{ trans('app.Choice4Label') }}</label>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control" name="choice[4]" id="choice4"
+                                                            value="{{$question->choice4}}" readonly/>
+                                                    </td>
+                                                    <td align="center">
+                                                        <input class="checkboxField" name="selected_ids[]" type="checkbox" value="4"
+                                                        />
+                                                    </td>
+
+                                                </tr>
+                                            </table>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                @endif @if ($question->questionType == 'TrueFalse')
+                                <div class="form-group row">
+                                    <div class="col-md-7 offset-md-2">
+                                        <div class="form-group">
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" name="radio" id="answer" value="True"> {{ trans('app.TrueLabel') }}</label>
+                                            </div>
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" name="radio" id="answer" value="False"> {{ trans('app.FalseLabel') }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endif @if ($question->questionType == 'FillUp')
+                                <div class="form-group row">
+                                    <div class="offset-md-2 col-md-8">
+
+                                        <div class="form-group">
+                                            <label for="add-question">{{ trans('app.AnswerLabel') }}</label>
+                                            <input type="text" class="form-control" name="answer" id="answer">
+                                        </div>
+
+                                    </div>
+                                </div>
+                                @endif @if ($question->questionType == 'NumericQuestion')
+                                <div class="form-group row">
+                                    <div class="offset-md-2 col-md-8">
+
+                                        <div class="form-group">
+                                            <label for="add-question">{{ trans('app.AnswerLabel') }}</label>
+                                            <input type="number" class="form-control" name="answer" id="answer">
+                                        </div>
+
+                                    </div>
+                                </div>
+                                @endif
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" name="quizNo" id="quizNo" value="{{$quiz->quizNumber}}" readonly required>
+                            <input type="hidden" class="form-control" name="timerStatus" id="timerStatus" value="{{$quiz->timerStatus}}" readonly required>
+                            <input type="hidden" class="form-control" name="questionNo" id="questionNo" value="{{$questionNo}}" readonly required>
+                            <input type="hidden" class="form-control" name="questionID" id="questionID" value="{{$question->id}}" readonly required>
+                            <input type="hidden" class="form-control" name="questionType" id="questionType" value="{{$question->questionType}}" readonly
+                                required>
+                            <input type="hidden" class="form-control" name="questionAnswer" id="questionAnswer" value="{{$question->answer}}" readonly
+                                required>
+                            <input type="hidden" class="form-control" name="difficultyLevel" id="difficultyLevel" value="{{$question->difficultyLevel}}"
+                                readonly required>
+                            <input type="hidden" class="form-control" name="attempt" id="attempt" value="{{$attempt}}" readonly required>
+                            <input type="hidden" class="form-control" name="isRangeAllowed" id="isRangeAllowed" value="{{$question->isRangeAllowed}}}" readonly required>
+                        </div>
+                        <div class="alert alert-success" id="correctAnswer" style="display:none;">
+                            <strong>{{ trans('app.CorrectAnsMsg') }}</strong>
+                        </div>
+                        <div class="alert alert-success" id="exactAnswer" style="display:none;">
+                            <strong>{{ trans('app.CorrectAnsRangeMsg') }} {{$question->answer}}.</strong>
+                        </div>
+                        <div class="alert alert-danger" id="wrongAnswer" style="display:none;">
+                            <strong>{{ trans('app.WrongAnsMsg') }} {{$question->answer}}. </strong> 
+                        </div>
+                        @if ($questionNo != -1)
+                        <div class="row mt-4">
+                            <div class="col-md-2 offset-md-10">
+                                <a class="buttonStyle" style="color:white;" onclick="showCorrectAnswer('{{$question->questionType}}','{{$question->isRangeAllowed}}')"
+                                    class="btn btn-info pull-right">{{ trans('app.NextButton') }}</a>
+                            </div>
+                        </div>
+                        @else
+                        <div class="row mt-4">
+                            <div class="col-md-2 offset-md-10">
+                                <a class="btn btn-warning" style="color:white;" onclick="showCorrectAnswer('{{$question->questionType}}','{{$question->isRangeAllowed}}')"
+                                    class="btn btn-info pull-right">{{ trans('app.SubmitButton') }}</a>
+                            </div>
+                        </div>
+                        @endif
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+@endsection
+
+<script>
+
+    window.onload = chooseLevel;
+
+    function chooseLevel() {
+        
+        var difficultyLevel = document.getElementById("difficultyLevel").value;
+        attempt = document.getElementById("attempt").value;
+        timerStatus = document.getElementById("timerStatus").value;
+        question_type = document.getElementById("questionType").value;
+        is_range_allowed = document.getElementById("isRangeAllowed").value;
+
+        countDownDate = new Date(); 
+        // 5 minutes in milliseconds
+        if (difficultyLevel == 'Easy') {
+            myTimeSpan = 1 * 15 * 1000;
+        } else if (difficultyLevel == 'Medium') {
+            myTimeSpan = 1 * 30 * 1000;
+        } else {
+            myTimeSpan = 1 * 45 * 1000;
+        }
+        countDownDate.setTime(countDownDate.getTime() + myTimeSpan);
+    }
+
+
+    // Updates the count down every 1 second
+    var x = setInterval(function () {
+
+        var now = new Date().getTime();
+        var distance = countDownDate - now;
+
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        if (attempt == 'firstAttempt' && timerStatus == 'On') {
+            $('#quizTimer').show();
+            document.getElementById("timer").innerHTML = minutes + "m " + seconds + "s ";
+
+            if (distance < 0) {
+                clearInterval(x);
+                showCorrectAnswer(question_type,is_range_allowed);
+            }
+        } else {
+            $('#quizTimer').hide();
+        }
+    }, );
+
+    function showCorrectAnswer(questionType, isRangeAllowed) {
+
+
+        var enteredAnswer = "";
+        if (questionType == 'MultipleChoice' || questionType == 'TrueFalse') {
+            enteredAnswer = $('input[name=radio]:checked').val();
+
+        } else if (questionType == 'MultipleAnswer') {
+            var values = new Array();
+            var count = 1;
+            var checkedLength = $(".checkboxField:checked").length;
+
+            $.each($("input[name='selected_ids[]']:checked"), function () {
+
+                var idNmae = "choice" + count;
+
+                if (count == checkedLength) {
+                    enteredAnswer += document.getElementById(idNmae).value;
+                } else {
+                    enteredAnswer += document.getElementById(idNmae).value;
+                    enteredAnswer += ",";
+                }
+                values.push($(this).val());
+                count++;
+            });
+        } else {
+            enteredAnswer = document.getElementById("answer").value;
+        }
+        if (enteredAnswer == undefined) {
+            enteredAnswer = "";
+        }
+
+        var actualAnswer = document.getElementById("questionAnswer").value;
+        var min, max;
+        if (questionType == 'NumericQuestion') {
+            if (isRangeAllowed == 'Yes') {
+                min = parseInt(actualAnswer) - 6;
+                max = parseInt(actualAnswer) + 6;
+
+                if ((min < enteredAnswer) && (enteredAnswer < max)) {
+                    if(enteredAnswer.toUpperCase() === actualAnswer.toUpperCase()){
+                        $('#correctAnswer').show();
+                        $('#wrongAnswer').hide();
+                    }else{
+                    $('#exactAnswer').show();
+                    $('#correctAnswer').hide();
+                    $('#wrongAnswer').hide();
+                    }
+                }else {
+                $('#wrongAnswer').show();
+                $('#correctAnswer').hide();
+            }
+            }else if (enteredAnswer.toUpperCase() === actualAnswer.toUpperCase()){
+                $('#correctAnswer').show();
+                $('#wrongAnswer').hide();
+            }else {
+                $('#wrongAnswer').show();
+                $('#correctAnswer').hide();
+            }
+        } else if (enteredAnswer.toUpperCase() === actualAnswer.toUpperCase()) {
+
+            $('#correctAnswer').show();
+            $('#wrongAnswer').hide();
+        } else {
+
+            $('#wrongAnswer').show();
+            $('#correctAnswer').hide();
+        }
+
+        setTimeout("submitAnswerForm()", 2500);
+    }
+
+    function submitAnswerForm() {
+
+        document.getElementById("submitQuiz").submit();
+    }
+
+    history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+        history.go(1);
+    };
+    
+</script>
