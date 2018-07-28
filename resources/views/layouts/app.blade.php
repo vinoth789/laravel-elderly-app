@@ -39,6 +39,10 @@
             border-radius: 4px;
             cursor: pointer;
         }
+        .buttonStyle:hover {
+            background: #2079b0;
+            text-decoration: none;
+        }
 
         .card-header {
 

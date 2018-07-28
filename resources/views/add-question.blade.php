@@ -252,7 +252,7 @@
                                 </div>
 
 
-                                <button  id="addQuestionBtn"  class="btn btn-xs btn-primary">{{ trans('app.AddButton') }}</button>
+                                <button class="buttonStyle"  id="addQuestionBtn"  class="btn btn-xs btn-primary">{{ trans('app.AddButton') }}</button>
                                 <a class="btn btn-danger" href="{{ route('admin.dashboard') }}">
                                     {{ trans('app.BackButton') }}
                                 </a>
