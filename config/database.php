@@ -1,9 +1,17 @@
 <?php
 $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+<<<<<<< HEAD
 $host = $url["host"];
 $username = $url["user"];
 $password = $url["pass"];
 $database = substr($url["path"], 1);
+=======
+    $host = $url["host"];
+    $username = $url["user"];
+    $password = $url["pass"];
+    $database = substr($url["path"], 1);
+
+>>>>>>> 3c255f7db06864694728488b41b3c710ff3f3010
 return [
 
     /*
@@ -16,8 +24,10 @@ return [
     | you may use many connections at once using the Database library.
     |
     */
+    
 
     'default' => env('DB_CONNECTION', 'mysql'),
+    
 
     /*
     |--------------------------------------------------------------------------

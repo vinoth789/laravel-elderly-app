@@ -51,7 +51,11 @@
         ],
         "post-install-cmd": [
             "php artisan clear-compiled",
+<<<<<<< HEAD
             "php artisan migrate --force",
+=======
+             "php artisan migrate",
+>>>>>>> 3c255f7db06864694728488b41b3c710ff3f3010
             "chmod -R 777 public/"
         ]
     },
