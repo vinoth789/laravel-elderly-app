@@ -12,14 +12,14 @@ return [
     | you may use many connections at once using the Database library.
     |
     */
-
-    'default' => env('DB_CONNECTION', 'mysql'),
     $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
-
 $host = $url["host"];
 $username = $url["user"];
 $password = $url["pass"];
 $database = substr($url["path"], 1);
+
+    'default' => env('DB_CONNECTION', 'mysql'),
+    
 
     /*
     |--------------------------------------------------------------------------
