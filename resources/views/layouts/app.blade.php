@@ -71,7 +71,7 @@
                     <img src="/img/GB.png" width="30" height="15" class="d-inline-block" alt="">
                 </a>
                 @else
-                <a class="nav-link" href="#" onclick="changeLanguage('de')" id="english">
+                <a class="nav-link" href="#" onclick="changeLanguage('de')" id="german">
                     <img src="/img/DE.png" width="30" height="15" class="d-inline-block" alt="">
                 </a>
                 @endif
