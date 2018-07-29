@@ -22,42 +22,7 @@
     <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="assets/js/app.js" type="text/javascript"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<script>
-    function changeLanguage(lang){
 
-    
-var token, url, locale;
-token = $('input[name=_token]').val();
-
-locale = lang;
-
-//url = "{{route('change.language')}}";
-url = "/language";
-
-$.ajax({
-    url: url,
-    data: {
-        _token: token,
-        locale: locale
-    },
-    method: 'POST',
-    datatype: 'json',
-    success: function (data) {
-        
-    },
-    error: function (data) {
-        
-    },
-    beforeSend: function (data) {
-        
-    },
-    complete: function (data) {
-        window.location.reload(true);
-    },
-});
-
-}
-</script>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
