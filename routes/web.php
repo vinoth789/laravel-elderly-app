@@ -53,12 +53,12 @@ Route::resource('quizNumber','CreateQuizController');
 Route::resource('submitQuiz','TakeQuizController');
 Route::resource('submitDailyQuiz','DailyChallengeController');
 
-Route::post('/language-chooser','LanguageController@changeLanguage');
-Route::post('/language', array(
-'before' => 'csrf',
-'as' => 'language-chooser',
-'uses' => 'LanguageCOntroller@changeLanguage',
+Route::post('/language','LanguageController@changeLanguage');
+// Route::post('/language', array(
+// 'before' => 'csrf',
+// 'as' => 'language-chooser',
+// 'uses' => 'LanguageCOntroller@changeLanguage',
 
-));
+// ));
 
 
