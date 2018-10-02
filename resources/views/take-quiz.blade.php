@@ -34,7 +34,7 @@
                                         {{$question->questionNumber}}. {{$question->question}}
                                     </div>
                                 </div>
-                                @if ($question->questionType == 'MultipleChoice')
+                                @if ($question->questionType == 'MultipleChoice' || $question->questionType == 'OrderOptions')
                                 <div class="form-group row">
                                     <div class="col-md-7 offset-md-2">
                                         <div class="radio">
@@ -162,6 +162,85 @@
                                         <div class="form-group">
                                             <label for="add-question">{{ trans('app.AnswerLabel') }}</label>
                                             <input type="number" class="form-control" name="answer" id="answer">
+                                        </div>
+
+                                    </div>
+                                </div>
+                                @endif  @if ($question->questionType == 'ImageType')
+                                <div class="form-group row">
+                                    <div class="col-md-7 offset-md-2">
+                                    <div class="table-responsive-sm">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Image1</th>
+                <th scope="col">Image2</th>
+                <th scope="col">Image3</th>
+                <th scope="col">Image4</th>
+            </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    <td><img width="150px" height="150px" src="/img/{{ $question->choice1 }}"></td>
+                    <td><img width="150px" height="150px" src="/img/{{ $question->choice2 }}"></td>
+                    <td><img width="150px" height="150px" src="/img/{{ $question->choice3 }}"></td>
+                    <td><img width="150px" height="150px" src="/img/{{ $question->choice4 }}"></td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+                                <div class="form-group row">
+                                    <div class="col-md-7 offset-md-2">
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="radio" id="answer" value="{{$question->choice1}}"> Image 1</label>
+                                        </div>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="radio" id="answer" value="{{$question->choice2}}">  Image 2</label>
+                                        </div>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="radio" id="answer" value="{{$question->choice3}}">  Image 3</label>
+                                        </div>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="radio" id="answer" value="{{$question->choice4}}">  Image 4</label>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                @endif
+
+                                @if ($question->questionType == 'VideoType')
+                                
+                                <div class="form-group row">
+                                    <div class="col-md-7 offset-md-2">
+
+                                    <video height="300px" width="600px" controls>
+    <source src="/video/{{ $question->imgFileName }}" type="video/mp4">
+  <source src="/video/{{ $question->imgFileName }}"  type="video/ogg">
+  Your browser does not support the video tag.
+      
+    </video>
+
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="radio" id="answer" value="{{$question->choice1}}"> {{$question->choice1}}</label>
+                                        </div>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="radio" id="answer" value="{{$question->choice2}}">  {{$question->choice1}}</label>
+                                        </div>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="radio" id="answer" value="{{$question->choice3}}">  {{$question->choice1}}</label>
+                                        </div>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="radio" id="answer" value="{{$question->choice4}}">  {{$question->choice1}}</label>
                                         </div>
 
                                     </div>

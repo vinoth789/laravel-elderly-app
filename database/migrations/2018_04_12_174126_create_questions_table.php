@@ -21,6 +21,7 @@ class CreateQuestionsTable extends Migration
             $table->string('choice2')->nullable();
             $table->string('choice3')->nullable();
             $table->string('choice4')->nullable();
+            $table->string('imgFileName')->nullable();
             $table->string('answer');
             $table->string('isRangeAllowed')->default('No');
             $table->string('questionType');

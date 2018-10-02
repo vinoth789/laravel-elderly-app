@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\AddQuestion;
 use App\Quiz;
 use DB;
+use File;
+use Video;
 
 class FrameQuestionsController extends Controller
 {
@@ -48,11 +50,112 @@ class FrameQuestionsController extends Controller
         return view('edit-question')->with('question', $question);
 
     }
+
+    public function videoStore(Request $request){
+        if($request->hasFile('file')) {
+        $video = $request->file('file');
+
+        $videoName = $video->getClientOriginalName();
+            $video->move(public_path('video'),$videoName);
+            return response()->json([
+                'success' => true,
+                'videoName' => $videoName
+            ]);
+        }
+
+    }
     
+    public function fileStore(Request $request)
+    {
+
+        if($request->hasFile('file')) {
+            $image = $request->file('file');
+            $imageName = $image->getClientOriginalName();
+            $image->move(public_path('img'),$imageName);
+            try{
+                return response()->json([
+                    'success' => true,
+                    'imageName' => $imageName
+                ]);
+            }catch(\Exception $e){
+                return response()->json(['error'=>$e->getMessage()]);
+            }
+        }
+            
+    }
+    public function fileDestroy(Request $request)
+    {
+        $filename =  $request->get('filename');
+        //$filename =  $request->get('id');
+        // AddQuestion::where('imgFileName',$filename)->delete();
+        $path=public_path().'/img/'.$filename;
+        if (file_exists($path)) {
+            unlink($path);
+            //$filename->delete();
+        }
+        return $filename;  
+    }
+
+    public function videoDestroy(Request $request)
+    {
+        $filename =  $request->get('filename');
+        //$filename =  $request->get('id');
+        // AddQuestion::where('imgFileName',$filename)->delete();
+        $path=public_path().'/video/'.$filename;
+        if (file_exists($path)) {
+            unlink($path);
+            //$filename->delete();
+        }
+        return $filename;  
+    }
+ 
+    public function imageFromServer(Request $request)
+    {
+        //echo "hello";
+        $filenames =[];
+        $filenames =  $request->input();
+        //$filenames =[];
+        //$filenames = Input::all();
+
+        $imageNameWithSize = [];
+
+        foreach ($filenames as $key=>$value) {
+            foreach($value as $select){
+
+            $path=public_path().'/img/'.$select;
+            $imageNameWithSize[] = [
+                'imageName' => $select ,
+                'size' => File::size($path)
+            ];
+        }
+            
+        }
+
+        return response()->json([
+            'imageNameWithSize' => $imageNameWithSize
+        ]);
+        //return $imageNameWithSize;
+    }
+
+    public function videoFromServer(Request $request)
+    {
+        //$filenames =[];
+        $filename =  $request->get('filename');
+        // $filenames =  $request->input();
+        // $filename = serialize($filenames);
+        //$filename.trim();
+
+            $path=public_path().'/video/'.$filename;
+
+                return response()->json([
+                    'videoName' => $filename,
+                    'size' => File::size($path)
+                ]);
+
+    }
     
     public function store(Request $request)
     {
-        
 
         $noOfQuestion = $request->input('questionNumber');
         $qNumber = $request->input('quizNumber');
@@ -145,7 +248,67 @@ class FrameQuestionsController extends Controller
             }else{
                 return redirect()->route('add.questions', $qNumber);
             }
-        }else if($questionType == 'MultipleAnswer'){
+        }else if($questionType == 'ImageType'){
+
+            $answer=""; 
+                
+                //$radioValue = $_POST['radio'];
+                $answer = "uploadImage".$_POST['imageRadio'];
+                $image1 = $_POST['uploadImage0'];
+                $image2 = $_POST['uploadImage1'];
+                $image3 = $_POST['uploadImage2'];
+                $image4 = $_POST['uploadImage3'];
+
+            DB::table('questions')->insert([
+                'questionNumber' => $request->input('questionNumber'),
+                'question' => $request->input('question'),
+                'choice1' => $image1,
+                'choice2' => $image2,
+                'choice3' => $image3,
+                'choice4' => $image4,
+                'answer' => $request->input($answer),
+                'questionType' => $request->input('questionType'),
+                'difficultyLevel' => $request->input('difficultyLevel'),
+                'quizNumber' => $request->input('quizNumber'),
+            ]);
+              
+            if($noOfQuestion == $totalNoOfQuestion){
+                return redirect()->route('admin.dashboard');
+            }else{
+                return redirect()->route('add.questions', $qNumber);
+            }
+        } else if($questionType == 'VideoType'){
+
+            $answer=""; 
+                
+                //$radioValue = $_POST['radio'];
+                $answer = "uploadVideo".$_POST['videoRadio'];
+                $videoName = $_POST['uploadVideo'];
+                $choice1 = $_POST['uploadVideo0'];
+                $choice2 = $_POST['uploadVideo1'];
+                $choice3 = $_POST['uploadVideo2'];
+                $choice4 = $_POST['uploadVideo3'];
+
+            DB::table('questions')->insert([
+                'questionNumber' => $request->input('questionNumber'),
+                'question' => $request->input('question'),
+                'choice1' => $choice1,
+                'choice2' => $choice2,
+                'choice3' => $choice3,
+                'choice4' => $choice4,
+                'imgFileName' => $videoName,
+                'answer' => $request->input($answer),
+                'questionType' => $request->input('questionType'),
+                'difficultyLevel' => $request->input('difficultyLevel'),
+                'quizNumber' => $request->input('quizNumber'),
+            ]);
+              
+            if($noOfQuestion == $totalNoOfQuestion){
+                return redirect()->route('admin.dashboard');
+            }else{
+                return redirect()->route('add.questions', $qNumber);
+            }
+        } else if($questionType == 'MultipleAnswer'){
 
             $answer = "";
             $length = sizeof($_POST['selected_ids']);
@@ -196,7 +359,7 @@ class FrameQuestionsController extends Controller
         
     
           $question = AddQuestion::find($id);
-          if($question->questionType == 'MultipleChoice'){
+          if($question->questionType == 'MultipleChoice' || $question->questionType == 'OrderOptions' || $question->questionType == 'ImageType'){
 
                     $answer=""; 
                     $radioValue = $_POST["radio"];
@@ -208,6 +371,7 @@ class FrameQuestionsController extends Controller
             $question->choice2 = $request->input('choice2');
             $question->choice3 = $request->input('choice3');
             $question->choice4 = $request->input('choice4');
+            $question->imgFileName = $request->input('uploadVideo');
             $question->answer = $request->input($answer);
             $question->difficultyLevel = $request->input('difficultyLevel');
 

@@ -16,6 +16,7 @@ class AddQuestion extends Model
         'choice2',
         'choice3',
         'choice4',
+        'imgFileName',
         'answer', 
         'isRangeAllowed',
         'questionType',

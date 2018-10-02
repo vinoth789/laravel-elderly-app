@@ -53,6 +53,19 @@ Route::resource('quizNumber','CreateQuizController');
 Route::resource('submitQuiz','TakeQuizController');
 Route::resource('submitDailyQuiz','DailyChallengeController');
 
+//Image upload,view and delete
+
+Route::post('image/upload/store','FrameQuestionsController@fileStore')->name('image.upload');
+Route::post('video/upload/store','FrameQuestionsController@videoStore');
+Route::post('image/delete','FrameQuestionsController@fileDestroy');
+Route::post('video/delete','FrameQuestionsController@videoDestroy');
+Route::get('server/image','FrameQuestionsController@imageFromServer');
+Route::get('server/video','FrameQuestionsController@videoFromServer');
+
+// Route::post('/images-save', 'UploadImagesController@store');
+// Route::post('/images-delete', 'UploadImagesController@destroy');
+// Route::get('/images-show', 'UploadImagesController@index');
+
 Route::post('/language','LanguageController@changeLanguage');
 // Route::post('/language', array(
 // 'before' => 'csrf',
