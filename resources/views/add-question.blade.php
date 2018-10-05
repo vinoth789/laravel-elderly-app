@@ -172,7 +172,7 @@
 
                                                     <div class="dropzone-previews" id="dropzonePreview"></div>
 
-                                                    <h4 style="text-align: center;color:#428bca;">Drop images in this
+                                                    <h4 style="text-align: center;color:#428bca;">Drop a video in this
                                                         area <span class="glyphicon glyphicon-hand-down"></span></h4>
 
                                                 </div>
@@ -262,7 +262,7 @@
 
                                                     <!-- <div class="dropzone-previews" id="dropzonePreview"></div> -->
 
-                                                    <h4 style="text-align: center;color:#428bca;">Drop images in this
+                                                    <h4 style="text-align: center;color:#428bca;">Please add 4 images in this
                                                         area <span class="glyphicon glyphicon-hand-down"></span></h4>
 
                                                 </div>
@@ -274,7 +274,8 @@
                                                     </tr>
                                                     <tr>
                                                         <td width="15%">
-                                                            <label>{{ trans('app.Choice1Label') }}</label>
+                                                            <!-- <label>{{ trans('app.Choice1Label') }}</label> -->
+                                                            <label>Image 1</label>
                                                         </td>
                                                         <td>
                                                             <input type="hidden" class="form-control" name="uploadImage0" id="uploadImage0"
@@ -288,7 +289,8 @@
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                            <label>{{ trans('app.Choice2Label') }}</label>
+                                                            <!-- <label>{{ trans('app.Choice2Label') }}</label> -->
+                                                            <label>Image 2</label>
                                                         </td>
                                                         <td>
                                                             <input type="hidden" class="form-control" name="uploadImage1" id="uploadImage1"
@@ -303,7 +305,8 @@
 
                                                     <tr>
                                                         <td>
-                                                            <label>{{ trans('app.Choice3Label') }}</label>
+                                                            <!-- <label>{{ trans('app.Choice3Label') }}</label> -->
+                                                            <label>Image 3</label>
                                                         </td>
                                                         <td>
                                                             <input type="hidden" class="form-control" name="uploadImage2" id="uploadImage2"
@@ -317,7 +320,8 @@
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                            <label>{{ trans('app.Choice4Label') }}</label>
+                                                            <!-- <label>{{ trans('app.Choice4Label') }}</label> -->
+                                                            <label>Image 4</label>
                                                         </td>
                                                         <td>
                                                             <input type="hidden" class="form-control" name="uploadImage3" id="uploadImage3"
@@ -527,237 +531,9 @@
 </div>
 @endsection
 
-<script type="text/javascript">
-    // Dropzone.options.myImageDropzone = {
-    //     maxFilesize: 15, // MB
-    //     maxFiles: 2,
-    //     dictDefaultMessage: "Upload Excel.",
-    //     init: function () {
-    //         var known = false;
-    //         this.on("success", function (file, responseText) {
-    //             alert("success");
-    //         });
-    //         this.on('error', function () {
-    //             // aler stuff
-    //         });
-    //         this.on("addedfile", function () {
-    //             if (this.files[10] != null) {
-    //                 this.removeFile(this.files[0]);
-    //                 if (known === false) {
-    //                     alert('Max. 10 Uploads!')
-    //                     known = true;
-    //                 }
-    //             }
-    //         });
-    //     }
-    // }
-    // $('#myImageDropzone').dropzone();
-</script>
 
 <script>
-    // var myDropzone;
-    // var token = "{{ csrf_token() }}";
-    // var baseUrl = "{{ url('/') }}";
-    // $(document).ready(function(){
-    //     alert("aa");
-    //       myDropzone = new Dropzone("div#myImageDropzone3", {
-    //       url: "image/upload/store",
-    //       params: {
-    //          _token: token
-    //          // other fields, here you can also pass a function and have the function return the fields
-    //          //name: $("#name").val()
-    //       },
-    //       autoProcessQueue:false,
-    //    });
-    // })
-
-    // $("#addQuestionBtn",function(e){
-    //    e.preventDefault();
-    //    myDropzone.processQueue();
-    // });
-</script>
-
-
-<script>
-    //     var photo_counter = 0;
-    //     Dropzone.options.realDropzone = {
-
-    //         uploadMultiple: false,
-    //         parallelUploads: 100,
-    //         maxFilesize: 8,
-    //         previewsContainer: '#dropzonePreview',
-    //         previewTemplate: document.querySelector('#preview-template').innerHTML,
-    //         addRemoveLinks: true,
-    //         dictRemoveFile: 'Remove',
-    //         dictFileTooBig: 'Image is bigger than 8MB',
-
-    //         // The setting up of the dropzone
-    //         init: function () {
-
-    //             this.on("removedfile", function (file) {
-
-    //                 $.ajax({
-    //                     type: 'POST',
-    //                     url: 'upload/delete',
-    //                     data: {
-    //                         id: file.name,
-    //                         _token: $('#csrf-token').val()
-    //                     },
-    //                     dataType: 'html',
-    //                     success: function (data) {
-    //                         var rep = JSON.parse(data);
-    //                         if (rep.code == 200) {
-    //                             photo_counter--;
-    //                             $("#photoCounter").text("(" + photo_counter + ")");
-    //                         }
-
-    //                     }
-    //                 });
-
-    //             });
-    //         },
-    //         error: function (file, response) {
-    //             if ($.type(response) === "string")
-    //                 var message = response; //dropzone sends it's own error messages in string
-    //             else
-    //                 var message = response.message;
-    //             file.previewElement.classList.add("dz-error");
-    //             _ref = file.previewElement.querySelectorAll("[data-dz-errormessage]");
-    //             _results = [];
-    //             for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-    //                 node = _ref[_i];
-    //                 _results.push(node.textContent = message);
-    //             }
-    //             return _results;
-    //         },
-    //         success: function (file, done) {
-    //             photo_counter++;
-    //             $("#photoCounter").text("(" + photo_counter + ")");
-    //         }
-    //     }
-</script>
-
-<script>
-    // Dropzone.autoDiscover = false;
-
-    // $("#myImageDropzone").dropzone({
-    //     alert("hellooo");
-    //                 url: "http://examle.com/upload_video",
-    //                 clickable: true,
-    //                 uploadmultipe:true,
-    //                 maxFilesize: 20,
-    //                 init: function() {
-    //     this.on("queuecomplete", function(file, serverresponse) { window.location.href="http://example.com/your_awesome_profile"; });               
-    //   }
-    //             });
-    //     Dropzone.options.myImageDropzone4 = { // The camelized version of the ID of the form element
-    // alert("hello");
-    //         // The configuration we've talked about above
-    //         autoProcessQueue: false,
-    //         uploadMultiple: true,
-    //         parallelUploads: 100,
-    //         maxFiles: 3,
-
-    //         // The setting up of the dropzone
-    //         init: function () {
-    //             var myDropzone = this;
-
-    //             // First change the button to actually tell Dropzone to process the queue.
-    //             // this.element.querySelector("button[type=submit]").addEventListener("click", function (e) {
-    //             //     // Make sure that the form isn't actually being sent.
-    //             //     e.preventDefault();
-    //             //     e.stopPropagation();
-    //             //     myDropzone.processQueue();
-    //             // });
-
-    //             // Listen to the sendingmultiple event. In this case, it's the sendingmultiple event instead
-    //             // of the sending event because uploadMultiple is set to true.
-    //             this.on("sendingmultiple", function () {
-    //                 // Gets triggered when the form is actually being sent.
-    //                 // Hide the success button or the complete form.
-    //             });
-    //             this.on("successmultiple", function (files, response) {
-    //                 alert("hi");
-    //                 // Gets triggered when the files have successfully been sent.
-    //                 // Redirect user or notify of success.
-    //             });
-    //             this.on("errormultiple", function (files, response) {
-    //                 // Gets triggered when there was an error sending the files.
-    //                 // Maybe show form again, and notify user of error
-    //             });
-    //         }
-
-    //     }
-</script>
-<script type="text/javascript">
-    //     Dropzone.options.myImageDropzonee = {
-    //             maxFilesize: 12,
-    //             renameFile: function (file) {
-    //                 var dt = new Date();
-    //                 var time = dt.getTime();
-    //                 return time + file.name;
-    //             },
-    //             autoProcessQueue: false,
-    //             uploadMultiple: true,
-    //             acceptedFiles: ".jpeg,.jpg,.png,.gif",
-    //             parallelUploads: 5,
-    //             maxFiles: 5,
-    //             addRemoveLinks: true,
-    //             timeout: 50000,
-
-    //             init: function () {
-    //                 this.on('success', function( file, resp ){
-    //                     alert(resp);
-    //                     });
-    //                     // var submitButton = document.querySelector("#addQuestionBtn")
-    //                     // myDropzone = this; // closure
-
-    //                     // submitButton.addEventListener("click", function () {
-    //                     //     myDropzone.processQueue(); // Tell Dropzone to process all queued files.
-    //                     // });
-    //                     this.on('addedfile', function (file) {
-    //                         alert(renameFile);
-    //                         if (this.files.length > 4) {
-    //                             this.removeFile(this.files[0]);
-    //                         }
-    //                     });
-    //                 },
-
-    //                 removedfile: function (file) {
-    //                     var name = file.upload.filename;
-    //                     $.ajax({
-    //                         headers: {
-    //                             'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-    //                         },
-    //                         type: 'POST',
-    //                         url: '{{ url("image/delete") }}',
-    //                         data: {
-    //                             filename: name
-    //                         },
-    //                         success: function (data) {
-    //                             console.log("File has been successfully removed!!");
-    //                         },
-    //                         error: function (e) {
-    //                             console.log(e);
-    //                         }
-    //                     });
-    //                     var fileRef;
-    //                     return (fileRef = file.previewElement) != null ?
-    //                         fileRef.parentNode.removeChild(file.previewElement) : void 0;
-    //                 },
-
-    //                 success: function (file, response) {
-    //                     alert(response);
-    //                     console.log(response);
-    //                 },
-    //                 error: function (file, response) {
-    //                     return false;
-    //                 }
-    //             };
-</script>
-
-<script>
-    window.translations = {selectAnswerAlert: '{{ trans('app.SelectAnswerAlert ') }}',};
+    window.translations = {selectAnswerAlert: '{{ trans('app.SelectAnswerAlert') }}',};
     translation = {selectAnswerAlert: window.translations.selectAnswerAlert,};
 
     function addQuestion() {
