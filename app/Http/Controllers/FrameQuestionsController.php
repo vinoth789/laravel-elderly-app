@@ -57,10 +57,14 @@ class FrameQuestionsController extends Controller
 
         $videoName = $video->getClientOriginalName();
             $video->move(public_path('video'),$videoName);
+            try{
             return response()->json([
                 'success' => true,
                 'videoName' => $videoName
             ]);
+        }catch(\Exception $e){
+            return response()->json(['error'=>$e->getMessage()]);
+        }
         }
 
     }
@@ -149,6 +153,23 @@ class FrameQuestionsController extends Controller
 
                 return response()->json([
                     'videoName' => $filename,
+                    'size' => File::size($path)
+                ]);
+
+    }
+
+    public function singleImageFromServer(Request $request)
+    {
+        //$filenames =[];
+        $filename =  $request->get('filename');
+        // $filenames =  $request->input();
+        // $filename = serialize($filenames);
+        //$filename.trim();
+
+            $path=public_path().'/img/'.$filename;
+
+                return response()->json([
+                    'imageName' => $filename,
                     'size' => File::size($path)
                 ]);
 
@@ -248,7 +269,7 @@ class FrameQuestionsController extends Controller
             }else{
                 return redirect()->route('add.questions', $qNumber);
             }
-        }else if($questionType == 'ImageType'){
+        }else if($questionType == 'ImageAsOptions'){
 
             $answer=""; 
                 
@@ -266,6 +287,37 @@ class FrameQuestionsController extends Controller
                 'choice2' => $image2,
                 'choice3' => $image3,
                 'choice4' => $image4,
+                'answer' => $request->input($answer),
+                'questionType' => $request->input('questionType'),
+                'difficultyLevel' => $request->input('difficultyLevel'),
+                'quizNumber' => $request->input('quizNumber'),
+            ]);
+              
+            if($noOfQuestion == $totalNoOfQuestion){
+                return redirect()->route('admin.dashboard');
+            }else{
+                return redirect()->route('add.questions', $qNumber);
+            }
+        }else if($questionType == 'ImageType'){
+
+            $answer=""; 
+                
+                //$radioValue = $_POST['radio'];
+                $answer = "singleImage".$_POST['singleImageRadio'];
+                $imageName = $_POST['uploadSingleImage'];
+                $image1 = $_POST['singleImage0'];
+                $image2 = $_POST['singleImage1'];
+                $image3 = $_POST['singleImage2'];
+                $image4 = $_POST['singleImage3'];
+
+            DB::table('questions')->insert([
+                'questionNumber' => $request->input('questionNumber'),
+                'question' => $request->input('question'),
+                'choice1' => $image1,
+                'choice2' => $image2,
+                'choice3' => $image3,
+                'choice4' => $image4,
+                'imgFileName' => $imageName,
                 'answer' => $request->input($answer),
                 'questionType' => $request->input('questionType'),
                 'difficultyLevel' => $request->input('difficultyLevel'),
@@ -359,7 +411,7 @@ class FrameQuestionsController extends Controller
         
     
           $question = AddQuestion::find($id);
-          if($question->questionType == 'MultipleChoice' || $question->questionType == 'OrderOptions' || $question->questionType == 'ImageType'){
+          if($question->questionType == 'MultipleChoice' || $question->questionType == 'OrderOptions' || $question->questionType == 'ImageType' || $question->questionType == 'ImageAsOptions' || $question->questionType == 'VideoType'){
 
                     $answer=""; 
                     $radioValue = $_POST["radio"];
@@ -371,7 +423,12 @@ class FrameQuestionsController extends Controller
             $question->choice2 = $request->input('choice2');
             $question->choice3 = $request->input('choice3');
             $question->choice4 = $request->input('choice4');
-            $question->imgFileName = $request->input('uploadVideo');
+            if($question->questionType == 'ImageType'){
+                $question->imgFileName = $request->input('uploadSingleImage');
+            }else if($question->questionType == 'VideoType'){
+                $question->imgFileName = $request->input('uploadVideo');
+            }
+ 
             $question->answer = $request->input($answer);
             $question->difficultyLevel = $request->input('difficultyLevel');
 

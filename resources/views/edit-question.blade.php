@@ -7,16 +7,18 @@
 
                 <div class="card-body">
                     <form onsubmit="return editQuestion();" method="POST" action="{{route('update.question', $question->id)}}">
-                    @csrf
-                    <input type="hidden" name="addEditPage" id="addEditPage" value='editPage'>
+                        @csrf
+                        <input type="hidden" name="addEditPage" id="addEditPage" value='editPage'>
                         <input type="hidden" name="questionType" id="questionType" value='{{$question->questionType}}'>
                         <input type="hidden" name="imageChoice0" id="imageChoice0" value='{{$question->choice1}}'>
                         <input type="hidden" name="imageChoice1" id="imageChoice1" value='{{$question->choice2}}'>
                         <input type="hidden" name="imageChoice2" id="imageChoice2" value='{{$question->choice3}}'>
                         <input type="hidden" name="imageChoice3" id="imageChoice3" value='{{$question->choice4}}'>
                         <input type="hidden" name="videoName" id="videoName" value='{{$question->imgFileName}}'>
+                        <input type="hidden" name="imageName" id="imageName" value='{{$question->imgFileName}}'>
                         <input type="hidden" name="uploadVideo" id="uploadVideo" value='{{$question->imgFileName}}'>
-                        <input type="hidden" name="redirects_to" id="redirects_to" value='{{URL::previous()}}'> 
+                        <input type="hidden" name="uploadSingleImage" id="uploadSingleImage" value='{{$question->imgFileName}}'>
+                        <input type="hidden" name="redirects_to" id="redirects_to" value='{{URL::previous()}}'>
                         @if (session('status'))
                         <div class="alert alert-success">
                             {{ session('status') }}
@@ -42,7 +44,7 @@
                                         </tr>
                                         <tr>
                                             <td width="15%">
-                                                <label>Choice 1</label>
+                                                <label><label>{{ trans('app.Choice1Label') }}</label></label>
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control" value='{{$question->choice1}}'
@@ -55,7 +57,7 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label>Choice 2</label>
+                                                <label><label>{{ trans('app.Choice2Label') }}</label></label>
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control" value='{{$question->choice2}}'
@@ -69,7 +71,7 @@
 
                                         <tr>
                                             <td>
-                                                <label>Choice 3</label>
+                                                <label><label>{{ trans('app.Choice3Label') }}</label></label>
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control" value='{{$question->choice3}}'
@@ -82,11 +84,95 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label>Choice 4</label>
+                                                <label><label>{{ trans('app.Choice4Label') }}</label></label>
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control" value='{{$question->choice4}}'
                                                     name="choice4" id="answer" />
+                                            </td>
+                                            <td align="center">
+                                                <input name="radio" type="radio" value="4" <?php echo ($question->answer
+                                                == $question->choice4)?'checked':'' ?>/></td>
+
+                                        </tr>
+                                    </table>
+
+                                </div>
+                                @endif
+                                @if ($question->questionType == 'ImageAsOptions')
+
+                                <div class="form-group">
+                                    <div class="dropzone" id="imageAsOptionsDropzone">
+
+                                        <div class="dz-message">
+
+                                        </div>
+
+                                        <div class="fallback">
+                                            <input name="file" type="file" multiple />
+                                        </div>
+
+                                        <div class="dropzone-previews" id="dropzonePreview"></div>
+
+                                        <h4 style="text-align: center;color:#428bca;">{{
+                                            trans('app.ImageAsOptionsDZmsg') }}<span class="glyphicon glyphicon-hand-down"></span></h4>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+
+                                    <table width="70%">
+                                        <tr>
+                                            <label>{{ trans('app.MultipleChoiceDesc') }}</label>
+                                        </tr>
+                                        <tr>
+                                            <td width="15%">
+                                                <label>{{ trans('app.Image1Label') }}</label>
+                                            </td>
+                                            <td>
+                                                <input type="hidden" class="form-control" value='{{$question->choice1}}'
+                                                    name="choice1" id="uploadImage0" />
+                                            </td>
+                                            <td align="center">
+                                                <input name="radio" type="radio" value="1" <?php echo ($question->answer
+                                                == $question->choice1)?'checked':'' ?>/></td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label>{{ trans('app.Image2Label') }}</label>
+                                            </td>
+                                            <td>
+                                                <input type="hidden" class="form-control" value='{{$question->choice2}}'
+                                                    name="choice2" id="uploadImage1" />
+                                            </td>
+                                            <td align="center">
+                                                <input name="radio" type="radio" value="2" <?php echo ($question->answer
+                                                == $question->choice2)?'checked':'' ?>/></td>
+
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <label>{{ trans('app.Image3Label') }}</label>
+                                            </td>
+                                            <td>
+                                                <input type="hidden" class="form-control" value='{{$question->choice3}}'
+                                                    name="choice3" id="uploadImage2" />
+                                            </td>
+                                            <td align="center">
+                                                <input name="radio" type="radio" value="3" <?php echo ($question->answer
+                                                == $question->choice3)?'checked':'' ?>/></td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label>{{ trans('app.Image4Label') }}</label>
+                                            </td>
+                                            <td>
+                                                <input type="hidden" class="form-control" value='{{$question->choice4}}'
+                                                    name="choice4" id="uploadImage3" />
                                             </td>
                                             <td align="center">
                                                 <input name="radio" type="radio" value="4" <?php echo ($question->answer
@@ -112,8 +198,8 @@
 
                                         <div class="dropzone-previews" id="dropzonePreview"></div>
 
-                                        <h4 style="text-align: center;color:#428bca;">Drop images in this
-                                            area <span class="glyphicon glyphicon-hand-down"></span></h4>
+                                        <h4 style="text-align: center;color:#428bca;">{{ trans('app.ImageTypeDZmsg') }}<span
+                                                class="glyphicon glyphicon-hand-down"></span></h4>
 
                                     </div>
                                 </div>
@@ -126,11 +212,11 @@
                                         </tr>
                                         <tr>
                                             <td width="15%">
-                                                <label>Choice 1</label>
+                                                <label><label>{{ trans('app.Choice1Label') }}</label></label>
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control" value='{{$question->choice1}}'
-                                                    name="choice1" id="uploadImage0" />
+                                                    name="choice1" id="uploadSingleImage0" />
                                             </td>
                                             <td align="center">
                                                 <input name="radio" type="radio" value="1" <?php echo ($question->answer
@@ -139,11 +225,11 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label>Choice 2</label>
+                                                <label><label>{{ trans('app.Choice2Label') }}</label></label>
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control" value='{{$question->choice2}}'
-                                                    name="choice2" id="uploadImage1" />
+                                                    name="choice2" id="uploadSingleImage1" />
                                             </td>
                                             <td align="center">
                                                 <input name="radio" type="radio" value="2" <?php echo ($question->answer
@@ -153,11 +239,11 @@
 
                                         <tr>
                                             <td>
-                                                <label>Choice 3</label>
+                                                <label><label>{{ trans('app.Choice3Label') }}</label></label>
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control" value='{{$question->choice3}}'
-                                                    name="choice3" id="uploadImage2" />
+                                                    name="choice3" id="uploadSingleImage2" />
                                             </td>
                                             <td align="center">
                                                 <input name="radio" type="radio" value="3" <?php echo ($question->answer
@@ -166,11 +252,11 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label>Choice 4</label>
+                                                <label><label>{{ trans('app.Choice4Label') }}</label></label>
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control" value='{{$question->choice4}}'
-                                                    name="choice4" id="uploadImage3" />
+                                                    name="choice4" id="uploadSingleImage3" />
                                             </td>
                                             <td align="center">
                                                 <input name="radio" type="radio" value="4" <?php echo ($question->answer
@@ -180,7 +266,7 @@
                                     </table>
 
                                 </div>
-                                @endif 
+                                @endif
                                 @if ($question->questionType == 'VideoType')
 
                                 <div class="form-group">
@@ -194,10 +280,10 @@
                                             <input name="file" type="file" multiple />
                                         </div>
 
-                                         <div class="dropzone-previews" id="dropzonePreview"></div> 
+                                        <div class="dropzone-previews" id="dropzonePreview"></div>
 
-                                        <h4 style="text-align: center;color:#428bca;">Drop video in this
-                                            area <span class="glyphicon glyphicon-hand-down"></span></h4>
+                                        <h4 style="text-align: center;color:#428bca;">{{ trans('app.VideoTypeDZmsg') }}<span
+                                                class="glyphicon glyphicon-hand-down"></span></h4>
 
                                     </div>
                                 </div>
@@ -210,7 +296,7 @@
                                         </tr>
                                         <tr>
                                             <td width="15%">
-                                                <label>Choice 1</label>
+                                                <label><label>{{ trans('app.Choice1Label') }}</label></label>
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control" value='{{$question->choice1}}'
@@ -223,7 +309,7 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label>Choice 2</label>
+                                                <label><label>{{ trans('app.Choice2Label') }}</label></label>
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control" value='{{$question->choice2}}'
@@ -237,7 +323,7 @@
 
                                         <tr>
                                             <td>
-                                                <label>Choice 3</label>
+                                                <label><label>{{ trans('app.Choice3Label') }}</label></label>
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control" value='{{$question->choice3}}'
@@ -250,7 +336,7 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label>Choice 4</label>
+                                                <label><label>{{ trans('app.Choice4Label') }}</label></label>
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control" value='{{$question->choice4}}'
@@ -273,7 +359,7 @@
                                         </tr>
                                         <tr>
                                             <td width="15%">
-                                                <label>Choice 1</label>
+                                                <label><label>{{ trans('app.Choice1Label') }}</label></label>
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control" value='{{$question->choice1}}'
@@ -287,7 +373,7 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label>Choice 2</label>
+                                                <label><label>{{ trans('app.Choice2Label') }}</label></label>
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control" value='{{$question->choice2}}'
@@ -302,7 +388,7 @@
 
                                         <tr>
                                             <td>
-                                                <label>Choice 3</label>
+                                                <label><label>{{ trans('app.Choice3Label') }}</label></label>
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control" value='{{$question->choice3}}'
@@ -316,7 +402,7 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label>Choice 4</label>
+                                                <label><label>{{ trans('app.Choice4Label') }}</label></label>
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control" value='{{$question->choice4}}'
@@ -422,33 +508,57 @@
 @endsection
 
 @section('page-js-files')
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
 @stop
 
 @section('head')
 <script type="text/javascript">
+    window.translations = {
+        selectAnswerAlert: '{{ trans('app.SelectAnswerAlert ') }}',
+        oneImageAlert: '{{ trans('app.AddOneImageAlert ') }}',
+        fourImageAlert: '{{ trans('app.AddFourImageAlert ') }}',
+        oneVideoAlert: '{{ trans('app.AddOneVideoAlert ') }}',
+        imageChangedAlert: '{{ trans('app.ImageChangedAlert ') }}',
+        videoChangedAlert: '{{ trans('app.VideoChangedAlert ') }}',
+    };
+    translation = {
+        selectAnswerAlert: window.translations.selectAnswerAlert,
+        oneImageAlert: window.translations.oneImageAlert,
+        fourImageAlert: window.translations.fourImageAlert,
+        oneVideoAlert: window.translations.oneVideoAlert,
+        imageChangedAlert: window.translations.imageChangedAlert,
+        videoChangedAlert: window.translations.videoChangedAlert,
+    };
+
     function backClicked() {
         var dbVal;
         var val;
         var check;
         var selected_question_type = $('#questionType').val();
-        if (selected_question_type === 'ImageType') {
+        if (selected_question_type === 'ImageAsOptions') {
             for (i = 0; i < 4; i++) {
                 val = $('#uploadImage' + i).val();
                 dbVal = $('#imageChoice' + i).val();
                 if (val != dbVal) {
-                    alert("Image has been changed please click update");
+                    alert(translation.imageChangedAlert);
                     return false
                 }
             }
         } else if (selected_question_type === 'VideoType') {
-                val = $('#uploadVideo').val();
-                dbVal = $('#videoName').val();
-                if (val != dbVal) {
-                    alert("Video has been changed please click update");
-                    return false
-                }
+            val = $('#uploadVideo').val();
+            dbVal = $('#videoName').val();
+            if (val != dbVal) {
+                alert(translation.videoChangedAlert);
+                return false
+            }
+        } else if (selected_question_type === 'ImageType') {
+            val = $('#uploadSingleImage').val();
+            dbVal = $('#imageName').val();
+            if (val != dbVal) {
+                alert(translation.imageChangedAlert);
+                return false
+            }
         }
 
     }
@@ -466,32 +576,40 @@
             check = $("input[name='radio']:checked").length;
         } else if (selected_question_type === 'MultipleAnswer') {
             check = $("input[name='selected_ids[]']:checked").length;
-        } else if (selected_question_type === 'ImageType') {
+        } else if (selected_question_type === 'ImageAsOptions') {
             for (i = 0; i < 4; i++) {
                 val = $('#uploadImage' + i).val();
-alert("value is"+val);
                 if (val == "" || val == "undefined") {
                     check = 0;
                 }
             }
         } else if (selected_question_type === 'VideoType') {
-            
-                val = $('#uploadVideo').val();
 
-                if (val == "" || val == "undefined") {
-                    check = 0;
-                }
-            
+            val = $('#uploadVideo').val();
+
+            if (val == "" || val == "undefined") {
+                check = 0;
+            }
+
+        } else if (selected_question_type === 'ImageType') {
+
+            val = $('#uploadSingleImage').val();
+
+            if (val == "" || val == "undefined") {
+                check = 0;
+            }
+
         } else {
             check = -1;
         }
         if (check === 0) {
-            if (selected_question_type === 'ImageType') {
-                alert("Please add four images");
+            if (selected_question_type === 'ImageAsOptions') {
+                alert(translation.fourImageAlert);
+            } else if (selected_question_type === 'ImageType') {
+                alert(translation.oneImageAlert);
             } else if (selected_question_type === 'VideoType') {
-                alert("Please add atleast one video");
-            } 
-            else {
+                alert(translation.oneVideoAlert);
+            } else {
                 alert(translation.selectAnswerAlert);
             }
             return false;

@@ -28,125 +28,113 @@
     <link rel="stylesheet" href="{{ url('/css/bootstrap.css') }}">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.4.0/min/dropzone.min.css">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.4.0/dropzone.js"></script>
 
     <script type="text/javascript">
-        var myDropzone;
-        var myDropzoneEdit;
+        var myImageDropzone;
         var myVideoDropzone;
-        var myNewVideoDropzone;
+        var imageAsOptionsDropzone;
         var token = "{{ csrf_token() }}";
         var photo_counter = 0;
         var imageFiles = [];
         var videoFiles = [];
         var imgName = [];
         var removeVideo = true;
+        var removeImage = true;
         var videoName;
+        var singleImageName;
 
         $(document).ready(function () {
 
-var page = $('#addEditPage').val();
+            var page = $('#addEditPage').val();
 
-        if(page == "editPage"){
-                    for (var i = 0; i < 4; i++) {
-                        var image = $('#uploadImage' + i).val();
-                        imgName.push(image);
-                    }
-                    videoName = $('#videoName').val();
+            if (page == "editPage") {
+                for (var i = 0; i < 4; i++) {
+                    var image = $('#uploadImage' + i).val();
+                    imgName.push(image);
+                }
+                videoName = $('#videoName').val();
+                singleImageName = $('#imageName').val();
 
-        }
-        if (document.getElementById('myImageDropzone')) {
-            Dropzone.autoDiscover = false;
-            myDropzone = new Dropzone("div#myImageDropzone", {
-                url: "image/upload/store",
-                params: {
-                    _token: token
-                },
-                renameFile: function (file) {
-                    var dt = new Date();
-                    var time = dt.getTime();
-                    return time + file.name;
-                },
-                maxFilesize: 500, // MB
-                //maxFiles: 4,
-                acceptedFiles: ".jpeg,.jpg,.png",
-                addRemoveLinks: true,
-                dictRemoveFile: 'Remove file',
-                autoProcessQueue: true,
-                uploadMultiple: false,
-                parallelUploads: 1,
+            }
+            if (document.getElementById('imageAsOptionsDropzone')) {
+                Dropzone.autoDiscover = false;
+                imageAsOptionsDropzone = new Dropzone("div#imageAsOptionsDropzone", {
+                    url: "image/upload/store",
+                    params: {
+                        _token: token
+                    },
+                    renameFile: function (file) {
+                        var dt = new Date();
+                        var time = dt.getTime();
+                        return time + file.name;
+                    },
+                    maxFilesize: 500, // MB
+                    //maxFiles: 4,
+                    acceptedFiles: ".jpeg,.jpg,.png",
+                    addRemoveLinks: true,
+                    dictRemoveFile: 'Remove file',
+                    autoProcessQueue: true,
+                    uploadMultiple: false,
+                    parallelUploads: 1,
 
-                init: function () {
+                    init: function () {
 
-                    var known = false;
+                        var known = false;
 
-                    var myDropzoneInstance = this;
+                        var myDropzoneInstance = this;
 
-                    if (page == "editPage") {
+                        if (page == "editPage") {
 
-                        $.ajax({
-                            headers: {
-                                'X-CSRF-TOKEN': token
-                            },
-                            type: 'GET',
-                            url: '{{ url("server/image") }}',
-                            data: {
-                                filenames: imgName
-                            },
-                            
-                            success: function (data) {
-                                
+                            $.ajax({
+                                headers: {
+                                    'X-CSRF-TOKEN': token
+                                },
+                                type: 'GET',
+                                url: '{{ url("server/image") }}',
+                                data: {
+                                    filenames: imgName
+                                },
+
+                                success: function (data) {
+
                                     $.each(data.imageNameWithSize, function (key, value) {
-                                        
-                                    var mockFile = {
-                                        filename: value.imageName,
-                                        size: value.size,
-                                        type: value.mimetype,
-                                        //type: 'image/jpeg, image/jpg, image/png',
-                                        //status: Dropzone.ADDED,
-                                        //status: Dropzone.ACCEPTED,
-                                        accepted: true,
-                                        acceptedFiles: ".png, .jpg, .jpeg",
-                                        //url: "/img/" + value.imageName
-                                    };
-                                    
-                                    
-                                    myDropzoneInstance.emit("addedfile", mockFile);
 
-                                    
-                                    myDropzoneInstance.emit("thumbnail", mockFile, "/img/" + value.imageName);
+                                        var mockFile = {
+                                            filename: value.imageName,
+                                            size: value.size,
+                                            type: value.mimetype,
+                                            accepted: true,
+                                            acceptedFiles: ".png, .jpg, .jpeg",
+                                        };
 
-                                    imageFiles.push(value.imageName);
-                                    
-                                    myDropzoneInstance.files.push(mockFile);
-                                    
-                                    myDropzoneInstance.emit("complete", mockFile);
-                                    //myDropzoneInstance.uploadFiles(mockFile);
-                                    
 
-                                    // var file = {name: value.imageName, size: value.size};
-                                    // myDropzoneInstance.options.addedfile.call(myDropzone, file);
-                                    // myDropzoneInstance.options.thumbnail.call(myDropzone, file, '/img/' + value.imageName);
-                                    // myDropzoneInstance.emit("complete", file);
-                                    
-                                    
+                                        myDropzoneInstance.emit("addedfile",
+                                            mockFile);
+                                        myDropzoneInstance.emit("thumbnail",
+                                            mockFile, "/img/" + value.imageName
+                                        );
+                                        imageFiles.push(value.imageName);
+                                        myDropzoneInstance.files.push(mockFile);
+                                        myDropzoneInstance.emit("complete",
+                                            mockFile);
 
-                                });
-                                
-                                photo_counter = 4;
-                            },
-                            error: function (e) {
-                                console.log(e);
-                            }
-                        });
-                       
+                                    });
 
-                    }
+                                    photo_counter = 4;
+                                },
+                                error: function (e) {
+                                    console.log(e);
+                                }
+                            });
 
-                    this.on("success", function (file, responseText) {
-                        
-                        
+
+                        }
+
+                        this.on("success", function (file, responseText) {
+
+
                             imageFiles.push(responseText.imageName);
 
                             if (photo_counter < 4) {
@@ -158,320 +146,416 @@ var page = $('#addEditPage').val();
                                 photo_counter = 4;
                             }
 
-                    });
-                    this.on('error', function (response) {
-
-                       // alert("error"+response.error);
-                    });
-                    this.on("processing", function (file) {
-                        this.options.url = '/image/upload/store';
-                        $.post({
-                            url: '/image/upload/store',
-                            headers: {
-                                'X-CSRF-TOKEN': token
-                            },
-                            data: {
-                                fileType:"image", _token: token
-                            },
-                            dataType: 'json',
-                            success: function (data) {
-                                //alert("added");
-                            }
                         });
-                    });
-                    this.on("complete", function (file) {
+                        this.on('error', function (response) {
 
-                        if (imageFiles.length > 4) {
 
-                            this.removeFile(this.files[4]);
-                            if (known === false) {
-                                alert('Max. 4 Uploads!')
-                                known = true;
+                        });
+                        this.on("processing", function (file) {
+                            this.options.url = '/image/upload/store';
+                            $.post({
+                                url: '/image/upload/store',
+                                headers: {
+                                    'X-CSRF-TOKEN': token
+                                },
+                                data: {
+                                    fileType: "image",
+                                    _token: token
+                                },
+                                dataType: 'json',
+                                success: function (data) {
+
+                                }
+                            });
+                        });
+                        this.on("complete", function (file) {
+
+                            if (imageFiles.length > 4) {
+
+                                this.removeFile(this.files[4]);
+                                if (known === false) {
+                                    alert('Max. 4 Uploads!')
+                                    known = true;
+                                }
                             }
-                        }
 
-                    });
-                    this.on("removedfile", function (file) {
-                       // alert("yo"+file.constructor.name);
-                        if(file.constructor.name == "File"){
-                            var name = file.upload.filename;
-                           // alert("file to be removed"+name);
-                        }else{
-                            var name = file.filename;
-                            //alert("fi to be removed"+name);
-                        }
+                        });
+                        this.on("removedfile", function (file) {
 
-                        $.ajax({
-                            headers: {
-                                'X-CSRF-TOKEN': token
-                            },
-                            type: 'POST',
-                            url: '{{ url("image/delete") }}',
-                            data: {
-                                filename: name
-                            },
-                            success: function (data) {
+                            if (file.constructor.name == "File") {
+                                var name = file.upload.filename;
 
-                                if (imageFiles.length > 0 && imageFiles.length <
-                                    5) {
-                                    for (var i = 0; i < 4; i++) {
-                                        if (document.getElementById(
-                                                "uploadImage" + i).value ===
-                                            data) {
+                            } else {
+                                var name = file.filename;
 
-                                            var index = imageFiles.indexOf(data);
-                                            imageFiles.splice(index, 1);
+                            }
+
+                            $.ajax({
+                                headers: {
+                                    'X-CSRF-TOKEN': token
+                                },
+                                type: 'POST',
+                                url: '{{ url("image/delete") }}',
+                                data: {
+                                    filename: name
+                                },
+                                success: function (data) {
+
+                                    if (imageFiles.length > 0 && imageFiles.length <
+                                        5) {
+                                        for (var i = 0; i < 4; i++) {
+                                            if (document.getElementById(
+                                                    "uploadImage" + i).value ===
+                                                data) {
+
+                                                var index = imageFiles.indexOf(
+                                                    data);
+                                                imageFiles.splice(index, 1);
+                                            }
+                                            document.getElementById(
+                                                "uploadImage" +
+                                                i).value = "";
                                         }
-                                        document.getElementById("uploadImage" +
-                                            i).value = "";
-                                    }
 
-                                    for (var i = 0; i < imageFiles.length; i++) {
+                                        for (var i = 0; i < imageFiles.length; i++) {
 
-                                        document.getElementById("uploadImage" +
-                                            i).value = imageFiles[i];
+                                            document.getElementById(
+                                                "uploadImage" +
+                                                i).value = imageFiles[i];
+                                        }
+                                        if (imageFiles.length < 5) {
+
+                                            photo_counter--;
+                                        }
+
+                                        console.log(
+                                            "File has been successfully removed!!"
+                                        );
                                     }
-                                    if (imageFiles.length < 5) {
-                                        //alert("pic counter before " +
-                                           // photo_counter);
-                                        photo_counter--;
+                                    if (imageFiles.length > 4) {
+                                        imageFiles.splice(4, imageFiles.length);
+
                                     }
-                                    //alert("pic counter " + photo_counter);
-                                    console.log(
-                                        "File has been successfully removed!!"
+                                },
+                                error: function (e) {
+                                    console.log(e);
+                                }
+                            });
+
+                        });
+                    }
+                });
+            }
+
+            //************************************************************************ */
+
+            if (document.getElementById('myImageDropzone')) {
+                Dropzone.autoDiscover = false;
+                myImageDropzone = new Dropzone("div#myImageDropzone", {
+                    url: "image/upload/store",
+                    params: {
+                        _token: token
+                    },
+                    renameFile: function (file) {
+                        var dt = new Date();
+                        var time = dt.getTime();
+                        return time + file.name;
+                    },
+                    maxFilesize: 500, // MB
+                    maxFiles: 1,
+                    acceptedFiles: ".jpeg,.jpg,.png",
+                    addRemoveLinks: true,
+                    dictRemoveFile: 'Remove file',
+                    autoProcessQueue: true,
+                    uploadMultiple: false,
+                    parallelUploads: 1,
+
+                    init: function () {
+
+                        var known = false;
+
+                        var singleImageDropzoneInstance = this;
+
+                        if (page == "editPage") {
+
+                            $.ajax({
+                                headers: {
+                                    _token: token
+                                },
+                                type: 'GET',
+                                url: '{{ url("server/singleimage") }}',
+                                data: {
+                                    filename: singleImageName
+                                },
+
+                                success: function (data) {
+
+                                    var singleImgMockFile = {
+                                        filename: data.imageName,
+                                        size: data.size,
+                                        type: data.mimetype,
+                                        accepted: true,
+                                        acceptedFiles: ".png, .jpg, .jpeg",
+                                    };
+
+                                    singleImageDropzoneInstance.emit("addedfile",
+                                        singleImgMockFile);
+                                    singleImageDropzoneInstance.emit("thumbnail",
+                                        singleImgMockFile, "/img/" + data.imageName
                                     );
+                                    singleImageDropzoneInstance.files.push(
+                                        singleImgMockFile);
+                                    singleImageDropzoneInstance.emit("complete",
+                                        singleImgMockFile);
+                                    document.getElementById("uploadVideo").value =
+                                        data.imageName;
+
+                                },
+                                error: function (e) {
+                                    console.log(e);
                                 }
-                                if (imageFiles.length > 4) {
-                                    imageFiles.splice(4, imageFiles.length);
-                                    //alert("image length" + imageFiles.length);
-                                    //photo_counter--;
+                            });
+
+                        }
+
+
+                        this.on("success", function (file, responseText) {
+
+                            document.getElementById("uploadSingleImage").value =
+                                responseText.imageName;
+
+                        });
+                        this.on('error', function (response) {
+
+                        });
+                        this.on("processing", function (file) {
+                            this.options.url = '/image/upload/store';
+                            $.post({
+                                url: '/image/upload/store',
+                                headers: {
+                                    'X-CSRF-TOKEN': token
+                                },
+                                data: {
+                                    fileType: "image",
+                                    _token: token
+                                },
+                                dataType: 'json',
+                                success: function (data) {
+
                                 }
-                            },
-                            error: function (e) {
-                                console.log(e);
+                            });
+                        });
+                        this.on("complete", function (file) {
+
+                            if (this.files[1] != null) {
+                                removeImage = false;
+                                this.removeFile(this.files[1]);
+                                if (known === false) {
+                                    alert('Max. 1 Uploads!')
+                                    known = true;
+                                }
                             }
+
                         });
 
-                    });
-                }
-            });
-        }
+                        this.on("removedfile", function (file) {
+
+                            if (file.constructor.name == "File") {
+                                var name = file.upload.filename;
+
+                            } else {
+                                var name = file.filename;
+
+                            }
+
+                            $.ajax({
+                                headers: {
+                                    'X-CSRF-TOKEN': token
+                                },
+                                type: 'POST',
+                                url: '{{ url("image/delete") }}',
+                                data: {
+                                    filename: name
+                                },
+                                success: function (data) {
+
+                                    if (removeImage) {
+
+                                        document.getElementById(
+                                            "uploadSingleImage").value = "";
+
+                                    }
+                                    removeImage = true;
+                                },
+                                error: function (e) {
+                                    console.log(e);
+                                }
+                            });
+
+                        });
+
+                    }
+                });
+            }
 
 
             //******************************************************************* */
 
-                if (document.getElementById('myVideoDropzone')) {
+            if (document.getElementById('myVideoDropzone')) {
                 Dropzone.autoDiscover = false;
-              var myVideoDropzone = new Dropzone("div#myVideoDropzone", {
-          url: "video/upload/store",
-          params: {
-             _token: token
-             // other fields, here you can also pass a function and have the function return the fields
-             //name: $("#name").val()
-          },
-          renameFile: function (file) {
-                    var dt = new Date();
-                    var time = dt.getTime();
-                    return time + file.name;
-                },
-                maxFilesize: 500, // MB
-                maxFiles: 1,
-                acceptedFiles: ".mp4,.mkv,.avi,.MOV",
-                addRemoveLinks: true,
-                dictRemoveFile: 'Remove file',
-                autoProcessQueue: true,
-                uploadMultiple: false,
-                parallelUploads: 1,
+                var myVideoDropzone = new Dropzone("div#myVideoDropzone", {
+                    url: "video/upload/store",
+                    params: {
+                        _token: token
 
-
-
-          init: function () {
-
-                    // myVideoDropzone.ondragover = function (e) {
-                    //     //e.preventDefault();
-                    // }; 
-
-              var myVideoDropzoneInstance = this;
-
-if (page == "editPage") {
-
-    $.ajax({
-        headers: {
-            _token: token
-        },
-        type: 'GET',
-        url: '{{ url("server/video") }}',
-        data: {
-            filename: videoName
-        },
-        
-        success: function (data) {
-            //alert(data.size);
-
-                var videoMockFile = {
-                    filename: data.videoName,
-                    size: data.size,
-                    type: data.mimetype,
-                    accepted: true,
+                    },
+                    renameFile: function (file) {
+                        var dt = new Date();
+                        var time = dt.getTime();
+                        return time + file.name;
+                    },
+                    maxFilesize: 500, // MB
+                    maxFiles: 1,
                     acceptedFiles: ".mp4,.mkv,.avi,.MOV",
-                };
-            
-                myVideoDropzoneInstance.emit("addedfile", videoMockFile);
-                myVideoDropzoneInstance.emit("thumbnail", videoMockFile, "/video/" + data.videoName);
-                myVideoDropzoneInstance.files.push(videoMockFile);
-                myVideoDropzoneInstance.emit("complete", videoMockFile);
-                document.getElementById("uploadVideo").value =
-                data.videoName;
-            
-        },
-        error: function (e) {
-            console.log(e);
-        }
-    });
-   
-}
-
-            this.on("success", function (file, responseText) {
-                  //alert("success"+file);    
-                   videoFiles.push(responseText.videoName); 
-                   document.getElementById("uploadVideo").value =
-                                    responseText.videoName;
-                                    myVideoDropzone.emit("thumbnail", file, "/video/" + responseText.videoName);
-                                    //myVideoDropzone.createThumbnailFromUrl(file, '/video/'+responseText.videoName);
-                });
-                this.on('error', function (file, responseText) {
-                    console.log( "File has been removed!!"+file+responseText);
-                   // alert(responseText);
-                });
-            this.on("processing", function (file) {
-                //alert("processing");
-                        this.options.url = '/video/upload/store';
-                        $.post({
-                            url: '/video/upload/store',
-                            data: {
-                                _token: token
-                            },
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            dataType: 'json',
-                            success: function (data) {
-                                //alert("added");
-                            }
-                        });
-                    });
-
-                    // this.on("thumbnail", function(file) { console.log("thumbnail") 
-                    // //alert("thumbnail"+file);
-                    // myVideoDropzone.emit("thumbnail", file, "/video/" + file.upload.name);   
-                    
-                    // });
-
-
-                    
-                // this.on("addedfile", function(file) {
+                    addRemoveLinks: true,
+                    dictRemoveFile: 'Remove file',
+                    autoProcessQueue: true,
+                    uploadMultiple: false,
+                    parallelUploads: 1,
 
 
 
-                // });
-                this.on("complete", function (file) {
+                    init: function () {
 
-                if (this.files[1] != null) {
-                    removeVideo = false;
-                    this.removeFile(this.files[1]);
-                    if (known === false) {
-                        alert('Max. 4 Uploads!')
-                        known = true;
-                    }
-                }
 
-                });
-                this.on("removedfile", function(file) {
+                        var myVideoDropzoneInstance = this;
 
-                    //alert("yo"+file.constructor.name);
-                        if(file.constructor.name == "File"){
-                            var name = file.upload.filename;
-                            //alert("file to be removed"+name);
-                        }else{
-                            var name = file.filename;
-                            //alert("fi to be removed"+name);
+                        if (page == "editPage") {
+
+                            $.ajax({
+                                headers: {
+                                    _token: token
+                                },
+                                type: 'GET',
+                                url: '{{ url("server/video") }}',
+                                data: {
+                                    filename: videoName
+                                },
+
+                                success: function (data) {
+
+                                    var videoMockFile = {
+                                        filename: data.videoName,
+                                        size: data.size,
+                                        type: data.mimetype,
+                                        accepted: true,
+                                        acceptedFiles: ".mp4,.mkv,.avi,.MOV",
+                                    };
+
+                                    myVideoDropzoneInstance.emit("addedfile",
+                                        videoMockFile);
+                                    myVideoDropzoneInstance.emit("thumbnail",
+                                        videoMockFile, "/video/" + data.videoName);
+                                    myVideoDropzoneInstance.files.push(videoMockFile);
+                                    myVideoDropzoneInstance.emit("complete",
+                                        videoMockFile);
+                                    document.getElementById("uploadVideo").value =
+                                        data.videoName;
+
+                                },
+                                error: function (e) {
+                                    console.log(e);
+                                }
+                            });
+
                         }
 
-                        $.ajax({
-                            headers: {
-                                'X-CSRF-TOKEN': token
-                            },
-                            type: 'POST',
-                            url: '{{ url("video/delete") }}',
-                            data: {
-                                filename: name
-                            },
-                            success: function (data) {
-                                //videoFiles.pop();
+                        this.on("success", function (file, responseText) {
 
-                                if (removeVideo) {
-                                //alert("delete success" + data);
-                                document.getElementById("uploadVideo").value ="";
-                                
+                            videoFiles.push(responseText.videoName);
+                            document.getElementById("uploadVideo").value =
+                                responseText.videoName;
+                            myVideoDropzone.emit("thumbnail", file, "/video/" +
+                                responseText.videoName);
+
+                        });
+                        this.on('error', function (file, responseText) {
+                            console.log("File has been removed!!" + file + responseText);
+
+                        });
+                        this.on("processing", function (file) {
+
+                            this.options.url = '/video/upload/store';
+                            $.post({
+                                url: '/video/upload/store',
+                                data: {
+                                    _token: token
+                                },
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                        'content')
+                                },
+                                dataType: 'json',
+                                success: function (data) {
+
                                 }
-                                removeVideo = true;
-                            },
-                            error: function (e) {
-                                console.log(e);
-                            }
+                            });
                         });
 
-                    });
 
-          }
-       });
-                }
-    })
+                        this.on("complete", function (file) {
+
+                            if (this.files[1] != null) {
+                                removeVideo = false;
+                                this.removeFile(this.files[1]);
+                                if (known === false) {
+                                    alert('Max. 1 Uploads!')
+                                    known = true;
+                                }
+                            }
+
+                        });
+                        this.on("removedfile", function (file) {
+
+                            if (file.constructor.name == "File") {
+                                var name = file.upload.filename;
+
+                            } else {
+                                var name = file.filename;
+
+                            }
+
+                            $.ajax({
+                                headers: {
+                                    'X-CSRF-TOKEN': token
+                                },
+                                type: 'POST',
+                                url: '{{ url("video/delete") }}',
+                                data: {
+                                    filename: name
+                                },
+                                success: function (data) {
+
+                                    if (removeVideo) {
+                                        document.getElementById("uploadVideo").value =
+                                            "";
+
+                                    }
+                                    removeVideo = true;
+                                },
+                                error: function (e) {
+                                    console.log(e);
+                                }
+                            });
+
+                        });
+
+                    }
+                });
+            }
+        })
 
 
-
-    // $(document).ready(function () {
-    //             //Dropzone.autoDiscover = false;
-    //           var myNewVideoDropzone = new Dropzone("div#myVideoDropzonee", {
-    //       url: "video/upload/store",
-    //       params: {
-    //          _token: token
-    //          // other fields, here you can also pass a function and have the function return the fields
-    //          //name: $("#name").val()
-    //       },
-    //       renameFile: function (file) {
-    //                 var dt = new Date();
-    //                 var time = dt.getTime();
-    //                 return time + file.name;
-    //             },
-    //             maxFilesize: 500, // MB
-    //             maxFiles: 1,
-    //             acceptedFiles: ".mp4,.mkv,.avi,.MOV",
-    //             addRemoveLinks: true,
-    //             dictRemoveFile: 'Remove file',
-    //             autoProcessQueue: true,
-    //             uploadMultiple: false,
-    //             parallelUploads: 1,
-
-    //       init: function () {
-
-    //           var myVideoDropzoneInstance = this;
-
-    //         this.on("success", function (file, responseText) {
-    //                alert("success"+responseText.videoName);    
-
-    //             });
-    //             this.on('error', function (file, responseText) {
-    //                 console.log( "File has been removed!!"+file+responseText);
-    //                 alert(responseText);
-    //             });
-
-    //       }
-    //    });
-    // })
-        
-
-        
     </script>
 
     <style>

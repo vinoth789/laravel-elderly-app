@@ -142,6 +142,11 @@ return [
      'FillupQT' => 'Fill in the blanks',
      'NumericQT' => 'Numeric',
      'OrderOptionsQT' => 'Order the options',
+       /* New */
+     'ImageAsOptionsQT' => 'Image as options',
+     'ImageTypeQT' => 'Image type',
+     'VideoTypeQT' => 'Video type',
+
      'AnswerLabel' => 'Answer',
      'TrueLabel' => 'True',
      'FalseLabel' => 'False',
@@ -155,6 +160,12 @@ return [
      'Choice2Label' => 'Choice 2',
      'Choice3Label' => 'Choice 3',
      'Choice4Label' => 'Choice 4',
+     /* New */
+     'Image1Label' => 'Image 1',
+     'Image2Label' => 'Image 2',
+     'Image3Label' => 'Image 3',
+     'Image4Label' => 'Image 4',
+
      'DifficultyLevelLabel' => 'Difficulty Level',
      'EasyLabel' => 'Easy',
      'MediumLabel' => 'Medium',
@@ -169,6 +180,11 @@ return [
      'CorrectAnsMsg' => 'Correct Answer!',
      'CorrectAnsRangeMsg' => 'Correct Answer! However, the exact answer is ',
      'WrongAnsMsg' => 'Wrong Answer! Correct answer is ',
+      /* New */
+      'ImageAsOptionsDZmsg' => 'Please add 4 images in this area',
+      'ImageTypeDZmsg' => 'Drop an image in this area',
+      'VideoTypeDZmsg' => 'Drop a video in this area',
+
 
      /* View quiz page */
 
@@ -223,5 +239,12 @@ return [
       'AddQuestionAlert' => 'Please add atleast one question !',
       'ConfirmAlert' => 'Are you sure ?',
       'SelectAnswerAlert' => 'Please select the answer',
+
+      /* New */
+      'AddOneImageAlert' => 'Please add atleast one image',
+      'AddFourImageAlert' => 'Please add four images',
+      'AddOneVideoAlert' => 'Please add atleast one video',
+      'ImageChangedAlert' => 'Image has been changed please click update',
+      'VideoChangedAlert' => 'Video has been changed please click update',
 
 ];

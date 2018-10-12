@@ -61,6 +61,7 @@ Route::post('image/delete','FrameQuestionsController@fileDestroy');
 Route::post('video/delete','FrameQuestionsController@videoDestroy');
 Route::get('server/image','FrameQuestionsController@imageFromServer');
 Route::get('server/video','FrameQuestionsController@videoFromServer');
+Route::get('server/singleimage','FrameQuestionsController@singleImageFromServer');
 
 // Route::post('/images-save', 'UploadImagesController@store');
 // Route::post('/images-delete', 'UploadImagesController@destroy');
