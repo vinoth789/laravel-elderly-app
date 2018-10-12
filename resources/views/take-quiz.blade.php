@@ -18,7 +18,7 @@
                     <form id="submitQuiz" method="POST" action="{{ route('submitQuiz.store') }}">
                         @csrf
                         <div class="row">
-                            <div class="col-md-8" >
+                            <div class="col-md-8">
                                 <label style="display:none;" id="quizTimer">{{ trans('app.TimeRemainingLabel') }}
                                     <p id="timer"></p>
                                 </label>
@@ -34,24 +34,29 @@
                                         {{$question->questionNumber}}. {{$question->question}}
                                     </div>
                                 </div>
-                                @if ($question->questionType == 'MultipleChoice' || $question->questionType == 'OrderOptions')
+                                @if ($question->questionType == 'MultipleChoice' || $question->questionType ==
+                                'OrderOptions')
                                 <div class="form-group row">
                                     <div class="col-md-7 offset-md-2">
                                         <div class="radio">
                                             <label>
-                                                <input type="radio" name="radio" id="answer" value="{{$question->choice1}}"> {{$question->choice1}}</label>
+                                                <input type="radio" name="radio" id="answer" value="{{$question->choice1}}">
+                                                {{$question->choice1}}</label>
                                         </div>
                                         <div class="radio">
                                             <label>
-                                                <input type="radio" name="radio" id="answer" value="{{$question->choice2}}"> {{$question->choice2}}</label>
+                                                <input type="radio" name="radio" id="answer" value="{{$question->choice2}}">
+                                                {{$question->choice2}}</label>
                                         </div>
                                         <div class="radio">
                                             <label>
-                                                <input type="radio" name="radio" id="answer" value="{{$question->choice3}}"> {{$question->choice3}}</label>
+                                                <input type="radio" name="radio" id="answer" value="{{$question->choice3}}">
+                                                {{$question->choice3}}</label>
                                         </div>
                                         <div class="radio">
                                             <label>
-                                                <input type="radio" name="radio" id="answer" value="{{$question->choice4}}"> {{$question->choice4}}</label>
+                                                <input type="radio" name="radio" id="answer" value="{{$question->choice4}}">
+                                                {{$question->choice4}}</label>
                                         </div>
 
                                     </div>
@@ -72,11 +77,11 @@
                                                     </td>
                                                     <td>
                                                         <input type="text" class="form-control" name="choice[1]" id="choice1"
-                                                            value="{{$question->choice1}}" readonly/>
+                                                            value="{{$question->choice1}}" readonly />
                                                     </td>
                                                     <td align="center">
-                                                        <input class="checkboxField" name="selected_ids[]" type="checkbox" value="1"
-                                                        />
+                                                        <input class="checkboxField" name="selected_ids[]" type="checkbox"
+                                                            value="1" />
                                                     </td>
 
                                                 </tr>
@@ -86,11 +91,11 @@
                                                     </td>
                                                     <td>
                                                         <input type="text" class="form-control" name="choice[2]" id="choice2"
-                                                            value="{{$question->choice2}}" readonly/>
+                                                            value="{{$question->choice2}}" readonly />
                                                     </td>
                                                     <td align="center">
-                                                        <input class="checkboxField" name="selected_ids[]" type="checkbox" value="2"
-                                                        />
+                                                        <input class="checkboxField" name="selected_ids[]" type="checkbox"
+                                                            value="2" />
                                                     </td>
 
                                                 </tr>
@@ -101,11 +106,11 @@
                                                     </td>
                                                     <td>
                                                         <input type="text" class="form-control" name="choice[3]" id="choice3"
-                                                            value="{{$question->choice3}}" readonly/>
+                                                            value="{{$question->choice3}}" readonly />
                                                     </td>
                                                     <td align="center">
-                                                        <input class="checkboxField" name="selected_ids[]" type="checkbox" value="3"
-                                                        />
+                                                        <input class="checkboxField" name="selected_ids[]" type="checkbox"
+                                                            value="3" />
                                                     </td>
 
                                                 </tr>
@@ -115,11 +120,11 @@
                                                     </td>
                                                     <td>
                                                         <input type="text" class="form-control" name="choice[4]" id="choice4"
-                                                            value="{{$question->choice4}}" readonly/>
+                                                            value="{{$question->choice4}}" readonly />
                                                     </td>
                                                     <td align="center">
-                                                        <input class="checkboxField" name="selected_ids[]" type="checkbox" value="4"
-                                                        />
+                                                        <input class="checkboxField" name="selected_ids[]" type="checkbox"
+                                                            value="4" />
                                                     </td>
 
                                                 </tr>
@@ -135,11 +140,13 @@
                                         <div class="form-group">
                                             <div class="radio">
                                                 <label>
-                                                    <input type="radio" name="radio" id="answer" value="True"> {{ trans('app.TrueLabel') }}</label>
+                                                    <input type="radio" name="radio" id="answer" value="True"> {{
+                                                    trans('app.TrueLabel') }}</label>
                                             </div>
                                             <div class="radio">
                                                 <label>
-                                                    <input type="radio" name="radio" id="answer" value="False"> {{ trans('app.FalseLabel') }}</label>
+                                                    <input type="radio" name="radio" id="answer" value="False"> {{
+                                                    trans('app.FalseLabel') }}</label>
                                             </div>
                                         </div>
                                     </div>
@@ -166,128 +173,188 @@
 
                                     </div>
                                 </div>
-                                @endif  @if ($question->questionType == 'ImageType')
+                                @endif @if ($question->questionType == 'ImageAsOptions')
                                 <div class="form-group row">
                                     <div class="col-md-7 offset-md-2">
-                                    <div class="table-responsive-sm">
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col">Image1</th>
-                <th scope="col">Image2</th>
-                <th scope="col">Image3</th>
-                <th scope="col">Image4</th>
-            </tr>
-            </thead>
-            <tbody>
+                                        <div class="table-responsive-sm">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">{{ trans('app.Image1Label') }}</th>
+                                                        <th scope="col">{{ trans('app.Image2Label') }}</th>
+                                                        <th scope="col">{{ trans('app.Image3Label') }}</th>
+                                                        <th scope="col">{{ trans('app.Image4Label') }}</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
 
-                <tr>
-                    <td><img width="150px" height="150px" src="/img/{{ $question->choice1 }}"></td>
-                    <td><img width="150px" height="150px" src="/img/{{ $question->choice2 }}"></td>
-                    <td><img width="150px" height="150px" src="/img/{{ $question->choice3 }}"></td>
-                    <td><img width="150px" height="150px" src="/img/{{ $question->choice4 }}"></td>
-                </tr>
+                                                    <tr>
+                                                        <td><img width="150px" height="150px" src="/img/{{ $question->choice1 }}"></td>
+                                                        <td><img width="150px" height="150px" src="/img/{{ $question->choice2 }}"></td>
+                                                        <td><img width="150px" height="150px" src="/img/{{ $question->choice3 }}"></td>
+                                                        <td><img width="150px" height="150px" src="/img/{{ $question->choice4 }}"></td>
+                                                    </tr>
 
-            </tbody>
-        </table>
-    </div>
-                                <div class="form-group row">
-                                    <div class="col-md-7 offset-md-2">
-                                        <div class="radio">
-                                            <label>
-                                                <input type="radio" name="radio" id="answer" value="{{$question->choice1}}"> Image 1</label>
+                                                </tbody>
+                                            </table>
                                         </div>
-                                        <div class="radio">
-                                            <label>
-                                                <input type="radio" name="radio" id="answer" value="{{$question->choice2}}">  Image 2</label>
+                                        <div class="form-group row">
+                                            <div class="col-md-7 offset-md-2">
+                                                <div class="radio">
+                                                    <label>
+                                                        <input type="radio" name="radio" id="answer" value="{{$question->choice1}}">
+                                                        {{ trans('app.Image1Label') }}</label>
+                                                </div>
+                                                <div class="radio">
+                                                    <label>
+                                                        <input type="radio" name="radio" id="answer" value="{{$question->choice2}}">
+                                                        {{ trans('app.Image2Label') }}</label>
+                                                </div>
+                                                <div class="radio">
+                                                    <label>
+                                                        <input type="radio" name="radio" id="answer" value="{{$question->choice3}}">
+                                                        {{ trans('app.Image3Label') }}</label>
+                                                </div>
+                                                <div class="radio">
+                                                    <label>
+                                                        <input type="radio" name="radio" id="answer" value="{{$question->choice4}}">
+                                                        {{ trans('app.Image4Label') }}</label>
+                                                </div>
+
+                                            </div>
                                         </div>
-                                        <div class="radio">
-                                            <label>
-                                                <input type="radio" name="radio" id="answer" value="{{$question->choice3}}">  Image 3</label>
-                                        </div>
-                                        <div class="radio">
-                                            <label>
-                                                <input type="radio" name="radio" id="answer" value="{{$question->choice4}}">  Image 4</label>
+                                        @endif
+
+                                        @if ($question->questionType == 'ImageType')
+                                        <div class="form-group row">
+                                            <div class="col-md-7 offset-md-2">
+                                                <div class="table-responsive-sm">
+                                                    <table class="table">
+                                                        <thead>
+
+                                                        </thead>
+                                                        <tbody>
+
+                                                            <tr>
+                                                                <td><img width="150px" height="150px" src="/img/{{ $question->imgFileName }}"></td>
+
+                                                            </tr>
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-md-7 offset-md-2">
+                                                        <div class="radio">
+                                                            <label>
+                                                                <input type="radio" name="radio" id="answer" value="{{$question->choice1}}">
+                                                                {{$question->choice1}}</label>
+                                                        </div>
+                                                        <div class="radio">
+                                                            <label>
+                                                                <input type="radio" name="radio" id="answer" value="{{$question->choice2}}">
+                                                                {{$question->choice2}}</label>
+                                                        </div>
+                                                        <div class="radio">
+                                                            <label>
+                                                                <input type="radio" name="radio" id="answer" value="{{$question->choice3}}">
+                                                                {{$question->choice3}}</label>
+                                                        </div>
+                                                        <div class="radio">
+                                                            <label>
+                                                                <input type="radio" name="radio" id="answer" value="{{$question->choice4}}">
+                                                                {{$question->choice4}}</label>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                @endif
+
+
+                                                @if ($question->questionType == 'VideoType')
+
+                                                <div class="form-group row">
+                                                    <div class="col-md-7 offset-md-2">
+
+                                                        <video height="300px" width="600px" controls>
+                                                            <source src="/video/{{ $question->imgFileName }}" type="video/mp4">
+                                                            <source src="/video/{{ $question->imgFileName }}" type="video/ogg">
+                                                            Your browser does not support the video tag.
+
+                                                        </video>
+
+                                                        <div class="radio">
+                                                            <label>
+                                                                <input type="radio" name="radio" id="answer" value="{{$question->choice1}}">
+                                                                {{$question->choice1}}</label>
+                                                        </div>
+                                                        <div class="radio">
+                                                            <label>
+                                                                <input type="radio" name="radio" id="answer" value="{{$question->choice2}}">
+                                                                {{$question->choice2}}</label>
+                                                        </div>
+                                                        <div class="radio">
+                                                            <label>
+                                                                <input type="radio" name="radio" id="answer" value="{{$question->choice3}}">
+                                                                {{$question->choice3}}</label>
+                                                        </div>
+                                                        <div class="radio">
+                                                            <label>
+                                                                <input type="radio" name="radio" id="answer" value="{{$question->choice4}}">
+                                                                {{$question->choice4}}</label>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                @endif
+
+                                            </div>
                                         </div>
 
-                                    </div>
-                                </div>
-                                @endif
-
-                                @if ($question->questionType == 'VideoType')
-                                
-                                <div class="form-group row">
-                                    <div class="col-md-7 offset-md-2">
-
-                                    <video height="300px" width="600px" controls>
-    <source src="/video/{{ $question->imgFileName }}" type="video/mp4">
-  <source src="/video/{{ $question->imgFileName }}"  type="video/ogg">
-  Your browser does not support the video tag.
-      
-    </video>
-
-                                        <div class="radio">
-                                            <label>
-                                                <input type="radio" name="radio" id="answer" value="{{$question->choice1}}"> {{$question->choice1}}</label>
+                                        <div class="form-group">
+                                            <input type="hidden" class="form-control" name="quizNo" id="quizNo" value="{{$quiz->quizNumber}}"
+                                                readonly required>
+                                            <input type="hidden" class="form-control" name="timerStatus" id="timerStatus"
+                                                value="{{$quiz->timerStatus}}" readonly required>
+                                            <input type="hidden" class="form-control" name="questionNo" id="questionNo"
+                                                value="{{$questionNo}}" readonly required>
+                                            <input type="hidden" class="form-control" name="questionID" id="questionID"
+                                                value="{{$question->id}}" readonly required>
+                                            <input type="hidden" class="form-control" name="questionType" id="questionType"
+                                                value="{{$question->questionType}}" readonly required>
+                                            <input type="hidden" class="form-control" name="questionAnswer" id="questionAnswer"
+                                                value="{{$question->answer}}" readonly required>
+                                            <input type="hidden" class="form-control" name="difficultyLevel" id="difficultyLevel"
+                                                value="{{$question->difficultyLevel}}" readonly required>
+                                            <input type="hidden" class="form-control" name="attempt" id="attempt" value="{{$attempt}}"
+                                                readonly required>
+                                            <input type="hidden" class="form-control" name="isRangeAllowed" id="isRangeAllowed"
+                                                value="{{$question->isRangeAllowed}}}" readonly required>
                                         </div>
-                                        <div class="radio">
-                                            <label>
-                                                <input type="radio" name="radio" id="answer" value="{{$question->choice2}}">  {{$question->choice1}}</label>
+                                        <div class="alert alert-success" id="correctAnswer" style="display:none;">
+                                            <strong>{{ trans('app.CorrectAnsMsg') }}</strong>
                                         </div>
-                                        <div class="radio">
-                                            <label>
-                                                <input type="radio" name="radio" id="answer" value="{{$question->choice3}}">  {{$question->choice1}}</label>
+                                        <div class="alert alert-success" id="exactAnswer" style="display:none;">
+                                            <strong>{{ trans('app.CorrectAnsRangeMsg') }} {{$question->answer}}.</strong>
                                         </div>
-                                        <div class="radio">
-                                            <label>
-                                                <input type="radio" name="radio" id="answer" value="{{$question->choice4}}">  {{$question->choice1}}</label>
+                                        <div class="alert alert-danger" id="wrongAnswer" style="display:none;">
+                                            <strong>{{ trans('app.WrongAnsMsg') }} {{$question->answer}}. </strong>
                                         </div>
-
-                                    </div>
-                                </div>
-                                @endif
-
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <input type="hidden" class="form-control" name="quizNo" id="quizNo" value="{{$quiz->quizNumber}}" readonly required>
-                            <input type="hidden" class="form-control" name="timerStatus" id="timerStatus" value="{{$quiz->timerStatus}}" readonly required>
-                            <input type="hidden" class="form-control" name="questionNo" id="questionNo" value="{{$questionNo}}" readonly required>
-                            <input type="hidden" class="form-control" name="questionID" id="questionID" value="{{$question->id}}" readonly required>
-                            <input type="hidden" class="form-control" name="questionType" id="questionType" value="{{$question->questionType}}" readonly
-                                required>
-                            <input type="hidden" class="form-control" name="questionAnswer" id="questionAnswer" value="{{$question->answer}}" readonly
-                                required>
-                            <input type="hidden" class="form-control" name="difficultyLevel" id="difficultyLevel" value="{{$question->difficultyLevel}}"
-                                readonly required>
-                            <input type="hidden" class="form-control" name="attempt" id="attempt" value="{{$attempt}}" readonly required>
-                            <input type="hidden" class="form-control" name="isRangeAllowed" id="isRangeAllowed" value="{{$question->isRangeAllowed}}}" readonly required>
-                        </div>
-                        <div class="alert alert-success" id="correctAnswer" style="display:none;">
-                            <strong>{{ trans('app.CorrectAnsMsg') }}</strong>
-                        </div>
-                        <div class="alert alert-success" id="exactAnswer" style="display:none;">
-                            <strong>{{ trans('app.CorrectAnsRangeMsg') }} {{$question->answer}}.</strong>
-                        </div>
-                        <div class="alert alert-danger" id="wrongAnswer" style="display:none;">
-                            <strong>{{ trans('app.WrongAnsMsg') }} {{$question->answer}}. </strong> 
-                        </div>
-                        @if ($questionNo != -1)
-                        <div class="row mt-4">
-                            <div class="col-md-2 offset-md-10">
-                                <a class="buttonStyle" style="color:white;" onclick="showCorrectAnswer('{{$question->questionType}}','{{$question->isRangeAllowed}}')"
-                                    class="btn btn-info pull-right">{{ trans('app.NextButton') }}</a>
-                            </div>
-                        </div>
-                        @else
-                        <div class="row mt-4">
-                            <div class="col-md-2 offset-md-10">
-                                <a class="btn btn-warning" style="color:white;" onclick="showCorrectAnswer('{{$question->questionType}}','{{$question->isRangeAllowed}}')"
-                                    class="btn btn-info pull-right">{{ trans('app.SubmitButton') }}</a>
-                            </div>
-                        </div>
-                        @endif
+                                        @if ($questionNo != -1)
+                                        <div class="row mt-4">
+                                            <div class="col-md-2 offset-md-10">
+                                                <a class="buttonStyle" style="color:white;" onclick="showCorrectAnswer('{{$question->questionType}}','{{$question->isRangeAllowed}}')"
+                                                    class="btn btn-info pull-right">{{ trans('app.NextButton') }}</a>
+                                            </div>
+                                        </div>
+                                        @else
+                                        <div class="row mt-4">
+                                            <div class="col-md-2 offset-md-10">
+                                                <a class="btn btn-warning" style="color:white;" onclick="showCorrectAnswer('{{$question->questionType}}','{{$question->isRangeAllowed}}')"
+                                                    class="btn btn-info pull-right">{{ trans('app.SubmitButton') }}</a>
+                                            </div>
+                                        </div>
+                                        @endif
                     </form>
 
                 </div>
@@ -299,18 +366,17 @@
 @endsection
 
 <script>
-
     window.onload = chooseLevel;
 
     function chooseLevel() {
-        
+
         var difficultyLevel = document.getElementById("difficultyLevel").value;
         attempt = document.getElementById("attempt").value;
         timerStatus = document.getElementById("timerStatus").value;
         question_type = document.getElementById("questionType").value;
         is_range_allowed = document.getElementById("isRangeAllowed").value;
 
-        countDownDate = new Date(); 
+        countDownDate = new Date();
         // 5 minutes in milliseconds
         if (difficultyLevel == 'Easy') {
             myTimeSpan = 1 * 15 * 1000;
@@ -340,7 +406,7 @@
 
             if (distance < 0) {
                 clearInterval(x);
-                showCorrectAnswer(question_type,is_range_allowed);
+                showCorrectAnswer(question_type, is_range_allowed);
             }
         } else {
             $('#quizTimer').hide();
@@ -351,7 +417,8 @@
 
 
         var enteredAnswer = "";
-        if (questionType == 'MultipleChoice' || questionType == 'TrueFalse') {
+        if (questionType == 'MultipleChoice' || questionType == 'OrderOptions' || questionType == 'TrueFalse' ||
+            questionType == 'ImageAsOptions' || questionType == 'ImageType' || questionType == 'VideoType') {
             enteredAnswer = $('input[name=radio]:checked').val();
 
         } else if (questionType == 'MultipleAnswer') {
@@ -387,22 +454,22 @@
                 max = parseInt(actualAnswer) + 6;
 
                 if ((min < enteredAnswer) && (enteredAnswer < max)) {
-                    if(enteredAnswer.toUpperCase() === actualAnswer.toUpperCase()){
+                    if (enteredAnswer.toUpperCase() === actualAnswer.toUpperCase()) {
                         $('#correctAnswer').show();
                         $('#wrongAnswer').hide();
-                    }else{
-                    $('#exactAnswer').show();
-                    $('#correctAnswer').hide();
-                    $('#wrongAnswer').hide();
+                    } else {
+                        $('#exactAnswer').show();
+                        $('#correctAnswer').hide();
+                        $('#wrongAnswer').hide();
                     }
-                }else {
-                $('#wrongAnswer').show();
-                $('#correctAnswer').hide();
-            }
-            }else if (enteredAnswer.toUpperCase() === actualAnswer.toUpperCase()){
+                } else {
+                    $('#wrongAnswer').show();
+                    $('#correctAnswer').hide();
+                }
+            } else if (enteredAnswer.toUpperCase() === actualAnswer.toUpperCase()) {
                 $('#correctAnswer').show();
                 $('#wrongAnswer').hide();
-            }else {
+            } else {
                 $('#wrongAnswer').show();
                 $('#correctAnswer').hide();
             }
@@ -428,5 +495,4 @@
     window.onpopstate = function () {
         history.go(1);
     };
-    
 </script>

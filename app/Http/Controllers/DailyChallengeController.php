@@ -47,7 +47,7 @@ class DailyChallengeController extends Controller
         
         $userId =  Auth::user()->id;
 
-        if($questionType == 'MultipleChoice' || $questionType == 'MultipleChoice'){
+        if($questionType == 'MultipleChoice' || $questionType == 'OrderOptions' || $questionType == 'TrueFalse' || $questionType == 'ImageAsOptions' || $questionType == 'ImageType' ||$questionType == 'VideoType'){
                 $answer=""; 
                 if(isset($_POST['radio']))
                 $answer = $_POST['radio'];
@@ -67,10 +67,6 @@ class DailyChallengeController extends Controller
                 $count++;
             } 
         }
-        }else if($questionType == 'TrueFalse'){
-                $answer=""; 
-                if(isset($_POST['radio']))
-                $answer = $_POST['radio'];
         }else{
             $answer = $request->input('answer');
         }

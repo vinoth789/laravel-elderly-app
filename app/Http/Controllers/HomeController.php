@@ -45,7 +45,7 @@ class HomeController extends Controller
         $mytime = Carbon::now();
 
         $currentTime = $mytime->toDateString();
-        $dailyChallengeQuestion = DailyChallenge::where('created_at',$currentTime)->first();
+        $dailyChallengeQuestion = DailyChallenge::where('chal_date',$currentTime)->first();
         $userTakenChallenge = false;
         $question = null;
         $questionID = null;
