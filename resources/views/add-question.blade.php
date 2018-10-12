@@ -557,10 +557,10 @@
 
 <script>
     window.translations = {
-        selectAnswerAlert: '{{ trans('app.SelectAnswerAlert ') }}',
-        oneImageAlert: '{{ trans('app.AddOneImageAlert ') }}',
-        fourImageAlert: '{{ trans('app.AddFourImageAlert ') }}',
-        oneVideoAlert: '{{ trans('app.AddOneVideoAlert ') }}',
+        selectAnswerAlert: '{{ trans('app.SelectAnswerAlert') }}',
+        oneImageAlert: '{{ trans('app.AddOneImageAlert') }}',
+        fourImageAlert: '{{ trans('app.AddFourImageAlert') }}',
+        oneVideoAlert: '{{ trans('app.AddOneVideoAlert') }}',
     };
     translation = {
         selectAnswerAlert: window.translations.selectAnswerAlert,

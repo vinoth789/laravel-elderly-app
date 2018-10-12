@@ -515,12 +515,12 @@
 @section('head')
 <script type="text/javascript">
     window.translations = {
-        selectAnswerAlert: '{{ trans('app.SelectAnswerAlert ') }}',
-        oneImageAlert: '{{ trans('app.AddOneImageAlert ') }}',
-        fourImageAlert: '{{ trans('app.AddFourImageAlert ') }}',
-        oneVideoAlert: '{{ trans('app.AddOneVideoAlert ') }}',
-        imageChangedAlert: '{{ trans('app.ImageChangedAlert ') }}',
-        videoChangedAlert: '{{ trans('app.VideoChangedAlert ') }}',
+        selectAnswerAlert: '{{ trans('app.SelectAnswerAlert') }}',
+        oneImageAlert: '{{ trans('app.AddOneImageAlert') }}',
+        fourImageAlert: '{{ trans('app.AddFourImageAlert') }}',
+        oneVideoAlert: '{{ trans('app.AddOneVideoAlert') }}',
+        imageChangedAlert: '{{ trans('app.ImageChangedAlert') }}',
+        videoChangedAlert: '{{ trans('app.VideoChangedAlert') }}',
     };
     translation = {
         selectAnswerAlert: window.translations.selectAnswerAlert,
