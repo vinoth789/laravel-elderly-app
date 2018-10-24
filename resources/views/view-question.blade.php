@@ -15,11 +15,10 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="form-group row">
-                                    <div class="col-md-8 offset-md-2">
-                                        {{$question->questionNumber}}. {{$question->question}}
-                                    </div>
+                                    <div class="col-md-8 offset-md-2" style="white-space: pre-wrap;">{{$question->questionNumber}}. {{$question->question}}</div>
                                 </div>
-                                @if ($question->questionType == 'MultipleChoice')
+                                @if ($question->questionType == 'MultipleChoice' || $question->questionType ==
+                                'OrderOptions')
                                 <div class="form-group row">
                                     <div class="col-md-7 offset-md-2">
                                         <ul class="list-group">
@@ -123,7 +122,7 @@
                                 @endif @if ($question->questionType == 'ImageAsOptions')
                                 <div class="form-group row">
                                     <div class="col-md-7 offset-md-2">
-                                        <div class="table-responsive-sm">
+                                        <div class="table-responsive">
                                             <table class="table">
                                                 <thead>
                                                     <tr>
@@ -136,10 +135,14 @@
                                                 <tbody>
 
                                                     <tr>
-                                                        <td><img width="150px" height="150px" src="/img/{{ $question->choice1 }}"></td>
-                                                        <td><img width="150px" height="150px" src="/img/{{ $question->choice2 }}"></td>
-                                                        <td><img width="150px" height="150px" src="/img/{{ $question->choice3 }}"></td>
-                                                        <td><img width="150px" height="150px" src="/img/{{ $question->choice4 }}"></td>
+                                                        <td><img class="img-responsive" width="150px" height="150px"
+                                                                src="/img/{{ $question->choice1 }}"></td>
+                                                        <td><img class="img-responsive" width="150px" height="150px"
+                                                                src="/img/{{ $question->choice2 }}"></td>
+                                                        <td><img class="img-responsive" width="150px" height="150px"
+                                                                src="/img/{{ $question->choice3 }}"></td>
+                                                        <td><img class="img-responsive" width="150px" height="150px"
+                                                                src="/img/{{ $question->choice4 }}"></td>
                                                     </tr>
 
                                                 </tbody>
@@ -221,11 +224,17 @@
                                 <div class="form-group row">
                                     <div class="col-md-7 offset-md-2">
 
-                                        <!-- <video  width="600" height="300" loop preload="false" autoplay  controls tabindex="0" src="/video/{{ $question->imgFileName }}?raw=true"  type="video/mp4"></video> -->
-                                        <video height="300px" width="600px" controls autoplay>
-                                            <source src="/video/{{ $question->imgFileName }}?raw=true" type="video/mp4">
-                                            <source src="/video/{{ $question->imgFileName }}?raw=true" type="video/ogg; codecs=theora, vorbis">
-                                            <source src="/video/{{ $question->imgFileName }}?raw=true" type="video/webm; codecs=vp8, vorbis">
+                                        <!-- <video poster="/img/vinoth1.jpg" width="600" height="300" loop preload="false" autoplay  controls tabindex="0" src="/video/{{ $question->imgFileName }}?raw=true"  type="video/mp4"></video> -->
+                                        <!-- <video height="300px" width="600px" src="/video/{{ $question->imgFileName }}" controls="false">
+                                    <p>Your browser does not support HTML5 video.</p>
+                                    <video id="videoQues" loop controls="true" height="300px" width="600px" src="/video/{{$question->imgFileName}}" type='video/mp4'></video>
+                                    </video> -->
+
+                                        <video id="videoQues" height="300px" width="600px">
+
+                                            <source src="/video/{{$question->imgFileName}}" type="video/mp4" />
+                                            <source src="/video/{{$question->imgFileName}}" type="video/ogv" />
+                                            <source src="/video/{{$question->imgFileName}}" type='video/webm;codecs="vp8, vorbis"' />
 
                                             Your browser does not support the video tag.
 

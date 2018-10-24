@@ -34,10 +34,17 @@
                                 @endif
 
 
-                                <div class="form-group">
+                                <div class="form-group" id="questionForm">
                                     <label for="add-question" style="font-weight:bold;">{{ trans('app.QuestionLabel')
                                         }}</label>
                                     <textarea class="form-control" name="question" rows="7" required></textarea>
+                                </div>
+
+                                <div class="form-group" id="orderOptionsForm" style="display:none;">
+                                    <label for="add-question" style="font-weight:bold;">{{ trans('app.QuestionLabel')
+                                        }}</label>
+                                    <textarea class="form-control" col="10" id="orderOptionsQuestion" name="orderOptionsQuestion"
+                                        rows="7" required>Description:&#13;&#10;&#13;&#10;Order 1. &#13;&#10;Order 2. &#13;&#10;Order 3. &#13;&#10;Order 4. &#13;&#10;</textarea>
                                 </div>
 
                                 <div class="form-group">
@@ -569,6 +576,7 @@
         oneVideoAlert: window.translations.oneVideoAlert,
     };
 
+
     function addQuestion() {
 
         var selected_question_type = $('#questionType').val();
@@ -634,6 +642,28 @@
 
         if (selected_question_type == 'MultipleChoice' || selected_question_type == 'OrderOptions') {
 
+            if (selected_question_type == 'OrderOptions') {
+                $('#orderOptionsForm').show();
+                $('#questionForm').hide();
+                $("[name='question']").attr("required", false);
+
+                var readOnlyLength = $('#orderOptionsQuestion').val().length;
+
+
+                $('#orderOptionsQuestion').on('keypress, keydown', function (event) {
+
+                    var $field = $(this);
+
+                    if ((event.which != 37 && (event.which != 39)) &&
+                        ((this.selectionStart < readOnlyLength) ||
+                            ((this.selectionStart == readOnlyLength) && (event.which == 8)))) {
+                        return false;
+                    }
+                });
+
+            }
+
+
             $('#multipleChoice').show();
             $('#trueOrFalsePanel').hide();
             $('#fillupPanel').hide();
@@ -678,6 +708,9 @@
             $('#imageUploadPanel').hide();
             $('#videoUploadPanel').hide();
             $('#imageAsOptionsPanel').hide();
+            $('#orderOptionsForm').hide();
+
+            $("[name='orderOptionsQuestion']").attr("required", false);
 
             $("[name='trueOrFalse']").attr("required", true);
 
@@ -714,6 +747,9 @@
             $('#imageUploadPanel').hide();
             $('#videoUploadPanel').hide();
             $('#imageAsOptionsPanel').hide();
+            $('#orderOptionsForm').hide();
+
+            $("[name='orderOptionsQuestion']").attr("required", false);
 
             $("[name='fillup']").attr("required", true);
 
@@ -750,6 +786,9 @@
             $('#imageUploadPanel').hide();
             $('#videoUploadPanel').hide();
             $('#imageAsOptionsPanel').hide();
+            $('#orderOptionsForm').hide();
+
+            $("[name='orderOptionsQuestion']").attr("required", false);
 
             $("[name='numericQuestion']").attr("required", true);
 
@@ -786,6 +825,9 @@
             $('#imageUploadPanel').hide();
             $('#videoUploadPanel').hide();
             $('#imageAsOptionsPanel').hide();
+            $('#orderOptionsForm').hide();
+
+            $("[name='orderOptionsQuestion']").attr("required", false);
 
             $("[name='choice[1]']").attr("required", true);
             $("[name='choice[2]']").attr("required", true);
@@ -813,11 +855,6 @@
 
         } else if (selected_question_type == 'ImageAsOptions') {
 
-            // var element = document.getElementById("addQuestionForm");
-            //     element.classList.add("dropzone");
-            //$( "#addQuestionForm" ).last().addClass( "dropzone" );
-
-
             $('#multipleAnswers').hide();
             $('#trueOrFalsePanel').hide();
             $('#multipleChoice').hide();
@@ -826,11 +863,9 @@
             $('#videoUploadPanel').hide();
             $('#imageUploadPanel').hide();
             $('#imageAsOptionsPanel').show();
+            $('#orderOptionsForm').hide();
 
-            // $("[name='uploadImage0']").attr("required", true);
-            // $("[name='uploadImage1']").attr("required", true);
-            // $("[name='uploadImage2']").attr("required", true);
-            // $("[name='uploadImage3']").attr("required", true);
+            $("[name='orderOptionsQuestion']").attr("required", false);
 
             $("[name='choice[1]']").attr("required", false);
             $("[name='choice[2]']").attr("required", false);
@@ -858,10 +893,6 @@
 
         } else if (selected_question_type == 'VideoType') {
 
-            // var element = document.getElementById("addQuestionForm");
-            //     element.classList.add("dropzone");
-            //$( "#addQuestionForm" ).last().addClass( "dropzone" );
-
 
             $('#multipleAnswers').hide();
             $('#trueOrFalsePanel').hide();
@@ -871,6 +902,9 @@
             $('#imageUploadPanel').hide();
             $('#videoUploadPanel').show();
             $('#imageAsOptionsPanel').hide();
+            $('#orderOptionsForm').hide();
+
+            $("[name='orderOptionsQuestion']").attr("required", false);
 
 
             $("[name='uploadVideo0']").attr("required", true);
@@ -907,6 +941,9 @@
             $('#imageUploadPanel').show();
             $('#videoUploadPanel').hide();
             $('#imageAsOptionsPanel').hide();
+            $('#orderOptionsForm').hide();
+
+            $("[name='orderOptionsQuestion']").attr("required", false);
 
 
             $("[name='uploadVideo0']").attr("required", false);

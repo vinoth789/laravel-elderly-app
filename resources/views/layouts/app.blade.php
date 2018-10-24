@@ -17,7 +17,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="assets/sass/app.scss" type="text/scss" />
+    <!-- <link rel="stylesheet" href="assets/sass/app.scss" type="text/scss" /> -->
 
     <!-- <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="assets/js/app.js" type="text/javascript"></script> -->
@@ -25,7 +25,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url('/css/bootstrap.css') }}">
+    <!-- <link rel="stylesheet" href="{{ url('/css/bootstrap.css') }}"> -->
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.4.0/min/dropzone.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
@@ -416,7 +416,7 @@
                     },
                     maxFilesize: 500, // MB
                     maxFiles: 1,
-                    acceptedFiles: ".mp4,.mkv,.avi,.MOV",
+                    acceptedFiles: ".mp4,.mkv,.avi,.m4v,.mov",
                     addRemoveLinks: true,
                     dictRemoveFile: 'Remove file',
                     autoProcessQueue: true,
@@ -449,7 +449,7 @@
                                         size: data.size,
                                         type: data.mimetype,
                                         accepted: true,
-                                        acceptedFiles: ".mp4,.mkv,.avi,.MOV",
+                                        acceptedFiles: ".mp4,.mkv,.avi,.m4v,.mov",
                                     };
 
                                     myVideoDropzoneInstance.emit("addedfile",
@@ -475,8 +475,8 @@
                             videoFiles.push(responseText.videoName);
                             document.getElementById("uploadVideo").value =
                                 responseText.videoName;
-                            myVideoDropzone.emit("thumbnail", file, "/video/" +
-                                responseText.videoName);
+                            // myVideoDropzone.emit("thumbnail", file, "/video/" +
+                            //     responseText.videoName);
 
                         });
                         this.on('error', function (file, responseText) {
@@ -581,6 +581,9 @@
             font-weight: bold;
         }
         .dz-image img{width: 100%;height: 100%;}
+        video {
+            width: 100%;
+        }
     </style>
     @yield('head')
 </head>

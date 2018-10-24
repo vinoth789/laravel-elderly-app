@@ -30,9 +30,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="form-group row">
-                                    <div class="col-md-8 offset-md-2">
-                                        {{$question->questionNumber}}. {{$question->question}}
-                                    </div>
+                                    <div class="col-md-8 offset-md-2" style="white-space: pre-wrap;">{{$question->questionNumber}}. {{$question->question}}</div>
                                 </div>
                                 @if ($question->questionType == 'MultipleChoice' || $question->questionType ==
                                 'OrderOptions')
@@ -189,10 +187,14 @@
                                                 <tbody>
 
                                                     <tr>
-                                                        <td><img width="150px" height="150px" src="/img/{{ $question->choice1 }}"></td>
-                                                        <td><img width="150px" height="150px" src="/img/{{ $question->choice2 }}"></td>
-                                                        <td><img width="150px" height="150px" src="/img/{{ $question->choice3 }}"></td>
-                                                        <td><img width="150px" height="150px" src="/img/{{ $question->choice4 }}"></td>
+                                                        <td><img class="img-responsive" width="150px" height="150px"
+                                                                src="/img/{{ $question->choice1 }}"></td>
+                                                        <td><img class="img-responsive" width="150px" height="150px"
+                                                                src="/img/{{ $question->choice2 }}"></td>
+                                                        <td><img class="img-responsive" width="150px" height="150px"
+                                                                src="/img/{{ $question->choice3 }}"></td>
+                                                        <td><img class="img-responsive" width="150px" height="150px"
+                                                                src="/img/{{ $question->choice4 }}"></td>
                                                     </tr>
 
                                                 </tbody>
@@ -276,7 +278,8 @@
                                                 <div class="form-group row">
                                                     <div class="col-md-7 offset-md-2">
 
-                                                        <video height="300px" width="600px" controls>
+                                                        <video id="videoTypeQuestion" height="300px" width="600px"
+                                                            controls preload="auto">
                                                             <source src="/video/{{ $question->imgFileName }}" type="video/mp4">
                                                             <source src="/video/{{ $question->imgFileName }}" type="video/ogg">
                                                             Your browser does not support the video tag.
@@ -366,52 +369,125 @@
 @endsection
 
 <script>
+window.onunload = function(e) {
+// Firefox || IE
+alert("pls");
+e = e || window.event;
+ 
+ var y = e.pageY || e.clientY;
+  
+ if(y < 0)  alert("Window closed");
+ else alert("Window refreshed");e.preventDefault();
+
+}
     window.onload = chooseLevel;
 
-    function chooseLevel() {
+    function chooseLevel(e) {
+
+        $("a").click(function () {
+                 logoutFlag = false;
+                 return false;
+             });
+
+
+  
 
         var difficultyLevel = document.getElementById("difficultyLevel").value;
         attempt = document.getElementById("attempt").value;
         timerStatus = document.getElementById("timerStatus").value;
         question_type = document.getElementById("questionType").value;
         is_range_allowed = document.getElementById("isRangeAllowed").value;
+        if (question_type == 'VideoType') {
+            var vid = document.getElementById("videoTypeQuestion");
 
-        countDownDate = new Date();
-        // 5 minutes in milliseconds
-        if (difficultyLevel == 'Easy') {
-            myTimeSpan = 1 * 15 * 1000;
-        } else if (difficultyLevel == 'Medium') {
-            myTimeSpan = 1 * 30 * 1000;
+            vid.onloadedmetadata = function () {
+                videoDuration = Math.round(vid.duration);
+                if (difficultyLevel == 'Easy') {
+                    myTimeSpan = 1 * (15 + videoDuration) * 1000;
+                } else if (difficultyLevel == 'Medium') {
+                    myTimeSpan = (1 * 30 * 1000) + vid.duration;
+                } else {
+                    myTimeSpan = (1 * 45 * 1000) + vid.duration;
+                }
+
+
+                countDownDate = new Date();
+                countDownDate.setTime(countDownDate.getTime() + myTimeSpan);
+
+                var x = setInterval(function () {
+
+                    var now = new Date().getTime();
+                    var distance = countDownDate - now;
+
+                    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                    if (attempt != 'firstAttempt' && timerStatus != 'On') {
+                    $('#quizTimer').show();
+                    document.getElementById("timer").innerHTML = minutes + "m " + seconds + "s ";
+
+                    if (distance < 0) {
+                        clearInterval(x);
+                        showCorrectAnswer(question_type, is_range_allowed);
+                    }
+                    } else {
+                        $('#quizTimer').hide();
+                    }
+                }, );
+            };
+
         } else {
-            myTimeSpan = 1 * 45 * 1000;
+
+            // 5 minutes in milliseconds
+            if (difficultyLevel == 'Easy') {
+
+                myTimeSpan = 1 * 15 * 1000;
+
+            } else if (difficultyLevel == 'Medium') {
+
+                myTimeSpan = 1 * 30 * 1000;
+
+            } else {
+
+                myTimeSpan = 1 * 45 * 1000;
+
+            }
+
+            countDownDate = new Date();
+            countDownDate.setTime(countDownDate.getTime() + myTimeSpan);
+
+            var x = setInterval(function () {
+
+                var now = new Date().getTime();
+                var distance = countDownDate - now;
+
+                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                if (attempt != 'firstAttempt' && timerStatus != 'On') {
+                $('#quizTimer').show();
+                document.getElementById("timer").innerHTML = minutes + "m " + seconds + "s ";
+
+                if (distance < 0) {
+                    clearInterval(x);
+                    showCorrectAnswer(question_type, is_range_allowed);
+                }
+                } else {
+                    $('#quizTimer').hide();
+                }
+            }, );
+
         }
-        countDownDate.setTime(countDownDate.getTime() + myTimeSpan);
+
     }
 
 
     // Updates the count down every 1 second
-    var x = setInterval(function () {
 
-        var now = new Date().getTime();
-        var distance = countDownDate - now;
-
-        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        if (attempt == 'firstAttempt' && timerStatus == 'On') {
-            $('#quizTimer').show();
-            document.getElementById("timer").innerHTML = minutes + "m " + seconds + "s ";
-
-            if (distance < 0) {
-                clearInterval(x);
-                showCorrectAnswer(question_type, is_range_allowed);
-            }
-        } else {
-            $('#quizTimer').hide();
-        }
-    }, );
 
     function showCorrectAnswer(questionType, isRangeAllowed) {
 
@@ -495,4 +571,6 @@
     window.onpopstate = function () {
         history.go(1);
     };
+    
+    
 </script>

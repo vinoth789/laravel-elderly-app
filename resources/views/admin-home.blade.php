@@ -288,7 +288,7 @@
                     <div class="modal fade" id="yourModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
-                                <div class="modal-header" style="background:linear-gradient(.33turn,#ef864e,#ac3f79)">
+                                <div class="modal-header" style="background: #00b0f0">
                                     <b>{{ trans('app.StudentInfoHeader') }}</b>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>

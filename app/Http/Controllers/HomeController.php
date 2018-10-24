@@ -10,6 +10,7 @@ use App\Answer;
 use App\PointsHistory;
 use App\User;
 use App\DailyChallenge;
+use App\Notification;
 use DB;
 use Session;
 use Auth;
@@ -42,6 +43,36 @@ class HomeController extends Controller
         $quizs = Quiz::where('teacherQuizStatus','Finish')->whereNotIn('quizNumber',$quizCompleted)->get();
         $retakeQuizs = Quiz::where('teacherQuizStatus','Finish')->whereIn('quizNumber',$finishedQuiz)->get();
         $userPoints = User::orderByRaw('total_points DESC')->get();
+
+        $rankNotification = new Notification();
+        $rankNotification->quizCount = $quizs->count();
+        foreach($userPoints as $key => $userDetails){
+            
+            if($userDetails->id == $userId){
+                if($key == 0){
+                    $rankNotification->pointsDifference = 0;
+                }else{
+                    for ($x = $key; $x > 0; $x--) {
+
+                    $currentUserPoints = $userPoints[$key]->total_points;
+                    $prevUserPoints = $userPoints[($x-1)]->total_points;
+                    $pointsDifference = abs($currentUserPoints - $prevUserPoints);
+                    $competetorName = $userPoints[($x-1)]->name;
+                    $prevUserRank = abs($x);
+                    if($pointsDifference != 0){
+                        
+                        $rankNotification->pointsDifference = $pointsDifference;
+                        $rankNotification->competetorName = $competetorName;
+                        $rankNotification->rank = $prevUserRank;
+                        break;
+                    }
+                    
+                    }
+
+                }
+                
+            }
+        }
         $mytime = Carbon::now();
 
         $currentTime = $mytime->toDateString();
@@ -57,7 +88,7 @@ class HomeController extends Controller
         }
     }
     $question = AddQuestion::where('id',$questionID) ->first();
-        return view('home',['quizs' => $quizs, 'userTakenChallenge' => $userTakenChallenge, 'retakeQuizs' => $retakeQuizs, 'quizResults' => $quizResults, 'question' => $question, 'userPoints' => $userPoints]);
+        return view('home',['quizs' => $quizs, 'userTakenChallenge' => $userTakenChallenge, 'retakeQuizs' => $retakeQuizs, 'quizResults' => $quizResults, 'question' => $question, 'userPoints' => $userPoints, 'rankNotification' => $rankNotification]);
     }
 
 }

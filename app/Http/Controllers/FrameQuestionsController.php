@@ -195,11 +195,16 @@ class FrameQuestionsController extends Controller
             $answer=""; 
                 
                 $answer = "choice".$_POST['radio'];
+                if($questionType == 'OrderOptions'){
+                    $question = $request->input('orderOptionsQuestion');
+                } else {
+                    $question = $request->input('question');
+                }
                    
             
             DB::table('questions')->insert([
                 'questionNumber' => $request->input('questionNumber'),
-                'question' => $request->input('question'),
+                'question' => $question,
                 'choice1' => $request->input('choice1'),
                 'choice2' => $request->input('choice2'),
                 'choice3' => $request->input('choice3'),
@@ -303,12 +308,12 @@ class FrameQuestionsController extends Controller
             $answer=""; 
                 
                 //$radioValue = $_POST['radio'];
-                $answer = "singleImage".$_POST['singleImageRadio'];
+                $answer = "uploadSingleImage".$_POST['singleImageRadio'];
                 $imageName = $_POST['uploadSingleImage'];
-                $image1 = $_POST['singleImage0'];
-                $image2 = $_POST['singleImage1'];
-                $image3 = $_POST['singleImage2'];
-                $image4 = $_POST['singleImage3'];
+                $image1 = $_POST['uploadSingleImage0'];
+                $image2 = $_POST['uploadSingleImage1'];
+                $image3 = $_POST['uploadSingleImage2'];
+                $image4 = $_POST['uploadSingleImage3'];
 
             DB::table('questions')->insert([
                 'questionNumber' => $request->input('questionNumber'),

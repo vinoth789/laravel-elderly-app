@@ -2,6 +2,30 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
+            @if($rankNotification->pointsDifference == 0)
+            <div class="alert success">
+                <span class="closebtn">&times;</span>
+                <strong>Congradulations!</strong> You top the table.
+            </div>
+            @else
+            <div class="alert warning">
+                <span class="closebtn">&times;</span>
+                <strong>Alert!</strong> you are {{$rankNotification->pointsDifference+1}} points away from surpassing
+                {{$rankNotification->competetorName}} and climb up to rank {{$rankNotification->rank}}.
+            </div>
+            @endif
+            @if($rankNotification->quizCount != 0)
+            <div class="alert info">
+                <span class="closebtn">&times;</span>
+                @if($rankNotification->quizCount == 1)
+                <strong>Alert!</strong> One new quiz is available.
+                @else
+                <strong>Alert!</strong> {{$rankNotification->quizCount}} new quizes are available.
+                @endif
+            </div>
+            @endif
+
+
             <div class="card">
                 <div class="card-header">
                     <b>{{ trans('app.StudentDashboard') }}</b>
@@ -171,15 +195,6 @@
 
                                                 </div>
 
-                                                <!-- <div class="form-group">
-                                        <label for="add-question" style="font-weight:bold;">Choose difficulty level</label>
-                                        <select class="form-control input-sm" name="difficultyLevel" id="difficultyLevel" onchange="chooseLevel()" required>
-                                        <option value="Easy">Easy</option>
-                                        <option value="Medium">Medium</option>
-                                        <option value="Hard">Hard</option>
-                                        </select>
-                                    </div> -->
-
                                             </div>
                                         </div>
                                         <button id="takeToQuiz" class="buttonStyle" onclick="startQuiz()">
@@ -229,7 +244,7 @@
                                     <div id="dailyChallenge" role="tabpanel" class="tab-pane">
 
                                         <h3>{{ trans('app.DailyChallengeLabel') }}</h3>
-                                        <p><b>{{$userTakenChallenge}} </b>
+                                        <p>
                                             <i>{{ trans('app.DailyChallengeDescLine1') }}
                                                 <br>{{ trans('app.DailyChallengeDescLine2') }}</i>
                                         </p>
@@ -312,225 +327,229 @@
                                                             </div>
                                                         </div>
                                                         @endif @if ($question->questionType == 'ImageAsOptions')
-                                                        <div class="col-md-7 offset-md-2">
-                                                            <div class="table-responsive-sm">
-                                                                <table class="table">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th scope="col">{{ trans('app.Image1Label')}}</th>
-                                                                            <th scope="col">{{ trans('app.Image2Label')}}</th>
-                                                                            <th scope="col">{{ trans('app.Image3Label')}}</th>
-                                                                            <th scope="col">{{ trans('app.Image4Label')}}</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-
-                                                                        <tr>
-                                                                            <td><img width="150px" height="150px" src="/img/{{ $question->choice1 }}"></td>
-                                                                            <td><img width="150px" height="150px" src="/img/{{ $question->choice2 }}"></td>
-                                                                            <td><img width="150px" height="150px" src="/img/{{ $question->choice3 }}"></td>
-                                                                            <td><img width="150px" height="150px" src="/img/{{ $question->choice4 }}"></td>
-                                                                        </tr>
-
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="col-md-7 offset-md-2">
-                                                                    <div class="radio">
-                                                                        <label>
-                                                                            <input type="radio" name="radio" id="answer"
-                                                                                value="{{$question->choice1}}">
-                                                                            {{ trans('app.Image1Label') }}</label>
-                                                                    </div>
-                                                                    <div class="radio">
-                                                                        <label>
-                                                                            <input type="radio" name="radio" id="answer"
-                                                                                value="{{$question->choice2}}">
-                                                                            {{ trans('app.Image2Label') }}</label>
-                                                                    </div>
-                                                                    <div class="radio">
-                                                                        <label>
-                                                                            <input type="radio" name="radio" id="answer"
-                                                                                value="{{$question->choice3}}">
-                                                                            {{ trans('app.Image3Label') }}</label>
-                                                                    </div>
-                                                                    <div class="radio">
-                                                                        <label>
-                                                                            <input type="radio" name="radio" id="answer"
-                                                                                value="{{$question->choice4}}">
-                                                                            {{ trans('app.Image4Label') }}</label>
-                                                                    </div>
-
-                                                                </div>
-                                                            </div>
-                                                            @endif @if ($question->questionType == 'MultipleAnswer')
-                                                            <div class="form-group row">
-                                                                <div class="offset-md-2 col-md-12">
-
-                                                                    <div class="form-group">
-
-                                                                        <table width="70%">
+                                                        <div class="form-group row">
+                                                            <div class="col-md-7 offset-md-2">
+                                                                <div class="table-responsive-sm">
+                                                                    <table class="table">
+                                                                        <thead>
                                                                             <tr>
-                                                                                <label>{{
-                                                                                    trans('app.MultipleAnswersDesc') }}</label>
+                                                                                <th scope="col">{{
+                                                                                    trans('app.Image1Label')}}</th>
+                                                                                <th scope="col">{{
+                                                                                    trans('app.Image2Label')}}</th>
+                                                                                <th scope="col">{{
+                                                                                    trans('app.Image3Label')}}</th>
+                                                                                <th scope="col">{{
+                                                                                    trans('app.Image4Label')}}</th>
                                                                             </tr>
-                                                                            <tr>
-                                                                                <td width="15%">
-                                                                                    <label>{{ trans('app.Choice1Label')
-                                                                                        }}</label>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <input type="text" class="form-control"
-                                                                                        name="choice[1]" id="choice1"
-                                                                                        value="{{$question->choice1}}"
-                                                                                        readonly />
-                                                                                </td>
-                                                                                <td align="center">
-                                                                                    <input class="checkboxField" name="selected_ids[]"
-                                                                                        type="checkbox" value="1" />
-                                                                                </td>
-
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td>
-                                                                                    <label>{{ trans('app.Choice2Label')
-                                                                                        }}</label>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <input type="text" class="form-control"
-                                                                                        name="choice[2]" id="choice2"
-                                                                                        value="{{$question->choice2}}"
-                                                                                        readonly />
-                                                                                </td>
-                                                                                <td align="center">
-                                                                                    <input class="checkboxField" name="selected_ids[]"
-                                                                                        type="checkbox" value="2" />
-                                                                                </td>
-
-                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
 
                                                                             <tr>
-                                                                                <td>
-                                                                                    <label>{{ trans('app.Choice3Label')
-                                                                                        }}</label>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <input type="text" class="form-control"
-                                                                                        name="choice[3]" id="choice3"
-                                                                                        value="{{$question->choice3}}"
-                                                                                        readonly />
-                                                                                </td>
-                                                                                <td align="center">
-                                                                                    <input class="checkboxField" name="selected_ids[]"
-                                                                                        type="checkbox" value="3" />
-                                                                                </td>
-
+                                                                                <td><img class="img-responsive" width="150px"
+                                                                                        height="150px" src="/img/{{ $question->choice1 }}"></td>
+                                                                                <td><img class="img-responsive" width="150px"
+                                                                                        height="150px" src="/img/{{ $question->choice2 }}"></td>
+                                                                                <td><img class="img-responsive" width="150px"
+                                                                                        height="150px" src="/img/{{ $question->choice3 }}"></td>
+                                                                                <td><img class="img-responsive" width="150px"
+                                                                                        height="150px" src="/img/{{ $question->choice4 }}"></td>
                                                                             </tr>
-                                                                            <tr>
-                                                                                <td>
-                                                                                    <label>{{ trans('app.Choice3Label')
-                                                                                        }}</label>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <input type="text" class="form-control"
-                                                                                        name="choice[4]" id="choice4"
-                                                                                        value="{{$question->choice4}}"
-                                                                                        readonly />
-                                                                                </td>
-                                                                                <td align="center">
-                                                                                    <input class="checkboxField" name="selected_ids[]"
-                                                                                        type="checkbox" value="4" />
-                                                                                </td>
 
-                                                                            </tr>
-                                                                        </table>
-
-                                                                    </div>
-
+                                                                        </tbody>
+                                                                    </table>
                                                                 </div>
                                                             </div>
-                                                            @endif @if ($question->questionType == 'TrueFalse')
-                                                            <div class="form-group row">
-                                                                <div class="col-md-7 offset-md-2">
-                                                                    <div class="form-group">
-                                                                        <div class="radio">
-                                                                            <label>
-                                                                                <input type="radio" name="radio" id="answer"
-                                                                                    value="True"> {{
-                                                                                trans('app.TrueLabel') }}</label>
-                                                                        </div>
-                                                                        <div class="radio">
-                                                                            <label>
-                                                                                <input type="radio" name="radio" id="answer"
-                                                                                    value="False"> {{
-                                                                                trans('app.FalseLabel') }}</label>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            @endif @if ($question->questionType == 'FillUp')
-                                                            <div class="form-group row">
-                                                                <div class="offset-md-2 col-md-8">
-
-                                                                    <div class="form-group">
-                                                                        <label for="add-question">{{
-                                                                            trans('app.AnswerLabel') }}</label>
-                                                                        <input type="text" class="form-control" name="answer"
-                                                                            id="answer">
-                                                                    </div>
-
-                                                                </div>
-                                                            </div>
-                                                            @endif @if ($question->questionType == 'NumericQuestion')
-                                                            <div class="form-group row">
-                                                                <div class="offset-md-2 col-md-8">
-
-                                                                    <div class="form-group">
-                                                                        <label for="add-question">{{
-                                                                            trans('app.AnswerLabel') }}</label>
-                                                                        <input type="number" class="form-control" name="answer"
-                                                                            id="answer">
-                                                                    </div>
-
-                                                                </div>
-                                                            </div>
-                                                            @endif
-
                                                         </div>
-                                                    </div>
+                                                        <div class="form-group row">
+                                                            <div class="col-md-7 offset-md-2">
+                                                                <div class="radio">
+                                                                    <label>
+                                                                        <input type="radio" name="radio" id="answer"
+                                                                            value="{{$question->choice1}}">
+                                                                        {{ trans('app.Image1Label') }}</label>
+                                                                </div>
+                                                                <div class="radio">
+                                                                    <label>
+                                                                        <input type="radio" name="radio" id="answer"
+                                                                            value="{{$question->choice2}}">
+                                                                        {{ trans('app.Image2Label') }}</label>
+                                                                </div>
+                                                                <div class="radio">
+                                                                    <label>
+                                                                        <input type="radio" name="radio" id="answer"
+                                                                            value="{{$question->choice3}}">
+                                                                        {{ trans('app.Image3Label') }}</label>
+                                                                </div>
+                                                                <div class="radio">
+                                                                    <label>
+                                                                        <input type="radio" name="radio" id="answer"
+                                                                            value="{{$question->choice4}}">
+                                                                        {{ trans('app.Image4Label') }}</label>
+                                                                </div>
 
-                                                    <div class="form-group">
-                                                        <input type="hidden" class="form-control" name="questionID" id="questionID"
-                                                            value="{{$question->id}}" readonly required>
-                                                        <input type="hidden" class="form-control" name="questionType"
-                                                            id="questionType" value="{{$question->questionType}}"
-                                                            readonly required>
-                                                        <input type="hidden" class="form-control" name="questionAnswer"
-                                                            id="questionAnswer" value="{{$question->answer}}" readonly
-                                                            required>
-                                                        <input type="hidden" class="form-control" name="difficultyLevel"
-                                                            id="difficultyLevel" value="{{$question->difficultyLevel}}"
-                                                            readonly required>
-                                                    </div>
-                                                    <div class="alert alert-success" id="correctAnswer" style="display:none;">
-                                                        <strong>{{ trans('app.CorrectAnsMsg') }}</strong>
-                                                    </div>
-                                                    <div class="alert alert-success" id="exactAnswer" style="display:none;">
-                                                        <strong>{{ trans('app.CorrectAnsRangeMsg') }}
-                                                            {{$question->answer}}.</strong>
-                                                    </div>
-                                                    <div class="alert alert-danger" id="wrongAnswer" style="display:none;">
-                                                        <strong>{{ trans('app.WrongAnsMsg') }} {{$question->answer}}.</strong>
-                                                    </div>
-
-                                                    <div class="row mt-4">
-                                                        <div class="col-md-2 offset-md-10">
-                                                            <a class="btn btn-warning" style="color:white;" onclick="showCorrectAnswer('{{$question->questionType}}','{{$question->isRangeAllowed}}')"
-                                                                class="btn btn-info pull-right">{{
-                                                                trans('app.SubmitButton') }} </a>
+                                                            </div>
                                                         </div>
+                                                        @endif @if ($question->questionType == 'MultipleAnswer')
+                                                        <div class="form-group row">
+                                                            <div class="offset-md-2 col-md-12">
+
+                                                                <div class="form-group">
+
+                                                                    <table width="70%">
+                                                                        <tr>
+                                                                            <label>{{
+                                                                                trans('app.MultipleAnswersDesc') }}</label>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td width="15%">
+                                                                                <label>{{ trans('app.Choice1Label')
+                                                                                    }}</label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="text" class="form-control"
+                                                                                    name="choice[1]" id="choice1" value="{{$question->choice1}}"
+                                                                                    readonly />
+                                                                            </td>
+                                                                            <td align="center">
+                                                                                <input class="checkboxField" name="selected_ids[]"
+                                                                                    type="checkbox" value="1" />
+                                                                            </td>
+
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <label>{{ trans('app.Choice2Label')
+                                                                                    }}</label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="text" class="form-control"
+                                                                                    name="choice[2]" id="choice2" value="{{$question->choice2}}"
+                                                                                    readonly />
+                                                                            </td>
+                                                                            <td align="center">
+                                                                                <input class="checkboxField" name="selected_ids[]"
+                                                                                    type="checkbox" value="2" />
+                                                                            </td>
+
+                                                                        </tr>
+
+                                                                        <tr>
+                                                                            <td>
+                                                                                <label>{{ trans('app.Choice3Label')
+                                                                                    }}</label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="text" class="form-control"
+                                                                                    name="choice[3]" id="choice3" value="{{$question->choice3}}"
+                                                                                    readonly />
+                                                                            </td>
+                                                                            <td align="center">
+                                                                                <input class="checkboxField" name="selected_ids[]"
+                                                                                    type="checkbox" value="3" />
+                                                                            </td>
+
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <label>{{ trans('app.Choice3Label')
+                                                                                    }}</label>
+                                                                            </td>
+                                                                            <td>
+                                                                                <input type="text" class="form-control"
+                                                                                    name="choice[4]" id="choice4" value="{{$question->choice4}}"
+                                                                                    readonly />
+                                                                            </td>
+                                                                            <td align="center">
+                                                                                <input class="checkboxField" name="selected_ids[]"
+                                                                                    type="checkbox" value="4" />
+                                                                            </td>
+
+                                                                        </tr>
+                                                                    </table>
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        @endif @if ($question->questionType == 'TrueFalse')
+                                                        <div class="form-group row">
+                                                            <div class="col-md-7 offset-md-2">
+                                                                <div class="form-group">
+                                                                    <div class="radio">
+                                                                        <label>
+                                                                            <input type="radio" name="radio" id="answer"
+                                                                                value="True"> {{
+                                                                            trans('app.TrueLabel') }}</label>
+                                                                    </div>
+                                                                    <div class="radio">
+                                                                        <label>
+                                                                            <input type="radio" name="radio" id="answer"
+                                                                                value="False"> {{
+                                                                            trans('app.FalseLabel') }}</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        @endif @if ($question->questionType == 'FillUp')
+                                                        <div class="form-group row">
+                                                            <div class="offset-md-2 col-md-8">
+
+                                                                <div class="form-group">
+                                                                    <label for="add-question">{{
+                                                                        trans('app.AnswerLabel') }}</label>
+                                                                    <input type="text" class="form-control" name="answer"
+                                                                        id="answer">
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        @endif @if ($question->questionType == 'NumericQuestion')
+                                                        <div class="form-group row">
+                                                            <div class="offset-md-2 col-md-8">
+
+                                                                <div class="form-group">
+                                                                    <label for="add-question">{{
+                                                                        trans('app.AnswerLabel') }}</label>
+                                                                    <input type="number" class="form-control" name="answer"
+                                                                        id="answer">
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        @endif
+
                                                     </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <input type="hidden" class="form-control" name="questionID" id="questionID"
+                                                        value="{{$question->id}}" readonly required>
+                                                    <input type="hidden" class="form-control" name="questionType" id="questionType"
+                                                        value="{{$question->questionType}}" readonly required>
+                                                    <input type="hidden" class="form-control" name="questionAnswer" id="questionAnswer"
+                                                        value="{{$question->answer}}" readonly required>
+                                                    <input type="hidden" class="form-control" name="difficultyLevel" id="difficultyLevel"
+                                                        value="{{$question->difficultyLevel}}" readonly required>
+                                                </div>
+                                                <div class="alert alert-success" id="correctAnswer" style="display:none;">
+                                                    <strong>{{ trans('app.CorrectAnsMsg') }}</strong>
+                                                </div>
+                                                <div class="alert alert-success" id="exactAnswer" style="display:none;">
+                                                    <strong>{{ trans('app.CorrectAnsRangeMsg') }}
+                                                        {{$question->answer}}.</strong>
+                                                </div>
+                                                <div class="alert alert-danger" id="wrongAnswer" style="display:none;">
+                                                    <strong>{{ trans('app.WrongAnsMsg') }} {{$question->answer}}.</strong>
+                                                </div>
+
+                                                <div class="row mt-4">
+                                                    <div class="col-md-2 offset-md-10">
+                                                        <a class="btn btn-warning" style="color:white;" onclick="showCorrectAnswer('{{$question->questionType}}','{{$question->isRangeAllowed}}')"
+                                                            class="btn btn-info pull-right">{{
+                                                            trans('app.SubmitButton') }} </a>
+                                                    </div>
+                                                </div>
 
                                         </form>
                                         @else
@@ -556,6 +575,42 @@
     <head>
 
         <style>
+            .alert {
+                padding: 20px;
+                background-color: #f44336;
+                color: white;
+                opacity: 1;
+                transition: opacity 0.6s;
+                margin-bottom: 15px;
+            }
+
+            .alert.success {
+                background-color: #4CAF50;
+            }
+
+            .alert.info {
+                background-color: #2196F3;
+            }
+
+            .alert.warning {
+                background-color: #ff9800;
+            }
+
+            .closebtn {
+                margin-left: 15px;
+                color: white;
+                font-weight: bold;
+                float: right;
+                font-size: 22px;
+                line-height: 20px;
+                cursor: pointer;
+                transition: 0.3s;
+            }
+
+            .closebtn:hover {
+                color: black;
+            }
+
             #leaderBoardTable th,
             #leaderBoardTable td,
             #pointsHistoryTable th,
@@ -618,11 +673,6 @@
                 background-color: #f1f1f1;
             }
 
-            /* tbody {
-    display:block;
-    height:50px;
-    overflow:auto;
-} */
 
             thead,
             tbody tr {
@@ -642,6 +692,21 @@
             }
         </style>
         <script>
+            window.onload = function () {
+                var close = document.getElementsByClassName("closebtn");
+                var i;
+
+                for (i = 0; i < close.length; i++) {
+                    close[i].onclick = function () {
+                        var div = this.parentElement;
+                        div.style.opacity = "0";
+                        setTimeout(function () {
+                            div.style.display = "none";
+                        }, 600);
+                    }
+                }
+            };
+
             function startQuiz() {
 
                 var selected_quiz = $('#quizNumber').val();
