@@ -5,22 +5,22 @@
             @if($rankNotification->pointsDifference == 0)
             <div class="alert success">
                 <span class="closebtn">&times;</span>
-                <strong>Congradulations!</strong> You top the table.
+                <strong>{{ trans('app.Congradulations') }}</strong> {{ trans('app.TopTableNotification') }}
             </div>
             @else
             <div class="alert warning">
                 <span class="closebtn">&times;</span>
-                <strong>Alert!</strong> you are {{$rankNotification->pointsDifference+1}} points away from surpassing
-                {{$rankNotification->competetorName}} and climb up to rank {{$rankNotification->rank}}.
+                <strong>{{ trans('app.Alert') }}</strong> {{ trans('app.QuizesNotification1') }} {{$rankNotification->pointsDifference+1}} {{ trans('app.QuizesNotification2') }}
+                {{$rankNotification->competetorName}} {{ trans('app.QuizesNotification3') }} {{$rankNotification->rank}}.
             </div>
             @endif
             @if($rankNotification->quizCount != 0)
             <div class="alert info">
                 <span class="closebtn">&times;</span>
                 @if($rankNotification->quizCount == 1)
-                <strong>Alert!</strong> One new quiz is available.
+                <strong>{{ trans('app.Alert') }}</strong> {{ trans('app.OneQuizNotification') }}
                 @else
-                <strong>Alert!</strong> {{$rankNotification->quizCount}} new quizes are available.
+                <strong>{{ trans('app.Alert') }}</strong> {{$rankNotification->quizCount}} {{ trans('app.QuizesNotification') }}
                 @endif
             </div>
             @endif

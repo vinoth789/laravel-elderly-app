@@ -247,4 +247,14 @@ return [
       'ImageChangedAlert' => 'Image has been changed please click update',
       'VideoChangedAlert' => 'Video has been changed please click update',
 
+      /* New */ /* Home notifications */
+      'Congradulations' => 'Congradulations!',
+      'Alert' => 'Alert!',
+      'TopTableNotification' => 'You top the table.',
+      'OneQuizNotification' => 'One new quiz is available.',
+      'QuizesNotification' => 'new quizes are available.',
+      'QuizesNotification1' => 'you are',
+      'QuizesNotification2' => 'points away from surpassing',
+      'QuizesNotification3' => 'and climb up to rank',
+
 ];

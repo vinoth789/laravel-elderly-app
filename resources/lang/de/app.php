@@ -225,4 +225,14 @@ return [
       'ConfirmAlert' => 'Sicher',
       'SelectAnswerAlert' => 'Bitte wählen Sie die Antwort',
 
+      /* New */ /* Home notifications */
+      'Congradulations' => 'Congrats!',
+      'Alert' => 'Achtung!',
+      'TopTableNotification' => 'You top the table.',
+      'OneQuizNotification' => 'One new quiz is available.',
+      'QuizesNotification' => 'new quizes are available.',
+      'QuizesNotification1' => 'you are',
+      'QuizesNotification2' => 'points away from surpassing',
+      'QuizesNotification3' => 'and climb up to rank',
+
 ];

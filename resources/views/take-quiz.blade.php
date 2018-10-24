@@ -372,7 +372,7 @@
 window.onunload = function(e) {
 // Firefox || IE
 alert("pls");
-e = e || window.event;
+             e = e || window.event;
  
  var y = e.pageY || e.clientY;
   
@@ -424,7 +424,7 @@ e = e || window.event;
                     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-                    if (attempt != 'firstAttempt' && timerStatus != 'On') {
+                    if (attempt == 'firstAttempt' && timerStatus == 'On') {
                     $('#quizTimer').show();
                     document.getElementById("timer").innerHTML = minutes + "m " + seconds + "s ";
 
@@ -468,7 +468,7 @@ e = e || window.event;
                 var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                 var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-                if (attempt != 'firstAttempt' && timerStatus != 'On') {
+                if (attempt == 'firstAttempt' && timerStatus == 'On') {
                 $('#quizTimer').show();
                 document.getElementById("timer").innerHTML = minutes + "m " + seconds + "s ";
 
