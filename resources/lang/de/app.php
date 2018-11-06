@@ -142,6 +142,9 @@ return [
      'FillupQT' => 'Fülle die Lücken',
      'NumericQT' => 'Numerisch',
      'OrderOptionsQT' => 'Sortiere die Optionen',
+     'ImageAsOptionsQT' => 'Bildauswahl',
+     'ImageTypeQT' => 'Bild Typ',
+     'VideoTypeQT' => 'Video Typ',
      'AnswerLabel' => 'Antwort',
      'TrueLabel' => 'Wahr',
      'FalseLabel' => 'Falsch',
@@ -155,6 +158,10 @@ return [
      'Choice2Label' => 'Auswahl 2',
      'Choice3Label' => 'Auswahl 3',
      'Choice4Label' => 'Auswahl 4',
+     'Image1Label' => 'Bild 1',
+     'Image2Label' => 'Bild 2',
+     'Image3Label' => 'Bild 3',
+     'Image4Label' => 'Bild 4',
      'DifficultyLevelLabel' => 'Schwierikeitslevel',
      'EasyLabel' => 'Einfach',
      'MediumLabel' => 'Mittel',
@@ -169,6 +176,10 @@ return [
      'CorrectAnsMsg' => 'Richtige Antwort!',
      'CorrectAnsRangeMsg' => 'Richtige Antwort! Die genaue Antwort lautet: ',
      'WrongAnsMsg' => 'Leide eine falsche Antwort! Die Richtige Antwort lautet: ',
+     'ImageAsOptionsDZmsg' => 'Bitte fügen Sie 4 Bilder in diesem Bereich ein',
+     'ImageTypeDZmsg' => 'Bild hier ablegen',
+     'VideoTypeDZmsg' => 'Video hier ablegen',
+     
 
      /* View quiz page */
 
@@ -225,14 +236,20 @@ return [
       'ConfirmAlert' => 'Sicher',
       'SelectAnswerAlert' => 'Bitte wählen Sie die Antwort',
 
+      'AddOneImageAlert' => 'Bitte mindestens ein Bild einfügen',
+      'AddFourImageAlert' => 'Bitte ergänzen Sie 4 Bilder ',
+      'AddOneVideoAlert' => ' Bitte ergänzen Sie mindestens 1 Video',
+      'ImageChangedAlert' => 'Das Bild wurde geändert, bitte aktualisieren Sie die Seite. ',
+      'VideoChangedAlert' => 'Das Video wurde geändert, bitte aktualisieren Sie die Seite. ',
+
       /* New */ /* Home notifications */
-      'Congradulations' => 'Congrats!',
+      'Congradulations' => 'Herzlichen Glückwunsch!',
       'Alert' => 'Achtung!',
-      'TopTableNotification' => 'You top the table.',
-      'OneQuizNotification' => 'One new quiz is available.',
-      'QuizesNotification' => 'new quizes are available.',
-      'QuizesNotification1' => 'you are',
-      'QuizesNotification2' => 'points away from surpassing',
-      'QuizesNotification3' => 'and climb up to rank',
+      'TopTableNotification' => 'Sie sind Tabellenführer!',
+      'OneQuizNotification' => 'Ein neues Quiz ist verfügbar.',
+      'QuizesNotification' => 'Es stehen neue Quiz zur Verfügung',
+      'QuizesNotification1' => 'Sie sind',
+      'QuizesNotification2' => 'Punkte fehlen zum Gewinner',
+      'QuizesNotification3' => 'und klettere einen weiteren Rang',
 
 ];
