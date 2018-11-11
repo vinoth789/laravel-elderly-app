@@ -35,13 +35,13 @@ class TakeQuizController extends Controller
         // $questions = $results->paginate(1);
         // return view('take-quiz',['questions' => $questions]);
 
-        $questionNo = Session::get('currentQuestionNo');
-        $question = Session::get('currentQuestion');
-        $quiz = Session::get('quiz');
-        $attempt = Session::get('attempt');
-        $pageRefresh ="yes";
+        // $questionNo = Session::get('currentQuestionNo');
+        // $question = Session::get('currentQuestion');
+        // $quiz = Session::get('quiz');
+        // $attempt = Session::get('attempt');
+        // $pageRefresh ="yes";
 
-        return view('take-quiz',compact('question','quiz', 'questionNo','attempt','pageRefresh'));
+        // return view('take-quiz',compact('question','quiz', 'questionNo','attempt','pageRefresh'));
     }
 
     public function displayQuestions($quizNo,$attempt,$questionNo = null){
@@ -88,6 +88,7 @@ class TakeQuizController extends Controller
        
         $userId =  Auth::user()->id; 
         $questionExists = Answer::where('user_id',$userId)->where('quiz_number',$quizNo)->where('question_number',$questionID)->first();
+        
         $allQuestions = AddQuestion::where('quizNumber',$quizNo)->get();
         $count = count($allQuestions);
         $quiz = Quiz::find($quizNo);
@@ -95,10 +96,12 @@ class TakeQuizController extends Controller
 
         $request->session()->put('quiz', $quiz);
         $request->session()->put('attempt', $attempt);
-        if($attempt != "firstAttempt"){
-            $questionExists = AddQuestion::where('quizNumber',0)->get();;
+        if($attempt == "firstAttempt"){
+            $quizCount = count($questionExists);
+        }else{
+            $quizCount = -1;
         }
-        if (count($questionExists) == 0){
+        if ($quizCount == 0){
 
         if($questionType == 'MultipleChoice' || $questionType == 'OrderOptions' || $questionType == 'TrueFalse' || $questionType == 'ImageAsOptions' || $questionType == 'ImageType' ||$questionType == 'VideoType'){
                 $answer=""; 
