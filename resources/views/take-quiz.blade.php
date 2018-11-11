@@ -30,11 +30,9 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="form-group row">
-                                    <div class="col-md-8 offset-md-2" style="white-space: pre-wrap;">{{$question->questionNumber}}.
-                                        {{$question->question}}</div>
+                                    <div class="col-md-8 offset-md-2" style="white-space: pre-wrap;">{{$question->questionNumber}}.{{$question->question}}</div>
                                 </div>
-                                @if ($question->questionType == 'MultipleChoice' || $question->questionType ==
-                                'OrderOptions')
+                                @if ($question->questionType == 'MultipleChoice' || $question->questionType =='OrderOptions')
                                 <div class="form-group row">
                                     <div class="col-md-7 offset-md-2">
                                         <div class="radio">
@@ -529,26 +527,11 @@
             enteredAnswer = $('input[name=radio]:checked').val();
 
             imgCount = 0;
-            //radioList = $('input[name=radio]').length;
-            // $("#myForm input[type=radio]:checked").each(function() {
-            //         if(this.value == "No" && this.checked == true)
-            //         {
-            //             result = "fail";
-            //             return false;
-            //         }
-            // });
             $('input:radio').each(function () {
                 imgCount++;
                 if (actualAnswer == this.value) {
-                    alert(imgCount);
-                }
-                if ($(this).is(':checked')) {
-                    // You have a checked radio button here...
-                } else {
-                    // Or an unchecked one here...
                 }
             });
-            // alert(radioList);
 
         } else if (questionType == 'MultipleAnswer') {
             var values = new Array();
