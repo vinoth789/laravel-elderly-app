@@ -99,8 +99,9 @@ class TakeQuizController extends Controller
         if($attempt == "firstAttempt"){
             $quizCount = count($questionExists);
         }else{
-            $quizCount = -1;
+            $quizCount = 0;
         }
+        echo $quizCount;
         if ($quizCount == 0){
 
         if($questionType == 'MultipleChoice' || $questionType == 'OrderOptions' || $questionType == 'TrueFalse' || $questionType == 'ImageAsOptions' || $questionType == 'ImageType' ||$questionType == 'VideoType'){
