@@ -30,7 +30,8 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="form-group row">
-                                    <div class="col-md-8 offset-md-2" style="white-space: pre-wrap;">{{$question->questionNumber}}. {{$question->question}}</div>
+                                    <div class="col-md-8 offset-md-2" style="white-space: pre-wrap;">{{$question->questionNumber}}.
+                                        {{$question->question}}</div>
                                 </div>
                                 @if ($question->questionType == 'MultipleChoice' || $question->questionType ==
                                 'OrderOptions')
@@ -201,7 +202,7 @@
                                             </table>
                                         </div>
                                         <div class="form-group row">
-                                            <div class="col-md-7 offset-md-2">
+                                            <div class="col-md-7 offset-md-2" id="imageRadio">
                                                 <div class="radio">
                                                     <label>
                                                         <input type="radio" name="radio" id="answer" value="{{$question->choice1}}">
@@ -238,7 +239,7 @@
                                                         <tbody>
 
                                                             <tr>
-                                                                <td><img width="150px" height="150px" src="/img/{{ $question->imgFileName }}"></td>
+                                                                <td><img width="150px" height="150px" src="/img/{{$question->imgFileName}}"></td>
 
                                                             </tr>
 
@@ -315,6 +316,7 @@
                                         </div>
 
                                         <div class="form-group">
+                                            <input type="hidden" name="_method" value="POST">
                                             <input type="hidden" class="form-control" name="quizNo" id="quizNo" value="{{$quiz->quizNumber}}"
                                                 readonly required>
                                             <input type="hidden" class="form-control" name="timerStatus" id="timerStatus"
@@ -332,7 +334,10 @@
                                             <input type="hidden" class="form-control" name="attempt" id="attempt" value="{{$attempt}}"
                                                 readonly required>
                                             <input type="hidden" class="form-control" name="isRangeAllowed" id="isRangeAllowed"
-                                                value="{{$question->isRangeAllowed}}}" readonly required>
+                                                value="{{$question->isRangeAllowed}}" readonly required>
+
+                                            <input type="hidden" class="form-control" name="pageRefresh" id="pageRefresh"
+                                                value="{{$pageRefresh}}" readonly required>
                                         </div>
                                         <div class="alert alert-success" id="correctAnswer" style="display:none;">
                                             <strong>{{ trans('app.CorrectAnsMsg') }}</strong>
@@ -342,6 +347,10 @@
                                         </div>
                                         <div class="alert alert-danger" id="wrongAnswer" style="display:none;">
                                             <strong>{{ trans('app.WrongAnsMsg') }} {{$question->answer}}. </strong>
+                                        </div>
+                                        <div class="alert alert-danger" id="wrongAnswerImgVid" style="display:none;">
+                                            <strong>{{ trans('app.WrongAnsMsg') }} <span id="wrongAnsMsg"></span>.
+                                            </strong>
                                         </div>
                                         @if ($questionNo != -1)
                                         <div class="row mt-4">
@@ -369,45 +378,49 @@
 @endsection
 
 <script>
-window.onunload = function(e) {
-// Firefox || IE
-alert("pls");
-             e = e || window.event;
- 
- var y = e.pageY || e.clientY;
-  
- if(y < 0)  alert("Window closed");
- else alert("Window refreshed");e.preventDefault();
-
-}
     window.onload = chooseLevel;
 
     function chooseLevel(e) {
 
         $("a").click(function () {
-                 logoutFlag = false;
-                 return false;
-             });
-
-
-  
+            logoutFlag = false;
+            return false;
+        });
 
         var difficultyLevel = document.getElementById("difficultyLevel").value;
         attempt = document.getElementById("attempt").value;
         timerStatus = document.getElementById("timerStatus").value;
         question_type = document.getElementById("questionType").value;
         is_range_allowed = document.getElementById("isRangeAllowed").value;
+        pageRefresh = document.getElementById("pageRefresh").value;
+        if (pageRefresh == "yes") {
+            refreshMinutes = localStorage.getItem("minutes");
+            refreshSeconds = localStorage.getItem("seconds");
+        }
+
         if (question_type == 'VideoType') {
             var vid = document.getElementById("videoTypeQuestion");
 
             vid.onloadedmetadata = function () {
                 videoDuration = Math.round(vid.duration);
                 if (difficultyLevel == 'Easy') {
-                    myTimeSpan = 1 * (15 + videoDuration) * 1000;
+                    if (pageRefresh == "yes") {
+                        myTimeSpan = 1 * (refreshSeconds + videoDuration) * 1000;
+                    } else {
+                        myTimeSpan = 1 * (15 + videoDuration) * 1000;
+                    }
                 } else if (difficultyLevel == 'Medium') {
-                    myTimeSpan = (1 * 30 * 1000) + vid.duration;
+                    if (pageRefresh == "yes") {
+                        myTimeSpan = 1 * (refreshSeconds + videoDuration) * 1000;
+                    } else {
+                        myTimeSpan = 1 * (30 + videoDuration) * 1000;
+                    }
                 } else {
-                    myTimeSpan = (1 * 45 * 1000) + vid.duration;
+                    if (pageRefresh == "yes") {
+                        myTimeSpan = 1 * (refreshSeconds + videoDuration) * 1000;
+                    } else {
+                        myTimeSpan = 1 * (45 + videoDuration) * 1000;
+                    }
                 }
 
 
@@ -423,15 +436,15 @@ alert("pls");
                     var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
+                    $minutes = localStorage.setItem("minutes", minutes);
+                    $seconds = localStorage.setItem("seconds", seconds);
                     if (attempt == 'firstAttempt' && timerStatus == 'On') {
-                    $('#quizTimer').show();
-                    document.getElementById("timer").innerHTML = minutes + "m " + seconds + "s ";
-
-                    if (distance < 0) {
-                        clearInterval(x);
-                        showCorrectAnswer(question_type, is_range_allowed);
-                    }
+                        $('#quizTimer').show();
+                        document.getElementById("timer").innerHTML = minutes + "m " + seconds + "s ";
+                        if (distance < 0) {
+                            clearInterval(x);
+                            showCorrectAnswer(question_type, is_range_allowed);
+                        }
                     } else {
                         $('#quizTimer').hide();
                     }
@@ -442,16 +455,27 @@ alert("pls");
 
             // 5 minutes in milliseconds
             if (difficultyLevel == 'Easy') {
-
-                myTimeSpan = 1 * 15 * 1000;
+                if (pageRefresh == "yes") {
+                    myTimeSpan = 1 * refreshSeconds * 1000;
+                } else {
+                    myTimeSpan = 1 * 15 * 1000;
+                }
 
             } else if (difficultyLevel == 'Medium') {
 
-                myTimeSpan = 1 * 30 * 1000;
+                if (pageRefresh == "yes") {
+                    myTimeSpan = 1 * refreshSeconds * 1000;
+                } else {
+                    myTimeSpan = 1 * 30 * 1000;
+                }
 
             } else {
 
-                myTimeSpan = 1 * 45 * 1000;
+                if (pageRefresh == "yes") {
+                    myTimeSpan = 1 * refreshSeconds * 1000;
+                } else {
+                    myTimeSpan = 1 * 45 * 1000;
+                }
 
             }
 
@@ -459,6 +483,7 @@ alert("pls");
             countDownDate.setTime(countDownDate.getTime() + myTimeSpan);
 
             var x = setInterval(function () {
+
 
                 var now = new Date().getTime();
                 var distance = countDownDate - now;
@@ -468,14 +493,18 @@ alert("pls");
                 var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                 var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-                if (attempt == 'firstAttempt' && timerStatus == 'On') {
-                $('#quizTimer').show();
-                document.getElementById("timer").innerHTML = minutes + "m " + seconds + "s ";
+                $minutes = localStorage.setItem("minutes", minutes);
+                $seconds = localStorage.setItem("seconds", seconds);
 
-                if (distance < 0) {
-                    clearInterval(x);
-                    showCorrectAnswer(question_type, is_range_allowed);
-                }
+                if (attempt == 'firstAttempt' && timerStatus == 'On') {
+                    $('#quizTimer').show();
+
+                    document.getElementById("timer").innerHTML = minutes + "m " + seconds + "s ";
+
+                    if (distance < 0) {
+                        clearInterval(x);
+                        showCorrectAnswer(question_type, is_range_allowed);
+                    }
                 } else {
                     $('#quizTimer').hide();
                 }
@@ -493,9 +522,33 @@ alert("pls");
 
 
         var enteredAnswer = "";
+        var actualAnswer = document.getElementById("questionAnswer").value;
+        var min, max;
         if (questionType == 'MultipleChoice' || questionType == 'OrderOptions' || questionType == 'TrueFalse' ||
             questionType == 'ImageAsOptions' || questionType == 'ImageType' || questionType == 'VideoType') {
             enteredAnswer = $('input[name=radio]:checked').val();
+
+            imgCount = 0;
+            //radioList = $('input[name=radio]').length;
+            // $("#myForm input[type=radio]:checked").each(function() {
+            //         if(this.value == "No" && this.checked == true)
+            //         {
+            //             result = "fail";
+            //             return false;
+            //         }
+            // });
+            $('input:radio').each(function () {
+                imgCount++;
+                if (actualAnswer == this.value) {
+                    alert(imgCount);
+                }
+                if ($(this).is(':checked')) {
+                    // You have a checked radio button here...
+                } else {
+                    // Or an unchecked one here...
+                }
+            });
+            // alert(radioList);
 
         } else if (questionType == 'MultipleAnswer') {
             var values = new Array();
@@ -522,8 +575,6 @@ alert("pls");
             enteredAnswer = "";
         }
 
-        var actualAnswer = document.getElementById("questionAnswer").value;
-        var min, max;
         if (questionType == 'NumericQuestion') {
             if (isRangeAllowed == 'Yes') {
                 min = parseInt(actualAnswer) - 6;
@@ -533,30 +584,49 @@ alert("pls");
                     if (enteredAnswer.toUpperCase() === actualAnswer.toUpperCase()) {
                         $('#correctAnswer').show();
                         $('#wrongAnswer').hide();
+                        $('#wrongAnswerImgVid').hide();
                     } else {
                         $('#exactAnswer').show();
                         $('#correctAnswer').hide();
                         $('#wrongAnswer').hide();
+                        $('#wrongAnswerImgVid').hide();
                     }
                 } else {
                     $('#wrongAnswer').show();
                     $('#correctAnswer').hide();
+                    $('#wrongAnswerImgVid').hide();
                 }
             } else if (enteredAnswer.toUpperCase() === actualAnswer.toUpperCase()) {
                 $('#correctAnswer').show();
                 $('#wrongAnswer').hide();
+                $('#wrongAnswerImgVid').hide();
             } else {
                 $('#wrongAnswer').show();
                 $('#correctAnswer').hide();
+                $('#wrongAnswerImgVid').hide();
+            }
+        } else if (questionType == 'ImageAsOptions') {
+            if (enteredAnswer.toUpperCase() === actualAnswer.toUpperCase()) {
+
+                $('#correctAnswer').show();
+                $('#wrongAnswer').hide();
+                $('#wrongAnswerImgVid').hide();
+            } else {
+                $('#correctAnswer').hide();
+                $('#wrongAnswer').hide();
+                $('#wrongAnswerImgVid').show();
+                $('#wrongAnsMsg').html("image" + imgCount);
             }
         } else if (enteredAnswer.toUpperCase() === actualAnswer.toUpperCase()) {
 
             $('#correctAnswer').show();
             $('#wrongAnswer').hide();
+            $('#wrongAnswerImgVid').hide();
         } else {
 
             $('#wrongAnswer').show();
             $('#correctAnswer').hide();
+            $('#wrongAnswerImgVid').hide();
         }
 
         setTimeout("submitAnswerForm()", 2500);
@@ -571,6 +641,4 @@ alert("pls");
     window.onpopstate = function () {
         history.go(1);
     };
-    
-    
 </script>

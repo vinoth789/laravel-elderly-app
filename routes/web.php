@@ -42,6 +42,7 @@ Route::post('timer-status/{qId}', 'AdminController@updateTimer')->name('timer.st
 Route::get('/student-result', 'AdminController@searchStudentResults')->name('studentResult.search');
 Route::post('/getUserDetails', 'UserDetailsController@store')->name('student.details');
 Route::get('/summary.show/{quizNo}','TakeQuizController@showQuizSummary')->name('summary.show');
+Route::post('/next-question','TakeQuizController@store')->name('next.question');
 // Route::get('/summary.show', function () {
 //     $pointsHistory = Session::get('pointsHistory');
 //     echo $pointsHistory;

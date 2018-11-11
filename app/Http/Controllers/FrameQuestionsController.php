@@ -90,12 +90,9 @@ class FrameQuestionsController extends Controller
     public function fileDestroy(Request $request)
     {
         $filename =  $request->get('filename');
-        //$filename =  $request->get('id');
-        // AddQuestion::where('imgFileName',$filename)->delete();
         $path=public_path().'/img/'.$filename;
         if (file_exists($path)) {
             unlink($path);
-            //$filename->delete();
         }
         return $filename;  
     }
@@ -103,23 +100,17 @@ class FrameQuestionsController extends Controller
     public function videoDestroy(Request $request)
     {
         $filename =  $request->get('filename');
-        //$filename =  $request->get('id');
-        // AddQuestion::where('imgFileName',$filename)->delete();
         $path=public_path().'/video/'.$filename;
         if (file_exists($path)) {
             unlink($path);
-            //$filename->delete();
         }
         return $filename;  
     }
  
     public function imageFromServer(Request $request)
     {
-        //echo "hello";
         $filenames =[];
         $filenames =  $request->input();
-        //$filenames =[];
-        //$filenames = Input::all();
 
         $imageNameWithSize = [];
 
@@ -138,17 +129,11 @@ class FrameQuestionsController extends Controller
         return response()->json([
             'imageNameWithSize' => $imageNameWithSize
         ]);
-        //return $imageNameWithSize;
     }
 
     public function videoFromServer(Request $request)
     {
-        //$filenames =[];
         $filename =  $request->get('filename');
-        // $filenames =  $request->input();
-        // $filename = serialize($filenames);
-        //$filename.trim();
-
             $path=public_path().'/video/'.$filename;
 
                 return response()->json([
@@ -160,12 +145,8 @@ class FrameQuestionsController extends Controller
 
     public function singleImageFromServer(Request $request)
     {
-        //$filenames =[];
-        $filename =  $request->get('filename');
-        // $filenames =  $request->input();
-        // $filename = serialize($filenames);
-        //$filename.trim();
 
+        $filename =  $request->get('filename');
             $path=public_path().'/img/'.$filename;
 
                 return response()->json([

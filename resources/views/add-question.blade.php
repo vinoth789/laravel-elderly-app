@@ -126,7 +126,7 @@
                                                         </td>
                                                         <td>
                                                             <input type="text" class="form-control" name="uploadVideo0"
-                                                                id="uploadVideo0" required />
+                                                                id="uploadVideo0"  />
 
                                                         </td>
                                                         <td align="center">
@@ -140,7 +140,7 @@
                                                         </td>
                                                         <td>
                                                             <input type="text" class="form-control" name="uploadVideo1"
-                                                                id="uploadVideo1" required />
+                                                                id="uploadVideo1"  />
 
                                                         </td>
                                                         <td align="center">
@@ -155,7 +155,7 @@
                                                         </td>
                                                         <td>
                                                             <input type="text" class="form-control" name="uploadVideo2"
-                                                                id="uploadVideo2" required />
+                                                                id="uploadVideo2"  />
 
                                                         </td>
                                                         <td align="center">
@@ -169,7 +169,7 @@
                                                         </td>
                                                         <td>
                                                             <input type="text" class="form-control" name="uploadVideo3"
-                                                                id="uploadVideo3" required />
+                                                                id="uploadVideo3"  />
 
                                                         </td>
                                                         <td align="center">
@@ -217,7 +217,7 @@
                                                         </td>
                                                         <td>
                                                             <input type="text" class="form-control" name="uploadSingleImage0"
-                                                                id="uploadSingleImage0" required />
+                                                                id="uploadSingleImage0"  />
 
                                                         </td>
                                                         <td align="center">
@@ -231,7 +231,7 @@
                                                         </td>
                                                         <td>
                                                             <input type="text" class="form-control" name="uploadSingleImage1"
-                                                                id="uploadSingleImage1" required />
+                                                                id="uploadSingleImage1"  />
 
                                                         </td>
                                                         <td align="center">
@@ -246,7 +246,7 @@
                                                         </td>
                                                         <td>
                                                             <input type="text" class="form-control" name="uploadSingleImage2"
-                                                                id="uploadSingleImage2" required />
+                                                                id="uploadSingleImage2"  />
 
                                                         </td>
                                                         <td align="center">
@@ -260,7 +260,7 @@
                                                         </td>
                                                         <td>
                                                             <input type="text" class="form-control" name="uploadSingleImage3"
-                                                                id="uploadSingleImage3" required />
+                                                                id="uploadSingleImage3"  />
 
                                                         </td>
                                                         <td align="center">
@@ -290,8 +290,6 @@
                                                         <input name="file" type="file" multiple />
                                                     </div>
 
-                                                    <!-- <div class="dropzone-previews" id="dropzonePreview"></div> -->
-
                                                     <h4 style="text-align: center;color:#428bca;">{{
                                                         trans('app.ImageAsOptionsDZmsg') }}<span class="glyphicon glyphicon-hand-down"></span></h4>
 
@@ -304,7 +302,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td width="15%">
-                                                            <!-- <label>{{ trans('app.Choice1Label') }}</label> -->
+                                                            
                                                             <label>{{ trans('app.Image1Label') }}</label>
                                                         </td>
                                                         <td>
@@ -319,7 +317,6 @@
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                            <!-- <label>{{ trans('app.Choice2Label') }}</label> -->
                                                             <label>{{ trans('app.Image2Label') }}</label>
                                                         </td>
                                                         <td>
@@ -335,7 +332,6 @@
 
                                                     <tr>
                                                         <td>
-                                                            <!-- <label>{{ trans('app.Choice3Label') }}</label> -->
                                                             <label>{{ trans('app.Image3Label') }}</label>
                                                         </td>
                                                         <td>
@@ -350,7 +346,6 @@
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                            <!-- <label>{{ trans('app.Choice4Label') }}</label> -->
                                                             <label>{{ trans('app.Image4Label') }}</label>
                                                         </td>
                                                         <td>
@@ -661,6 +656,9 @@
                     }
                 });
 
+            }else{
+                $('#questionForm').show();
+                $("[name='question']").attr("required", true);
             }
 
 
@@ -672,6 +670,7 @@
             $('#imageUploadPanel').hide();
             $('#videoUploadPanel').hide();
             $('#imageAsOptionsPanel').hide();
+            
 
             $("[name='choice1']").attr("required", true);
             $("[name='choice2']").attr("required", true);
@@ -709,6 +708,9 @@
             $('#videoUploadPanel').hide();
             $('#imageAsOptionsPanel').hide();
             $('#orderOptionsForm').hide();
+            $('#questionForm').show();
+                
+            $("[name='question']").attr("required", true);
 
             $("[name='orderOptionsQuestion']").attr("required", false);
 
@@ -748,6 +750,9 @@
             $('#videoUploadPanel').hide();
             $('#imageAsOptionsPanel').hide();
             $('#orderOptionsForm').hide();
+            $('#questionForm').show();
+                
+            $("[name='question']").attr("required", true);
 
             $("[name='orderOptionsQuestion']").attr("required", false);
 
@@ -787,6 +792,9 @@
             $('#videoUploadPanel').hide();
             $('#imageAsOptionsPanel').hide();
             $('#orderOptionsForm').hide();
+            $('#questionForm').show();
+                
+            $("[name='question']").attr("required", true);
 
             $("[name='orderOptionsQuestion']").attr("required", false);
 
@@ -826,6 +834,9 @@
             $('#videoUploadPanel').hide();
             $('#imageAsOptionsPanel').hide();
             $('#orderOptionsForm').hide();
+            $('#questionForm').show();
+                
+            $("[name='question']").attr("required", true);
 
             $("[name='orderOptionsQuestion']").attr("required", false);
 
@@ -864,6 +875,9 @@
             $('#imageUploadPanel').hide();
             $('#imageAsOptionsPanel').show();
             $('#orderOptionsForm').hide();
+            $('#questionForm').show();
+                
+            $("[name='question']").attr("required", true);
 
             $("[name='orderOptionsQuestion']").attr("required", false);
 
@@ -903,6 +917,9 @@
             $('#videoUploadPanel').show();
             $('#imageAsOptionsPanel').hide();
             $('#orderOptionsForm').hide();
+            $('#questionForm').show();
+                
+            $("[name='question']").attr("required", true);
 
             $("[name='orderOptionsQuestion']").attr("required", false);
 
@@ -942,6 +959,9 @@
             $('#videoUploadPanel').hide();
             $('#imageAsOptionsPanel').hide();
             $('#orderOptionsForm').hide();
+            $('#questionForm').show();
+                
+            $("[name='question']").attr("required", true);
 
             $("[name='orderOptionsQuestion']").attr("required", false);
 

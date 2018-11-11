@@ -10,6 +10,7 @@ use App\Answer;
 use App\PointsHistory;
 use DB;
 use Auth;
+use Session;
 
 class TakeQuizController extends Controller
 {
@@ -27,12 +28,20 @@ class TakeQuizController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($view)
+    public function index()
     {
-        $results = AddQuestion::orderBy('id');
-        $results->where('quizNumber',1);
-        $questions = $results->paginate(1);
-        return view('take-quiz',['questions' => $questions]);
+        // $results = AddQuestion::orderBy('id');
+        // $results->where('quizNumber',1);
+        // $questions = $results->paginate(1);
+        // return view('take-quiz',['questions' => $questions]);
+
+        $questionNo = Session::get('currentQuestionNo');
+        $question = Session::get('currentQuestion');
+        $quiz = Session::get('quiz');
+        $attempt = Session::get('attempt');
+        $pageRefresh ="yes";
+
+        return view('take-quiz',compact('question','quiz', 'questionNo','attempt','pageRefresh'));
     }
 
     public function displayQuestions($quizNo,$attempt,$questionNo = null){
@@ -48,35 +57,8 @@ class TakeQuizController extends Controller
                 }
         }
         $quiz = Quiz::find($quizNo);
-
-        return view('take-quiz',compact('question','quiz', 'questionNo','attempt'));
-    }
-
-    public function storeAnswers(Request $request){
-    
-        $qNumber = $request->input('answer');
-        
-        $userId =  Auth::user()->id;
-        
-        $allQuestions = AddQuestion::where('quizNumber',$quizNo)->get();
-        $count = count($allQuestions);
-
-        if($questionNo == null){
-            $questionNo = 0;
-        if($allQuestions->isNotEmpty()) { 
-            $question = $allQuestions[$questionNo];
-
-            }
-        }elseif($questionNo < $count){
-            $questionNo++;
-            if($allQuestions->isNotEmpty()) {
-                $question = $allQuestions[$questionNo];
-
-            }
-        }
-
-        $quiz = Quiz::find($quizNo);
-        return view('take-quiz',compact('question','quiz', 'questionNo'));
+        $pageRefresh = "no";
+        return view('take-quiz',compact('question','quiz', 'questionNo','attempt','pageRefresh'));
     }
    
     public function create()
@@ -102,9 +84,21 @@ class TakeQuizController extends Controller
         $difficultyLevel = $request->input('difficultyLevel');
         $quizNo = $request->input('quizNo');
         $attempt = $request->input('attempt');
-        
-        
-        $userId =  Auth::user()->id;
+        $pageRefresh = "no";
+       
+        $userId =  Auth::user()->id; 
+        $questionExists = Answer::where('user_id',$userId)->where('quiz_number',$quizNo)->where('question_number',$questionID)->first();
+        $allQuestions = AddQuestion::where('quizNumber',$quizNo)->get();
+        $count = count($allQuestions);
+        $quiz = Quiz::find($quizNo);
+        $quizName = $quiz->quizName; 
+
+        $request->session()->put('quiz', $quiz);
+        $request->session()->put('attempt', $attempt);
+        if($attempt != "firstAttempt"){
+            $questionExists = AddQuestion::where('quizNumber',0)->get();;
+        }
+        if (count($questionExists) == 0){
 
         if($questionType == 'MultipleChoice' || $questionType == 'OrderOptions' || $questionType == 'TrueFalse' || $questionType == 'ImageAsOptions' || $questionType == 'ImageType' ||$questionType == 'VideoType'){
                 $answer=""; 
@@ -136,8 +130,9 @@ class TakeQuizController extends Controller
         if($questionType == 'NumericQuestion'){
             $isRangeAllowed = $rightAnswer->isRangeAllowed;
             if($isRangeAllowed  == 'Yes'){
-                $min = $correctAnswer-5;
-                $max = $correctAnswer+5;
+                $range = $correctAnswer*0.1;
+                $min = $correctAnswer-$range;
+                $max = $correctAnswer+$range;
                 if(($min <= $answer) && ($answer <= $max)){
                     $is_correct = 'yes';
                 }
@@ -159,13 +154,7 @@ class TakeQuizController extends Controller
         }else{
                 $points=0; 
             }
-            
-        
-        $allQuestions = AddQuestion::where('quizNumber',$quizNo)->get();
-        $count = count($allQuestions);
-        $quiz = Quiz::find($quizNo);
-        $quizName = $quiz->quizName; 
-        
+
         if($questionNo == -1){
             if($attempt == "firstAttempt"){  
             DB::table('quiz_results')->insert([
@@ -219,12 +208,16 @@ class TakeQuizController extends Controller
             $questionNo++;
             if($allQuestions->isNotEmpty()) {
                 $question = $allQuestions[$questionNo];
-
             }
+            $request->session()->put('currentQuestionNo', $questionNo);
+            $request->session()->put('currentQuestion', $question);
+            
         }else{
             $questionNo++;
             $question = $allQuestions[$questionNo];
             $questionNo = -1;
+            $request->session()->put('currentQuestionNo', $questionNo);
+            $request->session()->put('currentQuestion', $question);
         }
         if($attempt == "firstAttempt"){
         DB::table('quiz_results')->insert([
@@ -236,17 +229,21 @@ class TakeQuizController extends Controller
             'points' => $points,
         ]);
         }
-        
-        return view('take-quiz',compact('question','quiz', 'questionNo','attempt'));
+        return view('take-quiz',compact('question','quiz', 'questionNo','attempt','pageRefresh'));
        }
-        
+    }else{
+
+        $questionNo = $request->session()->get('currentQuestionNo');
+        $question = $request->session()->get('currentQuestion');
+        $pageRefresh = "yes";
+        return view('take-quiz',compact('question','quiz', 'questionNo','attempt','pageRefresh'));
+    }    
     }
 
     public function showQuizSummary($quizNo)
     {
         $userId =  Auth::user()->id;
         $pointsHistory = PointsHistory::get()->where('user_id',$userId)->where('quiz_number',$quizNo);
-
         return view('quiz-summary',['pointsHistory' => $pointsHistory]);
     }
 
