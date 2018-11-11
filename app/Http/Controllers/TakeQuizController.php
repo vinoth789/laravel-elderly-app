@@ -35,13 +35,13 @@ class TakeQuizController extends Controller
         // $questions = $results->paginate(1);
         // return view('take-quiz',['questions' => $questions]);
 
-        // $questionNo = Session::get('currentQuestionNo');
-        // $question = Session::get('currentQuestion');
-        // $quiz = Session::get('quiz');
-        // $attempt = Session::get('attempt');
-        // $pageRefresh ="yes";
+        $questionNo = Session::get('currentQuestionNo');
+        $question = Session::get('currentQuestion');
+        $quiz = Session::get('quiz');
+        $attempt = Session::get('attempt');
+        $pageRefresh ="yes";
 
-        // return view('take-quiz',compact('question','quiz', 'questionNo','attempt','pageRefresh'));
+        return view('take-quiz',compact('question','quiz', 'questionNo','attempt','pageRefresh'));
     }
 
     public function displayQuestions($quizNo,$attempt,$questionNo = null){
@@ -87,7 +87,7 @@ class TakeQuizController extends Controller
         $pageRefresh = "no";
        
         $userId =  Auth::user()->id; 
-        $questionExists = Answer::where('user_id',$userId)->where('quiz_number',$quizNo)->where('question_number',$questionID)->first();
+        $questionExists = Answer::where('user_id',$userId)->where('quiz_number',$quizNo)->where('question_number',$questionID)->get();
         
         $allQuestions = AddQuestion::where('quizNumber',$quizNo)->get();
         $count = count($allQuestions);
@@ -97,11 +97,15 @@ class TakeQuizController extends Controller
         $request->session()->put('quiz', $quiz);
         $request->session()->put('attempt', $attempt);
         if($attempt == "firstAttempt"){
+            if($questionExists->isNotEmpty()){
             $quizCount = count($questionExists);
+            }else{
+                $quizCount = 0;  
+            }
         }else{
             $quizCount = 0;
         }
-        echo $quizCount;
+
         if ($quizCount == 0){
 
         if($questionType == 'MultipleChoice' || $questionType == 'OrderOptions' || $questionType == 'TrueFalse' || $questionType == 'ImageAsOptions' || $questionType == 'ImageType' ||$questionType == 'VideoType'){
