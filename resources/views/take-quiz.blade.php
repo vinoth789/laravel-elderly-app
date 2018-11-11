@@ -392,7 +392,6 @@
         is_range_allowed = document.getElementById("isRangeAllowed").value;
         pageRefresh = document.getElementById("pageRefresh").value;
         if (pageRefresh == "yes") {
-            refreshMinutes = localStorage.getItem("minutes");
             refreshSeconds = localStorage.getItem("seconds");
         }
 
@@ -403,24 +402,26 @@
                 videoDuration = Math.round(vid.duration);
                 if (difficultyLevel == 'Easy') {
                     if (pageRefresh == "yes") {
-                        myTimeSpan = 1 * (refreshSeconds + videoDuration) * 1000;
+                        myTimeSpan = 1 * refreshSeconds * 1000;
                     } else {
-                        myTimeSpan = 1 * (15 + videoDuration) * 1000;
+                        videoDurationLeft = ((parseInt(videoDuration))+15);
+                        myTimeSpan = 1 * videoDurationLeft * 1000;
                     }
                 } else if (difficultyLevel == 'Medium') {
                     if (pageRefresh == "yes") {
-                        myTimeSpan = 1 * (refreshSeconds + videoDuration) * 1000;
+                        myTimeSpan = 1 * refreshSeconds * 1000;
                     } else {
-                        myTimeSpan = 1 * (30 + videoDuration) * 1000;
+                        videoDurationLeft = ((parseInt(videoDuration))+30);
+                        myTimeSpan = 1 * videoDurationLeft * 1000;
                     }
                 } else {
                     if (pageRefresh == "yes") {
-                        myTimeSpan = 1 * (refreshSeconds + videoDuration) * 1000;
+                        myTimeSpan = 1 * refreshSeconds * 1000;
                     } else {
-                        myTimeSpan = 1 * (45 + videoDuration) * 1000;
+                        videoDurationLeft = ((parseInt(videoDuration))+45);
+                        myTimeSpan = 1 * videoDurationLeft * 1000;
                     }
                 }
-
 
                 countDownDate = new Date();
                 countDownDate.setTime(countDownDate.getTime() + myTimeSpan);
@@ -434,8 +435,10 @@
                     var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                    $minutes = localStorage.setItem("minutes", minutes);
-                    $seconds = localStorage.setItem("seconds", seconds);
+
+                    videoDurationLeft = ((parseInt(minutes)*60)+parseInt(seconds));
+                    localStorage.setItem("seconds", videoDurationLeft);
+
                     if (attempt == 'firstAttempt' && timerStatus == 'On') {
                         $('#quizTimer').show();
                         document.getElementById("timer").innerHTML = minutes + "m " + seconds + "s ";
@@ -530,6 +533,7 @@
             $('input:radio').each(function () {
                 imgCount++;
                 if (actualAnswer == this.value) {
+                    correctImgCount = imgCount;
                 }
             });
 
@@ -560,8 +564,9 @@
 
         if (questionType == 'NumericQuestion') {
             if (isRangeAllowed == 'Yes') {
-                min = parseInt(actualAnswer) - 6;
-                max = parseInt(actualAnswer) + 6;
+                range = actualAnswer*0.1;
+                min = parseInt(actualAnswer) - range;
+                max = parseInt(actualAnswer) + range;
 
                 if ((min < enteredAnswer) && (enteredAnswer < max)) {
                     if (enteredAnswer.toUpperCase() === actualAnswer.toUpperCase()) {
@@ -598,7 +603,7 @@
                 $('#correctAnswer').hide();
                 $('#wrongAnswer').hide();
                 $('#wrongAnswerImgVid').show();
-                $('#wrongAnsMsg').html("image" + imgCount);
+                $('#wrongAnsMsg').html("image" + correctImgCount);
             }
         } else if (enteredAnswer.toUpperCase() === actualAnswer.toUpperCase()) {
 

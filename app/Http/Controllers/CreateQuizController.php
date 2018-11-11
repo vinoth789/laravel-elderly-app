@@ -77,6 +77,7 @@ class CreateQuizController extends Controller
                 $choice3 = $questions->choice3;
                 $choice4 = $questions->choice4;
                 $answer = $questions->answer;
+                $imgVidFileName = $questions->imgFileName;
                 $questionType = $questions->questionType;
                 $difficultyLevel = $questions->difficultyLevel;
                 
@@ -89,6 +90,7 @@ class CreateQuizController extends Controller
                     'choice3' => $choice3,
                     'choice4' => $choice4,
                     'answer' => $answer,
+                    'imgFileName' => $imgVidFileName,
                     'questionType' => $questionType,
                     'difficultyLevel' => $difficultyLevel,    
                     'quizNumber' => $quizNumber,

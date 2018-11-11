@@ -542,7 +542,10 @@
                                                 <div class="alert alert-danger" id="wrongAnswer" style="display:none;">
                                                     <strong>{{ trans('app.WrongAnsMsg') }} {{$question->answer}}.</strong>
                                                 </div>
-
+                                                <div class="alert alert-danger" id="wrongAnswerImgVid" style="display:none;">
+                                                    <strong>{{ trans('app.WrongAnsMsg') }} <span id="wrongAnsMsg"></span>.
+                                                    </strong>
+                                                </div>
                                                 <div class="row mt-4">
                                                     <div class="col-md-2 offset-md-10">
                                                         <a class="btn btn-warning" style="color:white;" onclick="showCorrectAnswer('{{$question->questionType}}','{{$question->isRangeAllowed}}')"
@@ -734,8 +737,18 @@
             function showCorrectAnswer(questionType, isRangeAllowed) {
 
                 var enteredAnswer = "";
-                if (questionType == 'MultipleChoice' || questionType == 'TrueFalse') {
+                var actualAnswer = document.getElementById("questionAnswer").value;
+                var min, max;
+                if (questionType == 'MultipleChoice' || questionType == 'OrderOptions' || questionType == 'TrueFalse' ||
+                    questionType == 'ImageAsOptions' || questionType == 'ImageType' || questionType == 'VideoType') {
                     enteredAnswer = $('input[name=radio]:checked').val();
+                    imgCount = 0;
+                    $('input:radio').each(function () {
+                        imgCount++;
+                        if (actualAnswer == this.value) {
+                            correctImgCount = imgCount;
+                        }
+                    });
 
                 } else if (questionType == 'MultipleAnswer') {
                     var values = new Array();
@@ -762,41 +775,60 @@
                     enteredAnswer = "";
                 }
 
-                var actualAnswer = document.getElementById("questionAnswer").value;
-                var min, max;
+                
                 if (questionType == 'NumericQuestion') {
                     if (isRangeAllowed == 'Yes') {
-                        min = parseInt(actualAnswer) - 6;
-                        max = parseInt(actualAnswer) + 6;
+                        range = actualAnswer*0.1;
+                        min = parseInt(actualAnswer) - range;
+                        max = parseInt(actualAnswer) + range;
 
                         if ((min < enteredAnswer) && (enteredAnswer < max)) {
                             if (enteredAnswer.toUpperCase() === actualAnswer.toUpperCase()) {
                                 $('#correctAnswer').show();
                                 $('#wrongAnswer').hide();
+                                $('#wrongAnswerImgVid').hide();
                             } else {
                                 $('#exactAnswer').show();
                                 $('#correctAnswer').hide();
                                 $('#wrongAnswer').hide();
+                                $('#wrongAnswerImgVid').hide();
                             }
                         } else {
                             $('#wrongAnswer').show();
                             $('#correctAnswer').hide();
+                            $('#wrongAnswerImgVid').hide();
                         }
                     } else if (enteredAnswer.toUpperCase() === actualAnswer.toUpperCase()) {
                         $('#correctAnswer').show();
                         $('#wrongAnswer').hide();
+                        $('#wrongAnswerImgVid').hide();
                     } else {
                         $('#wrongAnswer').show();
                         $('#correctAnswer').hide();
+                        $('#wrongAnswerImgVid').hide();
                     }
-                } else if (enteredAnswer.toUpperCase() === actualAnswer.toUpperCase()) {
+                } else if (questionType == 'ImageAsOptions') {
+                    if (enteredAnswer.toUpperCase() === actualAnswer.toUpperCase()) {
+
+                        $('#correctAnswer').show();
+                        $('#wrongAnswer').hide();
+                        $('#wrongAnswerImgVid').hide();
+                    } else {
+                        $('#correctAnswer').hide();
+                        $('#wrongAnswer').hide();
+                        $('#wrongAnswerImgVid').show();
+                        $('#wrongAnsMsg').html("image" + correctImgCount);
+                    }
+                }else if (enteredAnswer.toUpperCase() === actualAnswer.toUpperCase()) {
 
                     $('#correctAnswer').show();
                     $('#wrongAnswer').hide();
+                    $('#wrongAnswerImgVid').hide();
                 } else {
 
                     $('#wrongAnswer').show();
                     $('#correctAnswer').hide();
+                    $('#wrongAnswerImgVid').hide();
                 }
 
                 setTimeout("submitAnswerForm()", 2500);
