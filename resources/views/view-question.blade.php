@@ -224,12 +224,6 @@
                                 <div class="form-group row">
                                     <div class="col-md-7 offset-md-2">
 
-                                        <!-- <video poster="/img/vinoth1.jpg" width="600" height="300" loop preload="false" autoplay  controls tabindex="0" src="/video/{{ $question->imgFileName }}?raw=true"  type="video/mp4"></video> -->
-                                        <!-- <video height="300px" width="600px" src="/video/{{ $question->imgFileName }}" controls="false">
-                                    <p>Your browser does not support HTML5 video.</p>
-                                    <video id="videoQues" loop controls="true" height="300px" width="600px" src="/video/{{$question->imgFileName}}" type='video/mp4'></video>
-                                    </video> -->
-
                                         <video id="videoQues" height="300px" width="600px">
 
                                             <source src="/video/{{$question->imgFileName}}" type="video/mp4" />

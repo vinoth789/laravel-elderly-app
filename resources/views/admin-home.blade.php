@@ -402,8 +402,6 @@
         transform: translateX(26px);
     }
 
-    /* Rounded sliders */
-
     .slider.round {
         border-radius: 34px;
     }
@@ -470,9 +468,7 @@
 
     #studentResultTable tr,
     #questionPoolTable tr {
-        /* Add a bottom border to all table rows */
         border-bottom: 1px solid #ddd;
-        /* page-break-inside: avoid ! important; */
     }
 
     .tbodyPanel {
@@ -489,7 +485,6 @@
     #studentResultTable tr:hover,
     #questionPoolTable tr.header,
     #questionPoolTable tr:hover {
-        /* Add a grey background color to the table header and on hover */
         background-color: #f1f1f1;
     }
 
@@ -498,12 +493,10 @@
         display: table;
         width: 100%;
         table-layout: fixed;
-        /* even columns width , fix width of table too*/
     }
 
     thead {
         background: rgba(99, 109, 132, 0.34);
-        /* width: calc( 100% - 1em) scrollbar is average 1em/16px width, remove it from thead width */
     }
 
     table {
@@ -517,7 +510,6 @@ window.translations = {
     selectQuestionAlert: '{{ trans('app.SelectQuestionAlert') }}',
     addQuestionAlert: '{{ trans('app.AddQuestionAlert') }}',
     confirmAlert: '{{ trans('app.ConfirmAlert') }}',
-        //somethingElse: '{{ trans('app.here') }}',
     };
      translation = {
         selectQuestionAlert: window.translations.selectQuestionAlert,
@@ -664,8 +656,15 @@ window.translations = {
             $('select option:first-child').attr("selected", "selected");
         } else {
             var result = confirm(translation.confirmAlert);
+            //alert(result);
             if (result) {
                 document.getElementById("saveForm" + quizNumber).submit();
+            }else{
+                if(selectedValue == 'Finish'){
+                    document.getElementById("teacherQuizStatus" + quizNumber).value = "InProgress";
+                }else{
+                    document.getElementById("teacherQuizStatus" + quizNumber).value = "Finish";
+                }
             }
         }
 

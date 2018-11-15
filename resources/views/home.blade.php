@@ -619,11 +619,7 @@
             #pointsHistoryTable th,
             #pointsHistoryTable td {
                 text-align: center;
-                /* Left-align text */
                 padding: 12px;
-                /* width:100% ! important;
-        white-space: nowrap; */
-                /* Add padding */
             }
 
             #leaderBoardTable,
@@ -644,11 +640,7 @@
             #pointsHistoryTable th,
             #pointsHistoryTable td {
                 text-align: center;
-                /* Left-align text */
                 padding: 12px;
-                /* width:100% ! important;
-        white-space: nowrap; */
-                /* Add padding */
             }
 
             #leaderBoardTable tr,
@@ -672,7 +664,6 @@
             #leaderBoardTable tr:hover,
             #pointsHistoryTable tr.header,
             #pointsHistoryTable tr:hover {
-                /* Add a grey background color to the table header and on hover */
                 background-color: #f1f1f1;
             }
 
@@ -682,12 +673,10 @@
                 display: table;
                 width: 100%;
                 table-layout: fixed;
-                /* even columns width , fix width of table too*/
             }
 
             thead {
                 background: rgba(99, 109, 132, 0.34);
-                /*  width: calc( 100% - 1em ) scrollbar is average 1em/16px width, remove it from thead width */
             }
 
             table {

@@ -30,11 +30,6 @@ class TakeQuizController extends Controller
      */
     public function index()
     {
-        // $results = AddQuestion::orderBy('id');
-        // $results->where('quizNumber',1);
-        // $questions = $results->paginate(1);
-        // return view('take-quiz',['questions' => $questions]);
-
         $questionNo = Session::get('currentQuestionNo');
         $question = Session::get('currentQuestion');
         $quiz = Session::get('quiz');
