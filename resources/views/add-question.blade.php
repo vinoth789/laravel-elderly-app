@@ -659,6 +659,7 @@
             }else{
                 $('#questionForm').show();
                 $("[name='question']").attr("required", true);
+                $('#orderOptionsForm').hide();
             }
 
 
