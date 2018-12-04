@@ -224,11 +224,10 @@
                                 <div class="form-group row">
                                     <div class="col-md-7 offset-md-2">
 
-                                        <video id="videoQues" height="300px" width="600px">
+                                        <video id="videoQues" height="300px" width="600px" controls preload="auto">
 
                                             <source src="/video/{{$question->imgFileName}}" type="video/mp4" />
                                             <source src="/video/{{$question->imgFileName}}" type="video/ogv" />
-                                            <source src="/video/{{$question->imgFileName}}" type='video/webm;codecs="vp8, vorbis"' />
 
                                             Your browser does not support the video tag.
 

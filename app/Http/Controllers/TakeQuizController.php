@@ -85,7 +85,7 @@ class TakeQuizController extends Controller
         $questionExists = Answer::where('user_id',$userId)->where('quiz_number',$quizNo)->where('question_number',$questionID)->get();
         
         $allQuestions = AddQuestion::where('quizNumber',$quizNo)->get();
-        $count = count($allQuestions);
+        $questionsCount = count($allQuestions);
         $quiz = Quiz::find($quizNo);
         $quizName = $quiz->quizName; 
 
@@ -207,7 +207,7 @@ class TakeQuizController extends Controller
             }
                 
        }else{
-        if($questionNo != $count-2){
+        if($questionNo != $questionsCount-2){
             $questionNo++;
             if($allQuestions->isNotEmpty()) {
                 $question = $allQuestions[$questionNo];

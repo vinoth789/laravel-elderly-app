@@ -44,7 +44,7 @@
                                     <label for="add-question" style="font-weight:bold;">{{ trans('app.QuestionLabel')
                                         }}</label>
                                     <textarea class="form-control" col="10" id="orderOptionsQuestion" name="orderOptionsQuestion"
-                                        rows="7" required>Description:&#13;&#10;&#13;&#10;Order 1. &#13;&#10;Order 2. &#13;&#10;Order 3. &#13;&#10;Order 4. &#13;&#10;</textarea>
+                                        rows="7" required>Description: &#13;&#10;&#13;&#10;Order 1. &#13;&#10;Order 2. &#13;&#10;Order 3. &#13;&#10;Order 4. &#13;&#10;</textarea>
                                 </div>
 
                                 <div class="form-group">
@@ -641,20 +641,6 @@
                 $('#orderOptionsForm').show();
                 $('#questionForm').hide();
                 $("[name='question']").attr("required", false);
-
-                var readOnlyLength = $('#orderOptionsQuestion').val().length;
-
-
-                $('#orderOptionsQuestion').on('keypress, keydown', function (event) {
-
-                    var $field = $(this);
-
-                    if ((event.which != 37 && (event.which != 39)) &&
-                        ((this.selectionStart < readOnlyLength) ||
-                            ((this.selectionStart == readOnlyLength) && (event.which == 8)))) {
-                        return false;
-                    }
-                });
 
             }else{
                 $('#questionForm').show();

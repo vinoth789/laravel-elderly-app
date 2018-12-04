@@ -610,10 +610,6 @@ window.translations = {
         }
     }
 
-    $(document).ready(function () {
-        App.init();
-    });
-
     function chooseQuizType() {
 
         var selected_quiz_type = $('#quizType').val();

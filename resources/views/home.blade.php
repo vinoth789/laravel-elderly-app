@@ -187,7 +187,7 @@
 
                                                         @foreach ($quizs as $quiz)
 
-                                                        <option value="{{$quiz->quizNumber}}">{{ $quiz->quizName }}
+                                                        <option value="{{$quiz->quizNumber}}">{{ $quiz->quizName }} - Timer {{ $quiz->timerStatus }}
                                                         </option>
 
                                                         @endforeach

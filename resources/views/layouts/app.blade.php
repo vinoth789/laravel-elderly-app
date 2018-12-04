@@ -29,6 +29,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.4.0/min/dropzone.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.4.0/dropzone.js"></script>
 
     <script type="text/javascript">
@@ -475,8 +476,8 @@
                             videoFiles.push(responseText.videoName);
                             document.getElementById("uploadVideo").value =
                                 responseText.videoName;
-                            // myVideoDropzone.emit("thumbnail", file, "/video/" +
-                            //     responseText.videoName);
+                             myVideoDropzone.emit("thumbnail", file, "/video/" +
+                                 responseText.videoName);
 
                         });
                         this.on('error', function (file, responseText) {
