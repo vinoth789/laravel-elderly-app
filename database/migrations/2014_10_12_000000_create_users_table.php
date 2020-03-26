@@ -19,9 +19,10 @@ class CreateUsersTable extends Migration
             $table->string('email', 150)->unique();
             $table->string('password');
             $table->rememberToken();
-            $table->integer('points_earned')->default('0');
-            $table->integer('daily_challenge_points')->default('0');
-            $table->integer('total_points')->default('0');
+            $table->integer('age');
+            $table->string('sex');
+            $table->string('disease');
+            $table->date('date_of_joining');
             $table->timestamps();
         });
     }

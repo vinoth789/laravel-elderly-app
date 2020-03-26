@@ -49,10 +49,16 @@ Route::post('/next-question','TakeQuizController@store')->name('next.question');
 //     return view('quiz-summary',compact('pointsHistory'));
 // })->name('summary.show');
 
-Route::resource('question','FrameQuestionsController');
-Route::resource('quizNumber','CreateQuizController');
-Route::resource('submitQuiz','TakeQuizController');
-Route::resource('submitDailyQuiz','DailyChallengeController');
+// Route::resource('question','FrameQuestionsController');
+// Route::resource('quizNumber','CreateQuizController');
+// Route::resource('submitQuiz','TakeQuizController');
+// Route::resource('submitDailyQuiz','DailyChallengeController');
+Route::resource('submitPhysicalFunctions','PhysicalFunctionsController');
+Route::resource('submitCognitiveFunctions','CognitiveFunctionsController');
+Route::resource('submitRelationships','RelationshipsController');
+Route::resource('submitEmotions','EmotionsController');
+Route::resource('submitMovementData','MovementController');
+Route::resource('submitSelfCare','SelfCareController');
 
 //Image upload,view and delete
 

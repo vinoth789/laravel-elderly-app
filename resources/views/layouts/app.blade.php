@@ -21,16 +21,16 @@
 
     <!-- <script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="assets/js/app.js" type="text/javascript"></script> -->
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <!-- <script src="//code.jquery.com/jquery-1.11.1.min.js"></script> -->
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!-- <link rel="stylesheet" href="{{ url('/css/bootstrap.css') }}"> -->
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.4.0/min/dropzone.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.4.0/dropzone.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.8.0/bootstrap-slider.min.js"></script>
+
 
     <script type="text/javascript">
         var myImageDropzone;
@@ -589,15 +589,15 @@
     @yield('head')
 </head>
 
-<body>
+<body onload="onloadFunction()">
     <div id="app">
         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-        <nav class="navbar navbar-expand-md navbar-light" style="background: #00b0f0">
+        <nav class="navbar navbar-expand-md navbar-light" style="background: #000000">
             <div class="container">
                 <a class="navbar-brand" style="color:white;">
                     <img src="/img/quiz-icon2.jpg" width="30" height="30" class="d-inline-block align-top" alt="">
                     <span class="fab fa-accusoft"></span>
-                    <b>DigiQuiz</b>
+                    <b>Elderly App</b>
                 </a>
                 @if (session('locale') == 'en')
                 <a class="nav-link" href="#" onclick="changeLanguage('de')" id="german">
@@ -629,17 +629,12 @@
                         @guest
                         <li>
                             <a style="color:white;" class="nav-link" href="{{ route('login') }}">
-                                <b>{{ trans('app.StudentLoginLabel') }}</b>
+                                <b>{{ trans('app.UserLoginLabel') }}</b>
                             </a>
                         </li>
                         <li>
                             <a style="color:white;" class="nav-link" href="{{ route('admin.login') }}">
-                                <b>{{ trans('app.TeacherLoginLabel') }}</b>
-                            </a>
-                        </li>
-                        <li>
-                            <a style="color:white;" class="nav-link" href="{{ route('register') }}">
-                                <b>{{ trans('app.StudentRegisterLabel') }}</b>
+                                <b>{{ trans('app.AdminLoginLabel') }}</b>
                             </a>
                         </li>
 

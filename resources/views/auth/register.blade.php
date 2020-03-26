@@ -60,6 +60,25 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Sex</label>
+
+                            <div class="col-md-6">
+                            <div class="radio">
+                                            <label>
+                                                <input type="radio" name="radio" id="answer" value="Male">
+                                                Male</label>
+                                        </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="radio" id="answer" value="Female">
+                                                Female</label>
+                                        </div>
+                                        </div>
+                            </div>
+                        </div>
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">

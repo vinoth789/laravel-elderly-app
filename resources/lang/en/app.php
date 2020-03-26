@@ -15,9 +15,9 @@ return [
 
         /* Navbar */
 
-        'StudentLoginLabel' => 'Student Login',
-        'TeacherLoginLabel' => 'Teacher Login',
-        'StudentRegisterLabel' => 'Student Register',
+        'UserLoginLabel' => 'User Login',
+        'AdminLoginLabel' => 'Admin Login',
+        'UserRegisterLabel' => 'User Register',
         'LogoutLabel' => 'Logout',
 
     /* Login */
@@ -30,16 +30,21 @@ return [
     'RememberMeCheckbox' => 'Remember Me',
     'LoginButton' => 'Login',
     'ForgotPassword' => 'Forgot Password',
-    'StudentLoginHeader' => 'Student Login',
-    'TeacherLoginHeader' => 'Teacher Login',
+    'UserLoginHeader' => 'User Login',
+    'AdminLoginHeader' => 'Admin Login',
 
     /* Register */
 
     'RegisterHeader' => 'Register',
     'StudentNameLabel' => 'Name',
+    'StudentVorNameLabel' => 'Last name',
     'PasswordLabel' => 'Password',
     'ConfirmPasswordLablel' => 'Confirm Password',
     'EmailAddress' => 'E-mail address',
+    'SexLabel' => 'Sex',
+    'AgeLablel' => 'Age',
+    'DiseaseLabel' => 'Disease',
+    'DateOfJoiningLabel' => 'Date of joining',
     'RegisterButton' => 'Register',
 
      /* Menu tabs - Teacher */
@@ -79,7 +84,7 @@ return [
 
  /* Teacher home */
 
-    'TeacherDashboard' => 'Teachers Dashboard',
+    'AdminDashboard' => 'Admin Dashboard',
     'HomeDesc' => 'Here, you can view and edit the questions in each quiz',
 
      /* Teacher home table */
@@ -192,7 +197,7 @@ return [
 
       /* Teacher home */
 
-    'StudentDashboard' => 'Student Dashboard',
+    'UserDashboard' => 'User Dashboard',
     'HomeDesc' => 'Here, you can view and edit the questions in each quiz',
 
      /* Leader board table */
@@ -256,5 +261,231 @@ return [
       'QuizesNotification1' => 'you are',
       'QuizesNotification2' => 'points away from surpassing',
       'QuizesNotification3' => 'and climb up to rank',
+
+      /* New */ /* Home notifications */
+      'PhysicalFunctionsTab' => 'Physical Functions',
+      'CognitiveFunctionsTab' => 'Cognitive Functions',
+      'RelationshipsTab' => 'Relationships',
+      'EmotionsTab' => 'Emotions',
+      'UserProfileTab' => 'User profile',
+      'MovementDataTab' => 'MovementData',
+      'ParticipationTab' => 'Participation',
+      'EvaluationTab' => 'Evaluation',
+      'ResultsTab' => 'Results',
+
+      /* New */ /* Home notifications */
+      'PhysicalFunctionsLabel' => 'Physical Functions',
+      'PhysicalFunctionsDesc' => 'Here the user can enter the weights for physical functions like Movement, Pain, Sleeping behaviour and senses',
+      'CognitiveFunctionsLabel' => 'Cognitive Functions',
+      'CognitiveFunctionsDesc' => 'Here the user can enter the weights for cognitive functions like Communicative skills and control',
+      'RelationshipsLabel' => 'Relationships',
+      'RelationshipsDesc' => 'Here the user can enter the weights for Relationships under functional value and emotional value',
+      'EmotionsLabel' => 'Emotions',
+      'EmotionsDesc' => 'Here the user can enter the weights for Emotions like positive effects and negative effects',
+      'UserProfileLabel' => 'UserProfile',
+      'UserProfileDesc' => 'Here you can view the user details',
+      'MovementDataLabel' => 'Movement data',
+      'ParticipationLabel' => 'Participation',
+      'ParticipationDesc' => 'Here the user can view the values of participation elements like nutrition, hygiene, house hold, self care and self-determination',
+      'EvaluationLabel' => 'Evaluation',
+      'EvaluationDesc' => 'Here the user can view the evaluation of results from all the four pillers (Physical functions, cognitive functions, relationships and emotions)',
+      'ResultsLabel' => 'Results',
+      'ResultsDesc' => 'Here the user can view the individual results of all the four pillers (Physical functions, cognitive functions, relationships and emotions) and the overall results for the well being and the quality of life',
+
+      /* New */ /* User details headers */
+      'UserIDLabel' => 'User ID',
+      'FirstNameLabel' => 'First name',
+      'LastNameLabel' => 'Last name',
+      'EmailLabel' => 'Email',
+      'SexLabel' => 'Sex',
+      'SexMaleLabel' => 'Male',
+      'SexFemaleLabel' => 'Female',
+      'AgeLabel' => 'Age',
+      'DiseaseLabel'=>'Disease',
+      'JoiningDateLabel'=>'Date of joining',
+
+      /* New */ /* Movement data headers */
+      'CurrentDateLabel' => 'Current date',
+      'wellbeingQtn' => 'How well do you feel right now?',
+      'veryWell' => 'Very well',
+      'well' => 'Well',
+      'notWell' => 'Not well',
+      'notSoWell' => 'Not so well',
+      'happeningQtn' => 'Are there any accidents or happenings in the last month? (e.g. Falling down etc.)',
+
+      /* New */ /* Physical function headers */
+      'MovementHeader' => 'Movement',
+      'PainHeader' => 'Pain',
+      'SleepingBehaviour' => 'Sleeping behaviour',
+      'Senses' => 'Senses',
+
+      /* New */ /* Cognitive function headers */
+      'CommunicativeSkillsHeader' => 'Communicative skills',
+      'ControlHeader' => 'Control',
+
+      /* New */ /*Relationships headers */
+      'FunctionalValueHeader' => 'Functional value',
+      'EmotionalValueHeader' => 'Emotional value',
+
+
+      /* New */ /*Emotions headers */
+      'PositiveEffectsHeader' => 'Positive effects',
+      'NegativeEffectsHeader' => 'Negative effects',
+
+      /* New */ /* Physical function questions - movement*/
+      'accidentQtn' => 'Did you fall down in the last seven days?',
+      'yesLabel' => 'Yes',
+      'NoLabel' => 'No',
+      'holdPositionQtn' => 'How well can you hold your position?',
+      'changePositionQtn' => 'How well can you change your position?',
+      'walkQtn' => 'How well can you walk?',
+      'climbStairsQtn' => 'How well can you climb stairs?',
+
+            /* New */ /* Physical function range slider label - movement */
+            'noEffortsM' => 'No efforts',
+            'withLessEffortsM' => 'With less efforts',
+            'withMoreEffortsM' => 'With more efforts',
+            'notPossibleM' => 'Not possible',
+
+      /* New */ /* Physical function questions - pain*/
+      'knownPainQtn' => 'How intense is your known pain in the last seven days?',
+      'unknownPainQtn' => 'How intense is your unknown pain in the last seven days?',
+
+            /* New */ /* Physical function range slider label - pain */
+            'noPain' => 'No pain',
+            'lessPain' => 'Less pain',
+            'morePain' => 'More pain',
+            'intensePain' => 'Intense pain',
+
+      /* New */ /* Physical function questions - sleeping behaviour*/
+      'fallAsleepQtn' => 'How easy is it for you to fall asleep?',
+      'sleepingDurationQtn' => 'How easy is it for you to sleep throughout the night?',
+
+            /* New */ /* Physical function range slider label - sleeping behaviour */
+            'noEffortsSlp' => 'No efforts',
+            'withLessEffortsSlp' => 'With less efforts',
+            'withMoreEffortsSlp' => 'With more efforts',
+            'notPossibleSlp' => 'Not possible',
+
+      /* New */ /* Physical function questions - senses*/
+      'seeingQtn' => 'How good can you see?',
+      'hearingQtn' => 'How good can you hear?',
+
+            /* New */ /* Physical function range slider label - senses*/
+            'noEffortsSenses' => 'No efforts',
+            'withLessEffortsSenses' => 'With less efforts',
+            'withMoreEffortsSenses' => 'With more efforts',
+            'notPossibleSenses' => 'Not possible',
+
+
+
+      /* New */ /* Cognitive function questions */
+      'CommunicativeSkillsHeader' => 'Communicative skills',
+      'ControlHeader' => 'Control',
+
+      /* New */ /* Cognitive function questions - Communicative skills*/
+      'expressionQtn' => 'How well can you express yourself?',
+      'understandQtn' => 'How well can you understand?',
+
+            /* New */ /* Cognitive function range slider label - Communicative skills */
+            'noEffortsComm' => 'No efforts',
+            'withLessEffortsComm' => 'With less efforts',
+            'withMoreEffortsComm' => 'With more efforts',
+            'notPossibleComm' => 'Not possible',
+
+      /* New */ /* Cognitive function questions - Cotrol*/
+      'concentrateQtn' => 'How well can you concentrate in the last seven days?',
+      'memoryQtn' => 'How well can you remember things that happened in the last seven days?',
+      'orientationQtn' => 'How well can you orient yourself in the last seven days?',
+
+            /* New */ /* Cognitive function range slider label - Communicative skills */
+            'noEffortsCon' => 'No efforts',
+            'withLessEffortsCon' => 'With less efforts',
+            'withMoreEffortsCon' => 'With more efforts',
+            'notPossibleCon' => 'Not possible',
+
+      /* New */ /* Relationship questions */
+      'FunctionalValueHeader' => 'Functional values',
+      'EmotionalValueHeader' => 'Emotional values',
+
+      /* New */ /* Relationship questions - functional value*/
+      'fFamilyQtn' => 'How important is the support from your family?',
+      'fFriendsQtn' => 'How important is the support from your friends?',
+      'fPartnershipQtn' => 'How important is the support from your partnership?',
+      'fNursingStaffQtn' => 'How important is the support from your nursing staffs?',
+      'fAcquaintancesQtn' => 'How important is the support from your acquaintances?',
+
+            /* New */ /* Relationship range slider label - functional value */
+            'veryImportantFV' => 'Very important',
+            'importantFV' => 'Important',
+            'lessImportantFV' => 'Less important',
+            'notImportantFV' => 'Not important',
+
+      /* New */ /* Relationship questions - emotional value*/
+      'eFamilyQtn' => 'How satisfying is the support from your family?',
+      'eFriendsQtn' => 'How satisfying is the support from your friends?',
+      'ePartnershipQtn' => 'How satisfying is the support from your partnership?',
+      'eNursingStaffQtn' => 'How satisfying is the support from your nursing staffs?',
+      'eAcquaintancesQtn' => 'How satisfying is the support from your acquaintances?',
+
+            /* New */ /* Relationship range slider label - emotional value */
+            'verySatisfiedEV' => 'Very Satisfied',
+            'satisfiedEV' => 'Satisfied',
+            'lessSatisfiedEV' => 'Less Satisfied',
+            'notSatisfiedEV' => 'Not Satisfied',
+
+
+      /* New */ /* Emotions questions */
+      'PositiveEffectsHeader' => 'Positive effects',
+      'NegativeEffectsHeader' => 'Negative effects',
+
+      /* New */ /* Emotions questions -  positive effects*/
+      'motivationQtn' => 'How often do you feel motivated in the last seven days?',
+      'highMoodQtn' => 'How often you were in high mood in the last seven days?',
+      'relaxationQtn' => 'How often you relaxed in the last seven days',
+
+            /* New */ /* Emotions range slider label - positive effects */
+            'neverPE' => 'Never',
+            'lessOftenPE' => 'Less often',
+            'moreOftenPE' => 'More often',
+            'alwaysPE' => 'Always',
+
+      /* New */ /* Emotions questions - negative effects*/
+      'indifferenceQtn' => 'How often do you feel indifferent in the last seven days?',
+      'sadnessQtn' => 'How often you were sad in the last seven days?',
+      'frustrationQtn' => 'How often you were frustrated in the last seven days',
+
+            /* New */ /* Emotions range slider label - negative effects */
+            'neverNE' => 'Never',
+            'lessOftenNE' => 'Less often',
+            'moreOftenNE' => 'More often',
+            'alwaysNE' => 'Always',
+
+      /* New */ /* Admin tab headers */
+      'registerUser' => 'Register user',
+      'listOfUsers' => 'list of users',
+
+      /* New */ /* dashboard headers */
+      'adminHeader' => 'Admin dashboard',
+      'userHeader' => 'User dashboard',
+
+      /* New */ /* Participation table headers */
+      'userIdHeader' => 'User ID',
+      'NutritionHeader' => 'Nutrition',
+      'hygieneHeader' => 'Hygiene',
+      'householdHeader' => 'Household',
+      'selfcareHeader' => 'self care',
+      'self-determinationHeader' => 'Self-determination',
+
+      /* New */ /* Participation table headers */
+      'userIdHeader' => 'User ID',
+      'physicalFunctionsResultsHeader' => 'Physical functions results',
+      'cognitiveFunctionsResultsHeader' => 'Cognitive functions results',
+      'relationshipResultsHeader' => 'Relationship results',
+      'emotionsResultsHeader' => 'Emotions results',
+      'participationResultsHeader' => 'Participation results',
+      'wellbeingResultsHeader' => 'Well being',
+      'accidentResultsHeader' => 'Accidents',
+      'qualityOfLifeResultsHeader' => 'Quality of life',
 
 ];

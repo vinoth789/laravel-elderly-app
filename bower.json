@@ -1,0 +1,25 @@
+{
+  "name": "elderly-app",
+  "description": "Pips slider",
+  "main": "bower.json",
+  "authors": [
+    "vinoth"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "bower"
+  ],
+  "homepage": "https://github.com/vinoth789/Digital-Quiz",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jQuery-ui-Slider-Pips": "jquery-ui-slider-pips#^1.11.4",
+    "bootstrap": "^4.3.1",
+    "jquery": "^3.4.1"
+  }
+}

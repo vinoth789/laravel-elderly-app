@@ -45,7 +45,7 @@ return [
             'driver' => 'mysql',
             'host' => env('DB_HOST', 'localhost'),
             'port' => env('DB_PORT', '8889'),
-            'database' => env('DB_DATABASE', 'Digi_Quiz'),
+            'database' => env('DB_DATABASE', 'Elderly_App'),
             'username' => env('DB_USERNAME', 'root'),
             'password' => env('DB_PASSWORD', 'root'),
             'unix_socket' => env('DB_SOCKET', '/Applications/MAMP/tmp/mysql/mysql.sock'),
